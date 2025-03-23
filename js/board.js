@@ -52,6 +52,13 @@ class ChessBoard {
                 square.dataset.row = row;
                 square.dataset.col = col;
                 
+                // Add coordinate label
+                const coordLabel = document.createElement('div');
+                coordLabel.className = 'coord-label';
+                const algebraic = this.squareToAlgebraic(row, col);
+                coordLabel.textContent = algebraic;
+                square.appendChild(coordLabel);
+                
                 this.boardElement.appendChild(square);
             }
         }
@@ -246,9 +253,7 @@ class ChessBoard {
             piece: piece,
             row: row,
             col: col,
-            element: dragElement,
-            offsetX: event.clientX - pieceElement.getBoundingClientRect().left,
-            offsetY: event.clientY - pieceElement.getBoundingClientRect().top
+            element: dragElement
         };
         
         // Hide the original piece
@@ -257,7 +262,7 @@ class ChessBoard {
         // Select the piece (to show valid moves)
         this.selectPiece(row, col);
         
-        // Position the dragging element
+        // Position the dragging element immediately
         this.updateDragging(event);
     }
     
@@ -270,10 +275,14 @@ class ChessBoard {
             return;
         }
         
-        // Position the dragging element
+        // Position the dragging element to center on cursor
         const element = this.draggingState.element;
-        element.style.left = (event.clientX - this.draggingState.offsetX) + 'px';
-        element.style.top = (event.clientY - this.draggingState.offsetY) + 'px';
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        element.style.left = (event.clientX - centerX) + 'px';
+        element.style.top = (event.clientY - centerY) + 'px';
     }
     
     /**

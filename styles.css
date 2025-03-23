@@ -119,6 +119,27 @@ h1 {
     background-color: var(--primary-color);
 }
 
+/* Square coordinates */
+.coord-label {
+    position: absolute;
+    font-size: 0.65rem;
+    opacity: 0.75;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    pointer-events: none;
+    bottom: 2px;
+    left: 4px;
+    z-index: 5;
+}
+
+.light .coord-label {
+    color: var(--primary-color);
+}
+
+.dark .coord-label {
+    color: var(--secondary-color);
+}
+
 .square.selected {
     background-color: rgba(241, 196, 15, 0.6);
 }
