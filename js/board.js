@@ -52,12 +52,22 @@ class ChessBoard {
                 square.dataset.row = row;
                 square.dataset.col = col;
                 
-                // Add coordinate label
-                const coordLabel = document.createElement('div');
-                coordLabel.className = 'coord-label';
-                const algebraic = this.squareToAlgebraic(row, col);
-                coordLabel.textContent = algebraic;
-                square.appendChild(coordLabel);
+                // Add coordinate label only on edges
+                // Show rank numbers only on the a-file (col 0)
+                if (col === 0) {
+                    const rankLabel = document.createElement('div');
+                    rankLabel.className = 'coord-label rank-label';
+                    rankLabel.textContent = 8 - row;
+                    square.appendChild(rankLabel);
+                }
+                
+                // Show file letters only on the 1st rank (row 7)
+                if (row === 7) {
+                    const fileLabel = document.createElement('div');
+                    fileLabel.className = 'coord-label file-label';
+                    fileLabel.textContent = String.fromCharCode(97 + col); // a, b, c, ...
+                    square.appendChild(fileLabel);
+                }
                 
                 this.boardElement.appendChild(square);
             }

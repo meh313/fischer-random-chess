@@ -127,9 +127,17 @@ h1 {
     font-family: 'Courier New', monospace;
     font-weight: 600;
     pointer-events: none;
-    bottom: 2px;
-    left: 4px;
     z-index: 5;
+}
+
+.file-label {
+    bottom: 2px;
+    right: 4px;
+}
+
+.rank-label {
+    top: 2px;
+    left: 4px;
 }
 
 .light .coord-label {
