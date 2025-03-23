@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fischer Random Chess (Chess960)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Fischer Random Chess</h1>
+            <div class="game-controls">
+                <button id="new-game-btn" class="btn">New Game</button>
+                <button id="invite-btn" class="btn">Invite Friend</button>
+            </div>
+        </header>
+        
+        <main>
+            <div class="game-container">
+                <div class="board-container">
+                    <div id="game-status" class="game-status">Waiting for opponent...</div>
+                    <div id="chessboard" class="chessboard"></div>
+                    <div class="game-info">
+                        <div id="player-turn" class="player-turn">White to move</div>
+                        <div id="game-id" class="game-id"></div>
+                    </div>
+                </div>
+                <div class="side-panel">
+                    <div class="move-history">
+                        <h3>Move History</h3>
+                        <div id="moves" class="moves"></div>
+                    </div>
+                    <div class="game-actions">
+                        <button id="resign-btn" class="btn secondary-btn">Resign</button>
+                        <button id="draw-btn" class="btn secondary-btn">Offer Draw</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div id="invite-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Invite a Friend</h3>
+                <p>Share this link with your friend:</p>
+                <div class="invite-link-container">
+                    <input type="text" id="invite-link" readonly>
+                    <button id="copy-link-btn" class="btn">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/chess.js"></script>
+    <script src="js/board.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/socket.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
