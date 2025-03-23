@@ -258,12 +258,19 @@ class ChessBoard {
         
         document.body.appendChild(dragElement);
         
+        // Calculate the offset between the mouse cursor and the square
+        const squareRect = this.getSquareElement(row, col).getBoundingClientRect();
+        const offsetX = event.clientX - squareRect.left;
+        const offsetY = event.clientY - squareRect.top;
+        
         // Store dragging state
         this.draggingState = {
             piece: piece,
             row: row,
             col: col,
-            element: dragElement
+            element: dragElement,
+            offsetX: offsetX,
+            offsetY: offsetY
         };
         
         // Hide the original piece
@@ -285,14 +292,10 @@ class ChessBoard {
             return;
         }
         
-        // Position the dragging element to center on cursor
+        // Position the dragging element based on mouse position and initial offset
         const element = this.draggingState.element;
-        const rect = element.getBoundingClientRect();
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        element.style.left = (event.clientX - centerX) + 'px';
-        element.style.top = (event.clientY - centerY) + 'px';
+        element.style.left = (event.clientX - this.draggingState.offsetX) + 'px';
+        element.style.top = (event.clientY - this.draggingState.offsetY) + 'px';
     }
     
     /**
