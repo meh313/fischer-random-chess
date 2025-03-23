@@ -108,23 +108,42 @@ class ChessBoard {
         
         // If no piece is selected and the clicked square has a piece of the current player
         if (!this.selectedPiece && piece && piece.color === this.chess.getCurrentPlayer()) {
+            // Select the piece
             this.selectPiece(row, col);
         }
         // If a piece is already selected
         else if (this.selectedPiece) {
-            // Try to make a move
             const fromRow = this.selectedPiece.row;
             const fromCol = this.selectedPiece.col;
             
-            const moveResult = this.chess.makeMove(fromRow, fromCol, row, col);
-            if (moveResult) {
-                this.updateBoard();
-                
-                // Announce the move
-                this.announceMove(fromRow, fromCol, row, col);
-                
-                // Check for game over
-                this.checkGameState();
+            // If clicking on the same piece, deselect it
+            if (fromRow === row && fromCol === col) {
+                this.clearSelection();
+                return;
+            }
+            
+            // If clicking on another own piece, select that piece instead
+            if (piece && piece.color === this.chess.getCurrentPlayer()) {
+                this.clearSelection();
+                this.selectPiece(row, col);
+                return;
+            }
+            
+            // Check if the clicked square is a valid move
+            const isValidMove = this.currentValidMoves.some(([r, c]) => r === row && c === col);
+            
+            if (isValidMove) {
+                // Try to make a move
+                const moveResult = this.chess.makeMove(fromRow, fromCol, row, col);
+                if (moveResult) {
+                    this.updateBoard();
+                    
+                    // Announce the move
+                    this.announceMove(fromRow, fromCol, row, col);
+                    
+                    // Check for game over
+                    this.checkGameState();
+                }
             }
             
             // Clear selection
@@ -214,6 +233,12 @@ class ChessBoard {
         dragElement.classList.add('dragging');
         dragElement.style.position = 'absolute';
         dragElement.style.zIndex = '1000';
+        
+        // Get the original size of the piece
+        const rect = pieceElement.getBoundingClientRect();
+        dragElement.style.width = rect.width + 'px';
+        dragElement.style.height = rect.height + 'px';
+        
         document.body.appendChild(dragElement);
         
         // Store dragging state
