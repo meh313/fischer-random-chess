@@ -8,7 +8,6 @@ class ChessBoard {
         this.chess = chess;
         this.boardElement = null;
         this.selectedPiece = null;
-        this.isDragging = false;
         this.currentValidMoves = [];
         this.pieceImages = {
             [COLOR.WHITE + PIECE.KING]: 'wk',
@@ -87,31 +86,6 @@ class ChessBoard {
             const col = parseInt(square.dataset.col);
             
             this.handleSquareClick(row, col);
-        });
-        
-        // Drag and drop
-        this.boardElement.addEventListener('mousedown', (event) => {
-            const pieceElement = event.target.closest('.piece');
-            if (!pieceElement) return;
-            
-            const square = pieceElement.closest('.square');
-            const row = parseInt(square.dataset.row);
-            const col = parseInt(square.dataset.col);
-            
-            this.startDragging(row, col, event);
-            event.preventDefault(); // Prevent default drag behavior
-        });
-        
-        document.addEventListener('mousemove', (event) => {
-            if (this.isDragging) {
-                this.updateDragging(event);
-            }
-        });
-        
-        document.addEventListener('mouseup', (event) => {
-            if (this.isDragging) {
-                this.stopDragging(event);
-            }
         });
     }
     
@@ -230,125 +204,6 @@ class ChessBoard {
     }
     
     /**
-     * Start dragging a piece
-     * @param {number} row Row index
-     * @param {number} col Column index
-     * @param {Event} event Mouse event
-     */
-    startDragging(row, col, event) {
-        const piece = this.chess.getPieceAt(row, col);
-        if (!piece || piece.color !== this.chess.getCurrentPlayer()) {
-            return;
-        }
-        
-        // Set up dragging
-        this.isDragging = true;
-        
-        // Create the dragging element
-        const pieceElement = this.getSquareElement(row, col).querySelector('.piece');
-        const dragElement = pieceElement.cloneNode(true);
-        dragElement.classList.add('dragging');
-        dragElement.style.position = 'absolute';
-        dragElement.style.zIndex = '1000';
-        
-        // Get the original size of the piece
-        const rect = pieceElement.getBoundingClientRect();
-        dragElement.style.width = rect.width + 'px';
-        dragElement.style.height = rect.height + 'px';
-        
-        document.body.appendChild(dragElement);
-        
-        // Calculate the offset between the mouse cursor and the square
-        const squareRect = this.getSquareElement(row, col).getBoundingClientRect();
-        const offsetX = event.clientX - squareRect.left;
-        const offsetY = event.clientY - squareRect.top;
-        
-        // Store dragging state
-        this.draggingState = {
-            piece: piece,
-            row: row,
-            col: col,
-            element: dragElement,
-            offsetX: offsetX,
-            offsetY: offsetY
-        };
-        
-        // Hide the original piece
-        pieceElement.style.opacity = '0.3';
-        
-        // Select the piece (to show valid moves)
-        this.selectPiece(row, col);
-        
-        // Position the dragging element immediately
-        this.updateDragging(event);
-    }
-    
-    /**
-     * Update the dragging element position
-     * @param {Event} event Mouse event
-     */
-    updateDragging(event) {
-        if (!this.isDragging || !this.draggingState) {
-            return;
-        }
-        
-        // Position the dragging element based on mouse position and initial offset
-        const element = this.draggingState.element;
-        element.style.left = (event.clientX - this.draggingState.offsetX) + 'px';
-        element.style.top = (event.clientY - this.draggingState.offsetY) + 'px';
-    }
-    
-    /**
-     * Stop dragging and make a move if valid
-     * @param {Event} event Mouse event
-     */
-    stopDragging(event) {
-        if (!this.isDragging || !this.draggingState) {
-            return;
-        }
-        
-        // Remove the dragging element
-        this.draggingState.element.remove();
-        
-        // Show the original piece
-        const pieceElement = this.getSquareElement(this.draggingState.row, this.draggingState.col).querySelector('.piece');
-        if (pieceElement) {
-            pieceElement.style.opacity = '1';
-        }
-        
-        // Find the square under the cursor
-        const elements = document.elementsFromPoint(event.clientX, event.clientY);
-        const square = elements.find(el => el.classList.contains('square'));
-        
-        if (square) {
-            const toRow = parseInt(square.dataset.row);
-            const toCol = parseInt(square.dataset.col);
-            
-            // Try to make a move
-            const fromRow = this.draggingState.row;
-            const fromCol = this.draggingState.col;
-            
-            if (fromRow !== toRow || fromCol !== toCol) {
-                const moveResult = this.chess.makeMove(fromRow, fromCol, toRow, toCol);
-                if (moveResult) {
-                    this.updateBoard();
-                    
-                    // Announce the move
-                    this.announceMove(fromRow, fromCol, toRow, toCol);
-                    
-                    // Check for game over
-                    this.checkGameState();
-                }
-            }
-        }
-        
-        // Clean up
-        this.isDragging = false;
-        this.draggingState = null;
-        this.clearSelection();
-    }
-    
-    /**
      * Update the board UI to reflect the current game state
      */
     updateBoard() {
@@ -392,7 +247,6 @@ class ChessBoard {
         
         pieceElement.src = `img/pieces/${pieceCode}.svg`;
         pieceElement.alt = pieceCode;
-        pieceElement.draggable = false; // Prevent default drag
         
         square.appendChild(pieceElement);
     }

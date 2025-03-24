@@ -178,19 +178,12 @@ h1 {
 .piece {
     width: 80%;
     height: 80%;
-    cursor: grab;
+    cursor: pointer;
     z-index: 10;
     transition: transform 0.1s ease;
 }
 
 .piece:hover {
-    transform: scale(1.05);
-}
-
-.piece.dragging {
-    cursor: grabbing;
-    pointer-events: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transform: scale(1.05);
 }
 
