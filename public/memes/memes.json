@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "memes": [
+    { "id": "mate", "on": "checkmate", "media": "placeholder-checkmate.svg", "ms": 3500, "sound": "meme", "placeholder": true, "caption": "gg" },
+    { "id": "blunder", "on": "blunder", "media": "placeholder-blunder.svg", "ms": 3000, "sound": "meme", "placeholder": true },
+    { "id": "promo", "on": "promotion", "media": "placeholder-promotion.svg", "ms": 2500, "placeholder": true },
+    { "id": "draw", "on": ["draw", "stalemate"], "media": "placeholder-draw.svg", "ms": 3000, "placeholder": true },
+    { "id": "duck", "on": "duckPlaced", "media": "placeholder-duck.svg", "ms": 2000, "weight": 1, "placeholder": true }
+  ]
+}

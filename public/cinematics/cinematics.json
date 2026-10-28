@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "cinematics": [
+    {
+      "id": "pawn-shoots-knight",
+      "match": { "attacker": "p", "victim": "n" },
+      "weight": 3,
+      "duration": 1900,
+      "steps": [
+        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
+        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
+        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
+        { "at": 480, "do": "sound", "sfx": "bang" },
+        { "at": 480, "do": "caption", "text": "then you die", "ms": 1200 },
+        { "at": 480, "do": "shake", "target": "victim", "ms": 450, "amp": 7 },
+        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 700 },
+        { "at": 1500, "do": "despawn", "target": "hand" }
+      ]
+    },
+    {
+      "id": "gun-any",
+      "match": {},
+      "weight": 3,
+      "duration": 1800,
+      "steps": [
+        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
+        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
+        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
+        { "at": 480, "do": "sound", "sfx": "bang" },
+        { "at": 480, "do": "caption", "text": ["then you die", "nothing personal", "sit down", "skill issue", "get out"], "ms": 1100 },
+        { "at": 480, "do": "shake", "target": "victim", "ms": 450, "amp": 6 },
+        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 650 },
+        { "at": 1400, "do": "despawn", "target": "hand" }
+      ]
+    },
+    {
+      "id": "chad-flex",
+      "match": { "attacker": "n", "victim": "*" },
+      "weight": 2,
+      "duration": 1700,
+      "steps": [
+        { "at": 0, "do": "pose", "target": "attacker", "pose": "smug" },
+        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
+        { "at": 0, "do": "scale", "target": "attacker", "to": 1.3, "ms": 300 },
+        { "at": 250, "do": "sound", "sfx": "capture" },
+        { "at": 250, "do": "caption", "text": ["too easy", "gigachad", "skill diff", "nothing personal, kid"], "ms": 1200 },
+        { "at": 250, "do": "shake", "target": "victim", "ms": 400, "amp": 8 },
+        { "at": 350, "do": "fade", "target": "victim", "to": 0, "ms": 600 },
+        { "at": 1200, "do": "scale", "target": "attacker", "to": 1, "ms": 300 }
+      ]
+    },
+    {
+      "id": "queen-slay",
+      "match": { "attacker": "q", "victim": "*" },
+      "weight": 2,
+      "duration": 1800,
+      "steps": [
+        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
+        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
+        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
+        { "at": 480, "do": "sound", "sfx": "bang" },
+        { "at": 480, "do": "caption", "text": ["slay", "he is mine", "you were never my type"], "ms": 1100 },
+        { "at": 480, "do": "shake", "target": "victim", "ms": 450, "amp": 6 },
+        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 650 },
+        { "at": 1400, "do": "despawn", "target": "hand" }
+      ]
+    },
+    {
+      "id": "queen-lost",
+      "match": { "attacker": "*", "victim": "q" },
+      "weight": 2,
+      "duration": 2000,
+      "steps": [
+        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
+        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
+        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
+        { "at": 480, "do": "sound", "sfx": "bang" },
+        { "at": 480, "do": "caption", "text": ["not the queen", "NOOOO", "my queen!"], "ms": 1300, "style": "red" },
+        { "at": 480, "do": "shake", "target": "victim", "ms": 600, "amp": 10 },
+        { "at": 700, "do": "fade", "target": "victim", "to": 0, "ms": 800 },
+        { "at": 1600, "do": "despawn", "target": "hand" }
+      ]
+    },
+    {
+      "id": "king-down",
+      "match": { "attacker": "*", "victim": "k" },
+      "weight": 1,
+      "duration": 2200,
+      "steps": [
+        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
+        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450 },
+        { "at": 480, "do": "sound", "sfx": "bang" },
+        { "at": 480, "do": "caption", "text": "long live the king", "ms": 1500, "pos": "center", "style": "red" },
+        { "at": 480, "do": "shake", "target": "victim", "ms": 700, "amp": 12 },
+        { "at": 800, "do": "fade", "target": "victim", "to": 0, "ms": 900 },
+        { "at": 1800, "do": "despawn", "target": "hand" }
+      ]
+    },
+    {
+      "id": "duck-witness",
+      "match": { "variant": "duck" },
+      "weight": 2,
+      "duration": 1700,
+      "steps": [
+        { "at": 0, "do": "spawn", "id": "witness", "sprite": "duck.svg", "anchor": "between", "size": 1.1 },
+        { "at": 0, "do": "scale", "target": "witness", "to": 1.4, "ms": 400 },
+        { "at": 300, "do": "sound", "sfx": "duck" },
+        { "at": 300, "do": "caption", "text": ["quack", "i saw nothing", "witness protection"], "ms": 1100 },
+        { "at": 300, "do": "shake", "target": "victim", "ms": 400, "amp": 6 },
+        { "at": 400, "do": "fade", "target": "victim", "to": 0, "ms": 600 },
+        { "at": 1300, "do": "despawn", "target": "witness" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "classic",
+  "name": "Classic",
+  "description": "Clean flat silhouettes. Original placeholder art.",
+  "license": "CC0, original to this project",
+  "placeholder": true,
+  "pieces": {
+    "wp": {
+      "img": "wp.svg"
+    },
+    "wn": {
+      "img": "wn.svg"
+    },
+    "wb": {
+      "img": "wb.svg"
+    },
+    "wr": {
+      "img": "wr.svg"
+    },
+    "wq": {
+      "img": "wq.svg"
+    },
+    "wk": {
+      "img": "wk.svg"
+    },
+    "wd": {
+      "img": "wd.svg"
+    },
+    "bp": {
+      "img": "bp.svg"
+    },
+    "bn": {
+      "img": "bn.svg"
+    },
+    "bb": {
+      "img": "bb.svg"
+    },
+    "br": {
+      "img": "br.svg"
+    },
+    "bq": {
+      "img": "bq.svg"
+    },
+    "bk": {
+      "img": "bk.svg"
+    },
+    "bd": {
+      "img": "bd.svg"
+    }
+  }
+}
