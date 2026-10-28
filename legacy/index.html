@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chass - Ultimate Random Chess</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="title-font text-4xl md:text-5xl font-bold mb-2 text-yellow-400">CHASS</h1>
+            <p class="text-lg text-gray-300">The Ultimate Random Chess Experience</p>
+        </header>
+        
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Left Panel - Game Controls -->
+            <div class="w-full lg:w-1/4 space-y-6">
+                <!-- Game Status -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-yellow-400 border-b border-gray-700 pb-2">Game Status</h2>
+                    <div class="flex justify-between items-center mb-2">
+                        <span>Turn:</span>
+                        <span id="current-turn" class="font-bold">White</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span>Phase:</span>
+                        <span id="game-phase" class="font-bold">Move Piece</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span>State:</span>
+                        <span id="game-state" class="font-bold">Normal</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Variant:</span>
+                        <span id="game-variant" class="font-bold">Standard</span>
+                    </div>
+                </div>
+                
+                <!-- Game Variants -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-yellow-400 border-b border-gray-700 pb-2">Game Variants</h2>
+                    
+                    <!-- Fischer Random Toggle -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="font-medium">Fischer Random</h3>
+                            <p class="text-sm text-gray-400">(Chess960)</p>
+                        </div>
+                        <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                            <input type="checkbox" id="fischer-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="fischer-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                    </div>
+                    
+                    <!-- Dragon Bishop Toggle -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="font-medium">Dragon Bishop</h3>
+                            <p class="text-sm text-gray-400">(Bishop + Xiangqi Horse)</p>
+                        </div>
+                        <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                            <input type="checkbox" id="dragon-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="dragon-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                    </div>
+                    
+                    <!-- Duck Chess Toggle -->
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-medium">Duck Chess</h3>
+                            <p class="text-sm text-gray-400">(Place a blocking duck)</p>
+                        </div>
+                        <div class="relative inline-block w-10 mr-2 align-middle select-none">
+                            <input type="checkbox" id="duck-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="duck-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Controls -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-yellow-400 border-b border-gray-700 pb-2">Controls</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="new-game-btn" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-medium py-2 px-4 rounded transition">
+                            <i class="fas fa-plus mr-2"></i> New Game
+                        </button>
+                        <button id="undo-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition">
+                            <i class="fas fa-undo mr-2"></i> Undo
+                        </button>
+                        <button id="flip-board-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition">
+                            <i class="fas fa-sync-alt mr-2"></i> Flip Board
+                        </button>
+                        <button id="settings-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition">
+                            <i class="fas fa-cog mr-2"></i> Settings
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Move History -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-yellow-400 border-b border-gray-700 pb-2">Move History</h2>
+                    <div id="move-history" class="max-h-60 overflow-y-auto">
+                        <div class="text-center text-gray-500 py-4">No moves yet</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Center Panel - Chess Board -->
+            <div class="w-full lg:w-2/4 flex flex-col items-center">
+                <div class="chess-board mb-4" id="chess-board">
+                    <!-- Squares will be generated by JavaScript -->
+                </div>
+                
+                <!-- Game Messages -->
+                <div id="game-message" class="bg-gray-800 rounded-lg p-4 w-full text-center hidden">
+                    <p class="text-lg font-semibold text-yellow-400"></p>
+                </div>
+            </div>
+            
+            <!-- Right Panel - Game Info -->
+            <div class="w-full lg:w-1/4 space-y-6">
+                <!-- Player Info - White -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-yellow-400">White Player</h2>
+                        <div class="w-6 h-6 rounded-full bg-white"></div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="block text-sm text-gray-400 mb-1">Name</label>
+                        <input type="text" value="Player 1" class="w-full bg-gray-700 rounded px-3 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Time</label>
+                        <div class="text-2xl font-mono bg-gray-900 rounded px-3 py-2 text-center">10:00</div>
+                    </div>
+                </div>
+                
+                <!-- Player Info - Black -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-xl font-semibold text-yellow-400">Black Player</h2>
+                        <div class="w-6 h-6 rounded-full bg-black border border-gray-400"></div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="block text-sm text-gray-400 mb-1">Name</label>
+                        <input type="text" value="Player 2" class="w-full bg-gray-700 rounded px-3 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Time</label>
+                        <div class="text-2xl font-mono bg-gray-900 rounded px-3 py-2 text-center">10:00</div>
+                    </div>
+                </div>
+                
+                <!-- Game Instructions -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-yellow-400 border-b border-gray-700 pb-2">Instructions</h2>
+                    <div id="variant-instructions" class="text-sm space-y-2">
+                        <p><span class="font-semibold text-yellow-400">Standard Chess:</span> Move pieces according to traditional chess rules.</p>
+                        <p class="hidden" data-variant="fischer"><span class="font-semibold text-yellow-400">Fischer Random:</span> Starting position is randomized with bishops on opposite colors and king between rooks.</p>
+                        <p class="hidden" data-variant="dragon"><span class="font-semibold text-yellow-400">Dragon Bishop:</span> Bishops move like standard bishops but can also jump like a Xiangqi horse (one step orthogonally then one step diagonally out).</p>
+                        <p class="hidden" data-variant="duck"><span class="font-semibold text-yellow-400">Duck Chess:</span> After each move, place the duck on any empty square to block movement through that square.</p>
+                    </div>
+                </div>
+                
+                <!-- Piece Legend -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-yellow-400 border-b border-gray-700 pb-2">Piece Legend</h2>
+                    <div class="grid grid-cols-3 gap-3 text-sm">
+                        <div class="flex flex-col items-center">
+                            <div class="piece white">♔</div>
+                            <span>King</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="piece white">♕</div>
+                            <span>Queen</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="piece white dragon-bishop">♗</div>
+                            <span>Dragon Bishop</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="piece white">♖</div>
+                            <span>Rook</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="piece white">♘</div>
+                            <span>Knight</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="piece white">♙</div>
+                            <span>Pawn</span>
+                        </div>
+                        <div class="flex flex-col items-center col-span-3">
+                            <div class="duck-piece"></div>
+                            <span>Duck</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chess Rules -->
+                <div class="bg-gray-800 rounded-lg p-4 shadow-lg">
+                    <h2 class="text-xl font-semibold mb-4 text-yellow-400 border-b border-gray-700 pb-2">Chess Rules</h2>
+                    <div class="text-sm space-y-3">
+                        <div>
+                            <h3 class="font-medium text-yellow-400">Check</h3>
+                            <p>When a king is under direct attack. Player must move to remove the threat.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-yellow-400">Checkmate</h3>
+                            <p>When a king is in check with no legal moves to escape. Game ends immediately.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-yellow-400">Pin</h3>
+                            <p>A piece cannot move off the line between it and its king, shielding it from attack.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-medium text-yellow-400">En Passant</h3>
+                            <p>Special pawn capture when opponent moves two squares from starting position.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
