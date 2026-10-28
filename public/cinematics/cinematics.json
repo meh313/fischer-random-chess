@@ -97,6 +97,22 @@
       ]
     },
     {
+      "id": "gun-duck-games",
+      "match": { "variant": "duck" },
+      "weight": 3,
+      "duration": 1800,
+      "steps": [
+        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
+        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
+        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
+        { "at": 480, "do": "sound", "sfx": "bang" },
+        { "at": 480, "do": "caption", "text": ["then you die", "the duck saw that", "sit down"], "ms": 1100 },
+        { "at": 480, "do": "shake", "target": "victim", "ms": 450, "amp": 6 },
+        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 650 },
+        { "at": 1400, "do": "despawn", "target": "hand" }
+      ]
+    },
+    {
       "id": "duck-witness",
       "match": { "variant": "duck" },
       "weight": 2,

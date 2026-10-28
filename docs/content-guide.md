@@ -1,0 +1,57 @@
+# Adding content (no code changes)
+
+Everything below lives in `public/` and is loaded at runtime. A bad file shows a red
+"Content problem" banner in the app instead of crashing it.
+
+## A new capture cinematic: `public/cinematics/cinematics.json`
+
+```json
+{
+  "id": "rook-bonks-bishop",
+  "match": { "attacker": "r", "victim": "b", "variant": "*" },
+  "weight": 2,
+  "duration": 1500,
+  "steps": [
+    { "at": 0,   "do": "spawn",   "id": "bonk", "sprite": "bonk.svg", "anchor": "victim", "size": 1.4 },
+    { "at": 200, "do": "caption", "text": ["bonk", "go to horny jail"], "ms": 900 },
+    { "at": 200, "do": "shake",   "target": "victim", "ms": 400 },
+    { "at": 300, "do": "fade",    "target": "victim", "to": 0, "ms": 600 }
+  ]
+}
+```
+
+- Match: `attacker` and `victim` take `p n b r q k d`, a list, or `*`. Optional `attackerColor`, `victimColor` (`w`/`b`) and `variant` (id or list: `fischer960`, `dragonBishop`, `duck`).
+- The most specific match wins (attacker +4, victim +2, variant +1). Several entries in the same tier are picked by `weight`. An entry with `"match": {}` is the fallback.
+- Steps: `spawn`, `move`, `rotate`, `scale`, `caption`, `shake`, `fade`, `pose`, `sound`, `despawn`. `at` is ms from the start. `target` is `attacker`, `victim` or a spawned `id`.
+- Anchors: `attacker`, `victim`, `from`, `to`, `between`, a square like `e4`, or `aim:<reach>` (a point on the attacker to victim line, `reach` squares short of the victim). `rotate: "toTarget"` aims a sprite that faces right at the victim.
+- Sprites live in `public/sprites/`. Sounds: `sfx` is a built-in name (`bang`, `capture`, `duck`, `check`, `promote`, `mate`, `meme`) or a file `public/sounds/<name>.mp3`, which overrides the synthesized placeholder.
+- Duration is clamped to 3000 ms. Any click or Esc skips the cinematic.
+
+## A new meme: `public/memes/memes.json`
+
+```json
+{ "id": "bruh", "on": "blunder", "media": "bruh.gif", "ms": 3000, "sound": "bruh", "caption": "bruh" }
+```
+
+Drop the file in `public/memes/`. `on` is any event type (`checkmate`, `check`, `capture`, `promotion`, `castling`, `duckPlaced`, `draw`, `stalemate`, `blunder`, `gameOver`) or a list. Images, GIFs and mp4/webm are supported. 2 to 4 s on screen, with a queue, cooldown and chance set in Settings. `"placeholder": true` shows a PLACEHOLDER tag.
+
+## A new piece set: `public/piecesets/<id>/`
+
+1. Add `<id>` to `public/piecesets/index.json`.
+2. Add `set.json` and the images:
+
+```json
+{
+  "id": "mine", "name": "My Pack", "extends": "classic",
+  "pieces": {
+    "wn": { "img": "wn.svg", "poses": { "smug": "wn-smug.svg", "shocked": "wn-shocked.svg" } },
+    "bn": { "img": "bn.svg", "poses": { "smug": "bn-smug.svg", "shocked": "bn-shocked.svg" } }
+  }
+}
+```
+
+Keys are color + kind: `wp wn wb wr wq wk wd` and `bp bn bb br bq bk bd` (`d` = Dragon Bishop). `extends` fills in every piece you do not define. Poses are optional. `smug` shows on the capturing piece, `shocked` on a king in check and on a victim during a cinematic.
+
+## Placeholder art
+
+`node tools/gen-art.mjs` regenerates the shipped placeholders (Classic set, Chad knight, hand-and-gun sprite, duck, meme cards). All of it is original to this project. Replace any file with final art.
