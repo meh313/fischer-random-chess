@@ -5,7 +5,8 @@ Effort: S is under a day, M is a few days, L is a week or more. All art and audi
 
 ## Do next: high impact, small or medium effort
 
-- [ ] **Random variant roulette per game ('Chaos Dice')** (impact: high, effort: S, game modes)
+- [x] **Random variant roulette per game ('Chaos Dice')** (impact: high, effort: S, game modes)
+  - Done 2026-10-30: Roll the Chaos Dice button, slot animation, shareable link (?chaos=SEED) that gives everyone the same variants and Chess960 setup. Not built yet: mid-game mutation mode, daily seed.
   - Why: Variants are chosen by checkbox, so players always pick the same ones. Random mixing is the cheapest replayability gain and the registry plus conflictsWith already supports composition.
   - How: Add a 'Roll the dice' button in App.tsx that picks 1 to 3 ids from VARIANTS using createRng(seed) while respecting conflictsWith, shows a slot-machine caption, then starts the game. Optional 'mid-game mutation' mode: every N full moves a new variant is activated by rebuilding the Game from the current FEN (needs a Variant.onActivate or just re-resolve variants at a ply boundary). Seed in the URL (?seed=) so friends can replay the same chaos.
 

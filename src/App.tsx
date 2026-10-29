@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { VARIANTS, squareName } from './engine'
+import { VARIANTS, newChaosSeed, parseChaosSeed, rollVariants, squareName } from './engine'
 import { loadCinematics, loadMemes, loadPieceSet, loadPieceSetIndex } from './content/loaders'
 import type { Cinematic, MemeEntry, ResolvedPieceSet } from './content/types'
 import { configureAudio, playSfx, unlockAudio } from './audio/sfx'
@@ -9,6 +9,7 @@ import { SettingsProvider, useSettings } from './state/settings'
 import { useChass } from './state/useChass'
 import { Board } from './ui/Board'
 import { PieceImg } from './ui/PieceImg'
+import { DiceOverlay } from './ui/DiceOverlay'
 import { SettingsPanel } from './ui/SettingsPanel'
 import { COLOR_NAME } from './ui/names'
 
@@ -30,6 +31,10 @@ function Chass() {
   const [problems, setProblems] = useState<string[]>([])
   const [variantIds, setVariantIds] = useState<string[]>([])
   const [settingsOpen, setSettingsOpen] = useState(false)
+  // Chaos Dice: `rolling` plays the slot animation, `chaos` remembers the last roll for the share link.
+  const [rolling, setRolling] = useState<{ seed: number; ids: string[] } | null>(null)
+  const [chaos, setChaos] = useState<{ seed: number; ids: string[] } | null>(null)
+  const [copied, setCopied] = useState(false)
   const boardRef = useRef<HTMLDivElement>(null)
 
   const chass = useChass(cinematics, settings)
@@ -99,6 +104,7 @@ function Chass() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        if (rollingRef.current) finishRollRef.current()
         chass.skipCine()
         memes.dismiss()
       }
@@ -107,10 +113,66 @@ function Chass() {
     return () => window.removeEventListener('keydown', onKey)
   }, [chass.skipCine, memes.dismiss]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const setSeedParam = (seed: number | null) => {
+    try {
+      const url = new URL(window.location.href)
+      if (seed === null) url.searchParams.delete('chaos')
+      else url.searchParams.set('chaos', String(seed))
+      window.history.replaceState(null, '', url)
+    } catch {
+      /* not critical: the share link just will not update */
+    }
+  }
+
+  const clearChaos = () => {
+    setChaos(null)
+    setSeedParam(null)
+  }
+
+  const rollingRef = useRef(rolling)
+  rollingRef.current = rolling
+  const finishRollRef = useRef<() => void>(() => {})
+
   const toggleVariant = (id: string, on: boolean) => {
     const next = on ? [...variantIds, id] : variantIds.filter((v) => v !== id)
     setVariantIds(next)
+    clearChaos()
     chass.newGame(next)
+  }
+
+  const rollDice = (seed = newChaosSeed()) => {
+    setRolling({ seed, ids: rollVariants(seed) })
+  }
+
+  const finishRoll = () => {
+    if (!rolling) return
+    setVariantIds(rolling.ids)
+    setChaos(rolling)
+    setSeedParam(rolling.seed)
+    chass.newGame(rolling.ids, rolling.seed)
+    setRolling(null)
+  }
+
+  finishRollRef.current = finishRoll
+
+  // A shared link (?chaos=SEED) rolls the same dice for everyone.
+  const linkHandled = useRef(false)
+  useEffect(() => {
+    if (linkHandled.current) return
+    linkHandled.current = true
+    const seed = parseChaosSeed(new URLSearchParams(window.location.search).get('chaos'))
+    if (seed !== null) rollDice(seed)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
+    } catch {
+      /* clipboard blocked: the address bar already holds the link */
+    }
   }
 
   const result = game.result
@@ -199,12 +261,33 @@ function Chass() {
                 </div>
               )
             })}
+            <div className="dice-row">
+              <button className="btn dice-btn" onClick={() => rollDice()} disabled={!!rolling}>
+                Roll the Chaos Dice
+              </button>
+              {chaos && (
+                <div className="dice-info">
+                  <span>Chaos seed {chaos.seed}</span>
+                  <button className="btn small" onClick={copyLink}>
+                    {copied ? 'Copied' : 'Copy link'}
+                  </button>
+                </div>
+              )}
+            </div>
           </section>
 
           <section className="card c-controls">
             <h2>Controls</h2>
             <div className="grid2">
-              <button className="btn primary" onClick={() => chass.newGame(variantIds)}>New Game</button>
+              <button
+                className="btn primary"
+                onClick={() => {
+                  clearChaos()
+                  chass.newGame(variantIds)
+                }}
+              >
+                New Game
+              </button>
               <button className="btn" onClick={chass.undo} disabled={!chass.canUndo}>Undo</button>
               <button className="btn" onClick={() => chass.setFlipped(!chass.flipped)} disabled={!!chass.cine}>Flip Board</button>
               <button className="btn" onClick={() => setSettingsOpen(true)}>Settings</button>
@@ -239,6 +322,7 @@ function Chass() {
         <main className="center">
           <div className="board-wrap">
             {ready ? <Board ref={boardRef} chass={chass} set={pieceSet} /> : <div className="board loading">Loading pieces...</div>}
+            {rolling && <DiceOverlay key={rolling.seed} ids={rolling.ids} seed={rolling.seed} onDone={finishRoll} />}
             <MemeOverlay meme={memes.active} muted={!settings.sound} volume={settings.volume} onDismiss={memes.dismiss} />
           </div>
           <div className={`banner ${resultText ? 'show' : ''}`} role="status">{resultText ?? ' '}</div>

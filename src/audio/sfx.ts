@@ -104,6 +104,11 @@ const SYNTH: Record<string, (c: AudioContext, out: AudioNode, t: number) => void
     tone(c, o, t + 0.2, 330, 0.25, 'triangle', 0.35)
   },
   blunder: (c, o, t) => tone(c, o, t, 300, 0.5, 'sawtooth', 0.35, 90),
+  dice: (c, o, t) => {
+    const notes = [520, 410, 660, 450, 600, 380, 700, 520, 820]
+    notes.forEach((f, i) => tone(c, o, t + i * 0.11, f, 0.06, 'square', 0.18))
+    tone(c, o, t + notes.length * 0.11, 988, 0.22, 'triangle', 0.3)
+  },
   meme: (c, o, t) => tone(c, o, t, 500, 0.15, 'square', 0.2, 900),
 }
 

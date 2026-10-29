@@ -911,3 +911,81 @@ input:focus-visible,
     scroll-behavior: auto !important;
   }
 }
+
+/* ------------------------------------------------------------ chaos dice */
+
+.dice-row {
+  margin-top: 14px;
+}
+.dice-btn {
+  width: 100%;
+  background: #7b1fa2;
+  color: #fff;
+  font-weight: 600;
+}
+.dice-btn:hover:not(:disabled) {
+  background: #9334c2;
+}
+.dice-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.dice-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  background: rgba(20, 12, 30, 0.82);
+  cursor: pointer;
+}
+.dice-card {
+  text-align: center;
+  padding: 18px 22px;
+  max-width: 90%;
+}
+.dice-title {
+  color: #d9a6ff;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+.dice-result {
+  margin: 10px 0 6px;
+  font-family: Impact, 'Arial Black', sans-serif;
+  font-size: clamp(1.4rem, 6.5vw, 2.6rem);
+  line-height: 1.1;
+  color: #fff;
+  -webkit-text-stroke: 1px #000;
+  paint-order: stroke fill;
+  min-height: 2.4em;
+  display: grid;
+  place-items: center;
+}
+.dice-card.landed .dice-result {
+  color: var(--accent);
+  animation: diceLand 0.35s ease-out;
+}
+.dice-seed {
+  color: #b9a3cc;
+  font-size: 0.8rem;
+}
+@keyframes diceLand {
+  0% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dice-card.landed .dice-result {
+    animation: none;
+  }
+}

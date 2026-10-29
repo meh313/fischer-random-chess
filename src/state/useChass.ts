@@ -148,8 +148,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   }, [publishClock])
 
   const newGame = useCallback(
-    (variants: readonly string[]) => {
-      const game = new Game({ variants })
+    (variants: readonly string[], seed?: number) => {
+      const game = new Game({ variants, seed })
       game.on(emit)
       gameRef.current = game
       trackedRef.current = trackFromGame(game)
