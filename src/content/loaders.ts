@@ -1,5 +1,5 @@
 import type { Cinematic, MemeEntry, MemeFile, PieceSetFile, ResolvedPieceSet } from './types'
-import { validateCinematics } from './select'
+import { validateCinematicsReport } from './select'
 
 export const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
 
@@ -9,8 +9,8 @@ async function getJson<T>(path: string): Promise<T> {
   return (await res.json()) as T
 }
 
-export async function loadCinematics(): Promise<Cinematic[]> {
-  return validateCinematics(await getJson('cinematics/cinematics.json'))
+export async function loadCinematics(): Promise<{ items: Cinematic[]; problems: string[] }> {
+  return validateCinematicsReport(await getJson('cinematics/cinematics.json'))
 }
 
 export async function loadMemes(): Promise<MemeEntry[]> {
@@ -21,8 +21,9 @@ export async function loadMemes(): Promise<MemeEntry[]> {
 
 export async function loadPieceSetIndex(): Promise<{ id: string; name: string; placeholder?: boolean }[]> {
   const ids = await getJson<string[]>('piecesets/index.json')
-  const sets = await Promise.all(ids.map((id) => getJson<PieceSetFile>(`piecesets/${id}/set.json`)))
-  return sets.map((s) => ({ id: s.id, name: s.name, placeholder: s.placeholder }))
+  // One broken pack must not hide the others.
+  const results = await Promise.allSettled(ids.map((id) => getJson<PieceSetFile>(`piecesets/${id}/set.json`)))
+  return results.flatMap((r) => (r.status === 'fulfilled' ? [{ id: r.value.id, name: r.value.name, placeholder: r.value.placeholder }] : []))
 }
 
 /** Loads a set, following `extends` so a pack can override only some pieces. */

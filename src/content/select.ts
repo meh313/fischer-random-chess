@@ -25,8 +25,14 @@ export function scoreMatch(match: CinematicMatch, ctx: CaptureContext): number {
     if (!kindHits(match.victim!, ctx.victim)) return -1
     score += 2
   }
-  if (match.attackerColor && match.attackerColor !== ctx.attackerColor) return -1
-  if (match.victimColor && match.victimColor !== ctx.victimColor) return -1
+  if (match.attackerColor) {
+    if (match.attackerColor !== ctx.attackerColor) return -1
+    score += 0.25 // colour-specific entries beat generic ones
+  }
+  if (match.victimColor) {
+    if (match.victimColor !== ctx.victimColor) return -1
+    score += 0.25
+  }
   const v = match.variant
   if (v !== undefined && v !== '*') {
     const wanted = Array.isArray(v) ? v : [v]
@@ -71,20 +77,74 @@ export function pickText(text: string | string[], rand: () => number = Math.rand
   return Array.isArray(text) ? text[Math.floor(rand() * text.length)] ?? '' : text
 }
 
-/** Throws a readable error for malformed content; clamps durations. */
-export function validateCinematics(raw: unknown): Cinematic[] {
+const STEP_FIELDS: Record<string, string[]> = {
+  spawn: ['id', 'sprite', 'anchor'],
+  move: ['target', 'to', 'ms'],
+  rotate: ['target', 'deg', 'ms'],
+  scale: ['target', 'to', 'ms'],
+  caption: ['text', 'ms'],
+  shake: ['target', 'ms'],
+  fade: ['target', 'to', 'ms'],
+  pose: ['target', 'pose'],
+  sound: ['sfx'],
+  despawn: ['target'],
+}
+const ANCHOR = /^(attacker|victim|from|to|between|[a-h][1-8]|aim:-?\d+(\.\d+)?)$/
+
+/** Human-readable problems with one cinematic (empty array = fine). */
+export function checkCinematic(c: Cinematic): string[] {
+  const out: string[] = []
+  if (!Array.isArray(c.steps)) return [`"${c.id}" needs steps[]`]
+  const spawned = new Set<string>()
+  for (const [i, step] of c.steps.entries()) {
+    const at = `"${c.id}" step ${i + 1}`
+    const st = step as unknown as Record<string, unknown>
+    if (typeof st.at !== 'number' || st.at < 0) out.push(`${at} has a bad "at"`)
+    const required = STEP_FIELDS[String(st.do)]
+    if (!required) {
+      out.push(`${at} has unknown "do": ${String(st.do)}`)
+      continue
+    }
+    for (const field of required) if (st[field] === undefined) out.push(`${at} (${String(st.do)}) is missing "${field}"`)
+    if (st.do === 'spawn' && typeof st.id === 'string') spawned.add(st.id)
+    for (const key of ['anchor', 'from', 'to']) {
+      const v = st[key]
+      if (typeof v === 'string' && st.do !== 'scale' && st.do !== 'fade' && !ANCHOR.test(v)) out.push(`${at} has an unknown anchor "${v}"`)
+    }
+    const t = st.target
+    if (typeof t === 'string' && t !== 'attacker' && t !== 'victim' && !spawned.has(t)) out.push(`${at} targets "${t}", which is never spawned before it`)
+  }
+  return out
+}
+
+/** Valid cinematics plus a list of problems. One bad entry never takes the others down. */
+export function validateCinematicsReport(raw: unknown): { items: Cinematic[]; problems: string[] } {
   const file = raw as { version?: number; cinematics?: Cinematic[] }
   if (!file || file.version !== 1 || !Array.isArray(file.cinematics)) throw new Error('cinematics.json: expected {version:1, cinematics:[...]}')
   const ids = new Set<string>()
-  return file.cinematics.map((c) => {
-    if (!c.id || ids.has(c.id)) throw new Error(`cinematics.json: missing or duplicate id "${c.id}"`)
-    ids.add(c.id)
-    if (!Array.isArray(c.steps)) throw new Error(`cinematics.json: "${c.id}" needs steps[]`)
-    for (const s of c.steps) {
-      if (typeof s.at !== 'number' || s.at < 0) throw new Error(`cinematics.json: "${c.id}" has a step with bad "at"`)
+  const items: Cinematic[] = []
+  const problems: string[] = []
+  for (const c of file.cinematics) {
+    if (!c || !c.id || ids.has(c.id)) {
+      problems.push(`missing or duplicate id "${c?.id}"`)
+      continue
     }
-    return { ...c, match: c.match ?? {}, duration: Math.min(Math.max(c.duration ?? 1500, 300), MAX_CINEMATIC_MS) }
-  })
+    ids.add(c.id)
+    const bad = checkCinematic(c)
+    if (bad.length) {
+      problems.push(...bad)
+      continue
+    }
+    items.push({ ...c, match: c.match ?? {}, duration: Math.min(Math.max(c.duration ?? 1500, 300), MAX_CINEMATIC_MS) })
+  }
+  return { items, problems }
+}
+
+/** Convenience wrapper: returns the valid cinematics and logs problems. Throws only for a broken file. */
+export function validateCinematics(raw: unknown): Cinematic[] {
+  const { items, problems } = validateCinematicsReport(raw)
+  for (const p of problems) console.warn('cinematics.json:', p)
+  return items
 }
 
 export function clampMemeMs(ms: number | undefined): number {

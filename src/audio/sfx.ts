@@ -6,7 +6,7 @@ import { asset } from '../content/loaders'
  */
 
 let ctx: AudioContext | null = null
-const buffers = new Map<string, AudioBuffer | null>() // null = no file, use synth
+const loading = new Map<string, Promise<AudioBuffer | null>>() // resolves to null when there is no file (use the synth)
 let master = { enabled: true, volume: 0.6 }
 
 export function configureAudio(enabled: boolean, volume: number) {
@@ -23,18 +23,23 @@ function getCtx(): AudioContext | null {
   return ctx
 }
 
-async function loadFile(name: string): Promise<AudioBuffer | null> {
-  if (buffers.has(name)) return buffers.get(name)!
-  buffers.set(name, null)
+function loadFile(name: string): Promise<AudioBuffer | null> {
+  let p = loading.get(name)
+  if (!p) {
+    p = fetchFile(name)
+    loading.set(name, p)
+  }
+  return p
+}
+
+async function fetchFile(name: string): Promise<AudioBuffer | null> {
   const c = getCtx()
   if (!c) return null
   try {
     const url = /\.[a-z0-9]+$/i.test(name) ? name : `${name}.mp3`
     const res = await fetch(asset(`sounds/${url}`))
     if (!res.ok || !(res.headers.get('content-type') ?? '').match(/audio|octet/)) return null
-    const buf = await c.decodeAudioData(await res.arrayBuffer())
-    buffers.set(name, buf)
-    return buf
+    return await c.decodeAudioData(await res.arrayBuffer())
   } catch {
     return null
   }

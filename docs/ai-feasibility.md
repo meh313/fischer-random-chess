@@ -26,7 +26,7 @@ castlingKingPiece = m
 - Duck Chess (one full turn = move plus duck placement) matches our engine exactly: start 640 and 379,440; a castling position 1510 and 1,940,435.
 - Without `castlingKingPiece = m` the commoner-king config silently disallows castling (1394 vs our 1510). That was a config gap, not a rules disagreement.
 - Fairy-Stockfish encodes a duck turn as one combined move, for example `a2a3,a3b3`.
-- Result: our rules and Fairy-Stockfish agree on both variants, so it can also serve as an independent perft oracle (`tools/fairy-perft.cjs`).
+- Result: our rules and Fairy-Stockfish agree on every position tested above (move counts only: the perft oracle does not cover game termination such as king capture, stalemate-win, repetition or duck legality at the end of a game). It can serve as an independent perft oracle (`tools/fairy-perft.cjs`) for more positions.
 
 ## Inspected, not played
 

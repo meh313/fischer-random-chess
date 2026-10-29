@@ -27,6 +27,7 @@ export function useMemes(memes: readonly MemeEntry[], settings: Settings) {
   const memesRef = useRef(memes)
   memesRef.current = memes
   const timer = useRef<number>(0)
+  const showing = useRef(false)
 
   const pump = useCallback(() => {
     const s = settingsRef.current
@@ -36,10 +37,12 @@ export function useMemes(memes: readonly MemeEntry[], settings: Settings) {
     const wait = lastEnd.current + s.memeCooldownSec * 1000 - Date.now()
     const start = () => {
       const ms = clampMemeMs(next.ms)
+      showing.current = true
       setActive({ key: ++key.current, entry: next, ms })
       if (next.sound) void playSfx(next.sound)
       timer.current = window.setTimeout(() => {
         timer.current = 0
+        showing.current = false
         lastEnd.current = Date.now()
         setActive(null)
         pump()
@@ -66,6 +69,8 @@ export function useMemes(memes: readonly MemeEntry[], settings: Settings) {
   )
 
   const dismiss = useCallback(() => {
+    if (!showing.current) return // nothing visible: leave queued memes and the cooldown alone
+    showing.current = false
     clearTimeout(timer.current)
     timer.current = 0
     lastEnd.current = Date.now()
@@ -78,6 +83,7 @@ export function useMemes(memes: readonly MemeEntry[], settings: Settings) {
       queue.current = []
       clearTimeout(timer.current)
       timer.current = 0
+      showing.current = false
       setActive(null)
     }
   }, [settings.memes])

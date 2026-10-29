@@ -1,4 +1,5 @@
 import { fileOf, opposite, rankOf } from '../engine/board'
+import { positionKey } from '../engine/game'
 import { applyMove, hasNoCheck, inCheck, isTwoPhase, legalMoves, pseudoMoves } from '../engine/rules'
 import type { Move, PieceKind, Square, State } from '../engine/types'
 import type { Variant } from '../engine/variant'
@@ -18,6 +19,8 @@ export interface AiOptions {
   /** Random jitter (centipawns) added to root scores so play varies. */
   noise: number
   rng?: () => number
+  /** Positions already played in the real game (key -> count). Used to dodge or steer into repetition draws. */
+  seen?: Map<string, number>
 }
 
 export const LEVELS: Record<AiLevel, AiOptions> = {
@@ -46,14 +49,20 @@ interface Ctx {
 /** Score from the side to move's point of view, in centipawns. */
 export function evaluate(s: State, noCheck = false): number {
   let score = 0
+  let nonPawn = 0
+  let matW = 0
+  let matB = 0
   for (let sq = 0; sq < 64; sq++) {
     const p = s.board[sq]
-    if (!p) continue
+    if (!p || p.kind === 'k') continue
     const f = fileOf(sq)
     const r = rankOf(sq)
     const dist = Math.max(Math.abs(f - 3.5), Math.abs(r - 3.5)) // 0.5 (center) .. 3.5 (corner)
     const center = (3.5 - dist) * 10
     let v = VALUE[p.kind]
+    if (p.color === 'w') matW += v
+    else matB += v
+    if (p.kind !== 'p') nonPawn += v
     switch (p.kind) {
       case 'p':
         v += (p.color === 'w' ? r - 1 : 6 - r) * 7 + (f === 3 || f === 4 ? center * 0.5 : 0)
@@ -69,11 +78,30 @@ export function evaluate(s: State, noCheck = false): number {
       case 'r':
         v += (p.color === 'w' ? r === 6 : r === 1) ? 12 : 0
         break
-      case 'k':
-        v += noCheck ? 0 : -center * 0.8 // keep the king off the center while queens are around
-        break
     }
     score += p.color === 'w' ? v : -v
+  }
+
+  // Kings: hide them while queens are around, centralize them in the endgame.
+  const endgame = nonPawn <= 2400
+  const kingDist = (sq: number) => Math.max(Math.abs(fileOf(sq) - 3.5), Math.abs(rankOf(sq) - 3.5))
+  if (!noCheck) {
+    for (const c of ['w', 'b'] as const) {
+      const k = s.kings[c]
+      if (k < 0) continue
+      const t = endgame ? (3.5 - kingDist(k)) * 25 : -(3.5 - kingDist(k)) * 8
+      score += c === 'w' ? t : -t
+    }
+    // Mop-up: the side that is clearly ahead drives the enemy king to the edge and brings its own king close.
+    const diff = matW - matB
+    if (endgame && Math.abs(diff) >= 250 && s.kings.w >= 0 && s.kings.b >= 0) {
+      const winner = diff > 0 ? 'w' : 'b'
+      const lose = s.kings[opposite(winner)]
+      const win = s.kings[winner]
+      const manhattan = Math.abs(fileOf(lose) - fileOf(win)) + Math.abs(rankOf(lose) - rankOf(win))
+      const mop = kingDist(lose) * 25 + (14 - manhattan) * 8
+      score += winner === 'w' ? mop : -mop
+    }
   }
   return s.turn === 'w' ? score : -score
 }
@@ -170,12 +198,27 @@ function duckNode(c: State, depth: number, alpha: number, beta: number, ply: num
 
 // --------------------------------------------------------------------- search
 
-function quiesce(s: State, alpha: number, beta: number, ply: number, qdepth: number, ctx: Ctx): number {
+function quiesce(s: State, alpha: number, beta: number, ply: number, qdepth: number, ctx: Ctx, pre?: Move[]): number {
   tick(ctx)
+  const all = pre ?? legalMoves(s, ctx.vs)
+  const checked = !ctx.noCheck && inCheck(s, ctx.vs)
+  if (!all.length) return checked ? -(MATE - ply) : 0
+  if (checked) {
+    // Standing pat is illegal in check: every evasion has to be considered.
+    if (qdepth <= 0) return evaluate(s, ctx.noCheck)
+    let best = -Infinity
+    for (const m of ordered(all)) {
+      const score = -quiesce(applyMove(s, m, ctx.vs), -beta, -alpha, ply + 1, qdepth - 1, ctx)
+      if (score > best) best = score
+      if (best > alpha) alpha = best
+      if (alpha >= beta) break
+    }
+    return best
+  }
   const stand = evaluate(s, ctx.noCheck)
   if (qdepth <= 0 || stand >= beta) return stand
   if (stand > alpha) alpha = stand
-  for (const m of ordered(legalMoves(s, ctx.vs).filter((x) => x.capture || x.promotion))) {
+  for (const m of ordered(all.filter((x) => x.capture || x.promotion))) {
     const score = -quiesce(applyMove(s, m, ctx.vs), -beta, -alpha, ply + 1, qdepth - 1, ctx)
     if (score >= beta) return score
     if (score > alpha) alpha = score
@@ -193,7 +236,7 @@ function negamax(s: State, depth: number, alpha: number, beta: number, ply: numb
   }
   if (depth <= 0) {
     if (ctx.twoPhase) return evaluate(s, true) + Math.round(bestCapture(s, ctx) * 0.7)
-    return quiesce(s, alpha, beta, ply, 6, ctx)
+    return quiesce(s, alpha, beta, ply, 6, ctx, moves)
   }
   let best = -Infinity
   for (const m of ordered(moves)) {
@@ -237,19 +280,29 @@ export function chooseAction(state: State, vs: readonly Variant[], opts: AiOptio
   let order = root
   for (let depth = 1; depth <= opts.maxDepth; depth++) {
     const scored: { m: Move; score: number; duck?: Square }[] = []
+    let bestSoFar = -Infinity
     try {
       for (const m of order) {
         const child = applyMove(state, m, vs)
+        // Moves worse than the best by more than the noise can never be picked, so search them with a narrow window.
+        const lower = bestSoFar === -Infinity ? -MATE : Math.max(-MATE, bestSoFar - opts.noise - 25)
         let score: number
         let duck: Square | undefined
         if (ctx.twoPhase) {
-          const r = duckNode(child, depth - 1, -MATE, MATE, 1, ctx)
+          const r = duckNode(child, depth - 1, lower, MATE, 1, ctx)
           score = r.score
           duck = r.duck
         } else {
-          score = -negamax(child, depth - 1, -MATE, MATE, 1, ctx)
+          score = -negamax(child, depth - 1, -MATE, -lower, 1, ctx)
+          if (opts.seen) {
+            // A move that repeats a position for the third time is a draw; one that repeats it once is mildly worse.
+            const seenTimes = opts.seen.get(positionKey(child, vs)) ?? 0
+            if (seenTimes >= 2) score = 0
+            else if (seenTimes === 1) score -= 15
+          }
         }
         scored.push({ m, score, duck })
+        if (score > bestSoFar) bestSoFar = score
         if (score >= MATE - 100) break // forced win found, no need to look further
       }
     } catch (e) {

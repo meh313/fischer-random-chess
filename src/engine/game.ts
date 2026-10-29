@@ -28,13 +28,15 @@ export interface MoveRecord {
 }
 
 interface Snapshot {
+  /** Resignation or flag: not a board action, the UI must not pop its piece stack for it. */
+  forced?: boolean
   state: State
   result: GameResult | null
   keys: string[]
   records: MoveRecord[]
 }
 
-export function positionKey(state: State): string {
+export function positionKey(state: State, vs: readonly Variant[] = []): string {
   let ep = '-'
   if (state.ep !== null) {
     const dir = state.turn === 'w' ? 1 : -1
@@ -46,6 +48,8 @@ export function positionKey(state: State): string {
       const p = state.board[sq(f, pawnRank)]
       if (p && p.kind === 'p' && p.color === state.turn) ep = String(state.ep)
     }
+    // FIDE: the ep square only counts if the capture is actually legal (not pinned).
+    if (ep !== '-' && state.phase === 'move' && !legalMoves(state, vs).some((m) => m.enPassant)) ep = '-'
   }
   return `${fenPlacement(state)} ${state.turn} ${fenCastling(state)} ${ep} ${state.phase} ${state.duck ?? '-'}`
 }
@@ -62,6 +66,27 @@ export function insufficientMaterial(state: State): boolean {
   if (minors.length <= 1) return true
   if (minors.every((m) => m.kind === 'b')) return minors.every((m) => m.squareColor === minors[0]!.squareColor)
   return false
+}
+
+/**
+ * Can `color` still deliver mate by any series of legal moves (ignoring what the opponent does)?
+ * Bare king, or king plus one minor against a bare king, cannot. Pawns, rooks, queens, dragons always can.
+ */
+export function canEverMate(state: State, color: Color): boolean {
+  let minors = 0
+  let others = 0
+  let opponentExtra = false
+  for (const p of state.board) {
+    if (!p || p.kind === 'k') continue
+    if (p.color !== color) {
+      opponentExtra = true
+      continue
+    }
+    if (p.kind === 'n' || p.kind === 'b') minors++
+    else others++
+  }
+  if (others > 0 || minors >= 2) return true
+  return minors === 1 && opponentExtra
 }
 
 export class Game {
@@ -95,7 +120,7 @@ export class Game {
     let state = parseFen(this.startFen)
     for (const v of this.vs) if (v.transformStart) state = v.transformStart(state)
     this.state = state
-    this.keys.push(positionKey(state))
+    this.keys.push(positionKey(state, this.vs))
     this.result = this.evaluate()
   }
 
@@ -211,7 +236,7 @@ export class Game {
       // Turn completes after the duck is placed. A captured king ends the game now.
       this.result = this.evaluate()
     } else {
-      this.keys.push(positionKey(after))
+      this.keys.push(positionKey(after, this.vs))
       this.result = this.evaluate()
       if (inCheck(after, this.vs)) events.push({ type: 'check', color: after.turn, kingSq: after.kings[after.turn] })
       this.maybeBlunder(before, after, color, m, events)
@@ -235,7 +260,7 @@ export class Game {
     }
     const last = this.records[this.records.length - 1]
     if (last) last.duck = square
-    this.keys.push(positionKey(this.state))
+    this.keys.push(positionKey(this.state, this.vs))
     this.result = this.evaluate()
     const events: GameEvent[] = [{ type: 'duckPlaced', color, square, previous: s.duck }]
     this.resultEvents(events)
@@ -253,25 +278,41 @@ export class Game {
     return true
   }
 
+  /** True when the last history entry is a resignation or flag rather than a board action. */
+  get forcedEnd(): boolean {
+    return !!this.history[this.history.length - 1]?.forced && this.result !== null
+  }
+
+  /** How often each position has occurred (keys as in threefold detection). */
+  positionCounts(): [string, number][] {
+    const m = new Map<string, number>()
+    for (const k of this.keys) m.set(k, (m.get(k) ?? 0) + 1)
+    return [...m.entries()]
+  }
+
   resign(color: Color): GameEvent[] {
     return this.endWith({ winner: opposite(color), reason: 'resign' })
   }
 
   timeout(color: Color): GameEvent[] {
-    return this.endWith({ winner: opposite(color), reason: 'timeout' })
+    // FIDE 6.9: a flag is only a loss if the opponent could still mate with some sequence of moves.
+    const winner = opposite(color)
+    if (!hasNoCheck(this.vs) && !canEverMate(this.state, winner)) return this.endWith({ winner: null, reason: 'insufficient' })
+    return this.endWith({ winner, reason: 'timeout' })
   }
 
   private endWith(result: GameResult): GameEvent[] {
     if (this.result) return []
-    this.snapshot()
+    this.snapshot(true)
     this.result = result
     const events: GameEvent[] = [{ type: 'gameOver', result }]
     this.emit(events)
     return events
   }
 
-  private snapshot() {
+  private snapshot(forced = false) {
     this.history.push({
+      forced,
       state: this.state,
       result: this.result,
       keys: [...this.keys],
@@ -280,7 +321,15 @@ export class Game {
   }
 
   private emit(events: GameEvent[]) {
-    for (const e of events) for (const h of this.handlers) h(e)
+    for (const e of events) {
+      for (const h of [...this.handlers]) {
+        try {
+          h(e)
+        } catch (err) {
+          console.error('Game event handler failed', err)
+        }
+      }
+    }
   }
 
   private maybeBlunder(before: State, after: State, color: Color, move: Move, events: GameEvent[]) {

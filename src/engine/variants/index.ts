@@ -11,8 +11,8 @@ export const VARIANTS: Record<string, Variant> = {
 }
 
 export function resolveVariants(ids: readonly string[]): Variant[] {
-  const list = ids.map((id) => {
-    const v = VARIANTS[id]
+  const list = [...new Set(ids)].map((id) => {
+    const v = Object.hasOwn(VARIANTS, id) ? VARIANTS[id] : undefined
     if (!v) throw new Error(`Unknown variant: ${id}`)
     return v
   })

@@ -12,6 +12,8 @@ interface Props {
   flipped: boolean
   setPose: (id: number, pose: string | null) => void
   onDone: () => void
+  /** Called when the cinematic plays one of its own sounds (so the default capture sound is skipped). */
+  onSound?: () => void
 }
 
 interface Pt {
@@ -30,10 +32,12 @@ const EASE: Record<string, string> = {
  * Plays one scripted cinematic over the board. Coordinates are in squares:
  * (0,0) is the top-left corner of the board as displayed, so flipping the board just works.
  */
-export function CinematicLayer({ request, flipped, setPose, onDone }: Props) {
+export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: Props) {
   const layerRef = useRef<HTMLDivElement>(null)
   const doneRef = useRef(onDone)
   doneRef.current = onDone
+  const soundRef = useRef(onSound)
+  soundRef.current = onSound
 
   useEffect(() => {
     const layer = layerRef.current!
@@ -78,6 +82,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone }: Props) {
     }
     const at = (p: Pt) => ({ left: `${p.x * 12.5}%`, top: `${p.y * 12.5}%` })
     const aimDeg = (Math.atan2(V.y - A.y, V.x - A.x) * 180) / Math.PI
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
 
     const exec = (s: CinematicStep) => {
       switch (s.do) {
@@ -88,6 +93,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone }: Props) {
           Object.assign(wrap.style, at(p))
           const rot = s.rotate === 'toTarget' ? aimDeg : s.rotate ?? 0
           wrap.style.transform = `rotate(${rot}deg)`
+          wrap.dataset.rot = String(rot)
           const img = document.createElement('img')
           img.src = asset(`sprites/${s.sprite}`)
           img.draggable = false
@@ -112,14 +118,22 @@ export function CinematicLayer({ request, flipped, setPose, onDone }: Props) {
         }
         case 'rotate': {
           const el = targetEl(s.target)
-          const cur = el?.style.transform.match(/rotate\(([-\d.]+)deg\)/)?.[1] ?? '0'
-          run(el, [{ transform: `rotate(${cur}deg)` }, { transform: `rotate(${Number(cur) + s.deg}deg)` }], { duration: s.ms })
+          // WAAPI fill does not update style.transform, so the running angle is tracked on the element.
+          const cur = Number(el?.dataset.rot ?? 0)
+          if (el) el.dataset.rot = String(cur + s.deg)
+          run(el, [{ transform: `rotate(${cur}deg)` }, { transform: `rotate(${cur + s.deg}deg)` }], { duration: s.ms })
           break
         }
-        case 'scale':
-          run(targetEl(s.target), [{ scale: '1' }, { scale: String(s.to) }], { duration: s.ms })
+        case 'scale': {
+          const el = targetEl(s.target)
+          if (reduced) break
+          // Start from wherever the element is now so a later scale-back animates instead of snapping.
+          const current = el ? getComputedStyle(el).scale : 'none'
+          run(el, [{ scale: current === 'none' ? '1' : current }, { scale: String(s.to) }], { duration: s.ms })
           break
+        }
         case 'shake': {
+          if (reduced) break
           const a = s.amp ?? 6
           const frames: Keyframe[] = [0, -1, 1, -1, 1, -0.5, 0.5, 0].map((m) => ({ translate: `${m * a}px ${m * a * 0.3}px` }))
           run(targetEl(s.target), frames, { duration: s.ms, fill: 'none' })
@@ -152,6 +166,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone }: Props) {
           break
         }
         case 'sound':
+          soundRef.current?.()
           void playSfx(s.sfx)
           break
         case 'despawn': {

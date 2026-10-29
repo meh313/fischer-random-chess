@@ -25,6 +25,8 @@ export interface Variant {
   extraMoves?(state: State, from: Square, piece: Piece, addTo: (to: Square) => void): void
   /** True if a piece of `by` attacks `target` through this variant's extra moves. */
   extraAttackers?(state: State, target: Square, by: Color): boolean
+  /** True if this one piece (standing on `from`) attacks `target` through the variant's extra moves. */
+  attacksFrom?(state: State, from: Square, piece: Piece, target: Square): boolean
 
   /** No check rules: moves are never filtered for king safety (duck chess). */
   noCheck?: boolean

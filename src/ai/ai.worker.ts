@@ -7,6 +7,8 @@ export interface AiRequest {
   state: State
   variants: string[]
   level: AiLevel
+  /** Position keys seen so far with counts, to avoid walking into repetition draws. */
+  seen: [string, number][]
 }
 export interface AiResponse {
   id: number
@@ -21,9 +23,9 @@ const scope = self as unknown as {
 
 // Search runs here so the board never freezes while the AI thinks.
 scope.onmessage = (e) => {
-  const { id, state, variants, level } = e.data
+  const { id, state, variants, level, seen } = e.data
   try {
-    scope.postMessage({ id, action: chooseAction(state, resolveVariants(variants), LEVELS[level]) })
+    scope.postMessage({ id, action: chooseAction(state, resolveVariants(variants), { ...LEVELS[level], seen: new Map(seen) }) })
   } catch (err) {
     scope.postMessage({ id, error: (err as Error).message })
   }

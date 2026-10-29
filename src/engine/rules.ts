@@ -111,8 +111,7 @@ export function attackersOf(state: State, target: Square, by: Color, vs: readonl
   for (let s = 0; s < 64; s++) {
     const p = b[s]
     if (!p || p.color !== by || p.kind !== 'd' || out.includes(s)) continue
-    const probe: State = { ...state, board: b.map((q, i) => (i === s ? q : null)) }
-    if (vs.some((v) => v.extraAttackers?.(probe, target, by))) out.push(s)
+    if (vs.some((v) => v.attacksFrom?.(state, s, p, target))) out.push(s)
   }
   return out
 }

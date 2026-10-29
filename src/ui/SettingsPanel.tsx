@@ -1,4 +1,5 @@
 import { TIME_CONTROLS, useSettings } from '../state/settings'
+import { useModal } from './useModal'
 
 interface Props {
   open: boolean
@@ -33,11 +34,12 @@ function Slider({ label, value, min, max, step, fmt, onChange }: { label: string
 
 export function SettingsPanel({ open, onClose, pieceSets }: Props) {
   const { settings: s, update, reset } = useSettings()
+  const boxRef = useModal<HTMLDivElement>(open, onClose)
   if (!open) return null
   const pct = (v: number) => `${Math.round(v * 100)}%`
   return (
     <div className="modal" onClick={onClose}>
-      <div className="modal-box" role="dialog" aria-label="Settings" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-box" ref={boxRef} role="dialog" aria-modal="true" aria-label="Settings" onClick={(e) => e.stopPropagation()}>
         <div className="modal-head">
           <h2>Settings</h2>
           <button className="btn small" onClick={onClose}>Close</button>

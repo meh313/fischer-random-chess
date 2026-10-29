@@ -862,3 +862,52 @@ body {
     grid-template-columns: 1fr 110px 40px;
   }
 }
+
+/* ---------------------------------------------------------- accessibility */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.sq:focus-visible,
+.btn:focus-visible,
+select:focus-visible,
+input:focus-visible,
+.promo-row button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+  box-shadow: 0 0 0 5px #111 inset;
+  z-index: 5;
+}
+.btn {
+  min-height: 44px;
+}
+.sq.light .coord {
+  color: #4e6a35;
+}
+.sq.dark .coord {
+  color: #f4f4dc;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .piece {
+    transition: none;
+  }
+  .aim-sprite img {
+    animation: none;
+    opacity: 0.9;
+  }
+  .meme-overlay {
+    animation-name: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}

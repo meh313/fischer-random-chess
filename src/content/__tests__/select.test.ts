@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { pickCinematic, pickMeme, scoreMatch, validateCinematics } from '../select'
+import { pickCinematic, pickMeme, scoreMatch, validateCinematics, validateCinematicsReport } from '../select'
 import type { Cinematic, MemeEntry } from '../types'
 
 const ctx = { attacker: 'p', victim: 'n', attackerColor: 'w', victimColor: 'b', variants: ['duck'] } as const
@@ -34,8 +34,59 @@ describe('cinematic selection', () => {
   it('validates and clamps duration to 3 s', () => {
     const out = validateCinematics({ version: 1, cinematics: [{ id: 'x', match: {}, duration: 99999, steps: [] }] })
     expect(out[0]!.duration).toBe(3000)
-    expect(() => validateCinematics({ version: 1, cinematics: [{ id: 'x', steps: [{ at: -1 }] }] })).toThrow(/bad "at"/)
     expect(() => validateCinematics({ version: 2 })).toThrow()
+  })
+})
+
+describe('cinematic validation', () => {
+  const good = { id: 'ok', match: {}, duration: 1000, steps: [{ at: 0, do: 'caption', text: 'hi', ms: 500 }] }
+  it('skips bad entries but keeps the good ones, with readable problems', () => {
+    const { items, problems } = validateCinematicsReport({
+      version: 1,
+      cinematics: [
+        good,
+        { id: 'neg', steps: [{ at: -1, do: 'caption', text: 'x', ms: 1 }] },
+        { id: 'typo', steps: [{ at: 0, do: 'captoin', text: 'x', ms: 1 }] },
+        { id: 'noid', steps: [{ at: 0, do: 'spawn', sprite: 'a.svg', anchor: 'victim' }] },
+        { id: 'ghost', steps: [{ at: 0, do: 'shake', target: 'nothing', ms: 100 }] },
+        { id: 'anchor', steps: [{ at: 0, do: 'spawn', id: 'a', sprite: 'a.svg', anchor: 'middle' }] },
+        { id: 'ok', steps: [] },
+      ],
+    })
+    expect(items.map((c) => c.id)).toEqual(['ok'])
+    const text = problems.join('\n')
+    expect(text).toMatch(/bad "at"/)
+    expect(text).toMatch(/unknown "do": captoin/)
+    expect(text).toMatch(/missing "id"/)
+    expect(text).toMatch(/never spawned/)
+    expect(text).toMatch(/unknown anchor "middle"/)
+    expect(text).toMatch(/duplicate id/)
+  })
+
+  it('accepts every step kind and aim anchors', () => {
+    const { problems } = validateCinematicsReport({
+      version: 1,
+      cinematics: [
+        {
+          id: 'all',
+          steps: [
+            { at: 0, do: 'spawn', id: 'h', sprite: 'a.svg', anchor: 'attacker' },
+            { at: 0, do: 'move', target: 'h', from: 'attacker', to: 'aim:1.2', ms: 400 },
+            { at: 0, do: 'rotate', target: 'h', deg: 10, ms: 100 },
+            { at: 0, do: 'scale', target: 'attacker', to: 1.2, ms: 100 },
+            { at: 0, do: 'fade', target: 'victim', to: 0, ms: 100 },
+            { at: 0, do: 'pose', target: 'victim', pose: 'shocked' },
+            { at: 0, do: 'sound', sfx: 'bang' },
+            { at: 0, do: 'despawn', target: 'h' },
+          ],
+        },
+      ],
+    })
+    expect(problems).toEqual([])
+  })
+
+  it('colour-specific matches outrank generic ones', () => {
+    expect(scoreMatch({ attackerColor: 'w' }, ctx)).toBeGreaterThan(scoreMatch({}, ctx))
   })
 })
 

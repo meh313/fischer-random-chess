@@ -10,6 +10,7 @@ import { useChass } from './state/useChass'
 import { Board } from './ui/Board'
 import { PieceImg } from './ui/PieceImg'
 import { SettingsPanel } from './ui/SettingsPanel'
+import { COLOR_NAME } from './ui/names'
 
 const VARIANT_ORDER = ['fischer960', 'dragonBishop', 'duck']
 
@@ -38,7 +39,12 @@ function Chass() {
   // Content is data: load it once, report problems without crashing the game.
   useEffect(() => {
     const note = (what: string) => (err: unknown) => setProblems((p) => [...p, `${what}: ${(err as Error).message}`])
-    loadCinematics().then(setCinematics).catch(note('cinematics'))
+    loadCinematics()
+      .then(({ items, problems: bad }) => {
+        setCinematics(items)
+        if (bad.length) setProblems((p) => [...p, ...bad.map((b) => `cinematics: ${b}`)])
+      })
+      .catch(note('cinematics'))
     loadMemes().then(setMemeList).catch(note('memes'))
     loadPieceSetIndex().then(setSetIndex).catch(note('piece sets'))
   }, [])
@@ -46,7 +52,10 @@ function Chass() {
   useEffect(() => {
     loadPieceSet(settings.pieceSet)
       .then(setPieceSet)
-      .catch((err: Error) => setProblems((p) => [...p, `piece set "${settings.pieceSet}": ${err.message}`]))
+      .catch((err: Error) => {
+        setProblems((p) => [...p, `piece set "${settings.pieceSet}": ${err.message}`])
+        if (settings.pieceSet !== 'classic') update({ pieceSet: 'classic' }) // never leave the board stuck loading
+      })
   }, [settings.pieceSet])
 
   useEffect(() => configureAudio(settings.sound, settings.volume), [settings.sound, settings.volume])
@@ -123,14 +132,23 @@ function Chass() {
   }, [result, settings.names])
 
   const pairs: { n: number; w?: string; b?: string }[] = []
-  game.records.forEach((r, i) => {
+  game.records.forEach((r) => {
     const text = r.san + (r.duck !== undefined ? ` @${squareName(r.duck)}` : '')
     if (r.color === 'w') pairs.push({ n: pairs.length + 1, w: text })
     else if (pairs.length && !pairs[pairs.length - 1]!.b && pairs[pairs.length - 1]!.w) pairs[pairs.length - 1]!.b = text
     else pairs.push({ n: pairs.length + 1, b: text })
-    void i
   })
 
+  const lastRecord = game.records[game.records.length - 1]
+  const announce = resultText
+    ? resultText
+    : [
+        lastRecord ? `${COLOR_NAME[lastRecord.color]} played ${lastRecord.san}${lastRecord.duck !== undefined ? `, duck on ${squareName(lastRecord.duck)}` : ''}.` : '',
+        game.inCheck ? 'Check.' : '',
+        `${COLOR_NAME[game.turn]} to ${game.state.phase === 'duck' ? 'place the duck' : 'move'}.`,
+      ]
+        .filter(Boolean)
+        .join(' ')
   const stateLabel = result ? 'Game over' : game.inCheck ? 'Check' : 'Normal'
   const variantLabel = game.variants.length ? game.variants.map((v) => v.name).join(' + ') : 'Standard'
   const phaseLabel = game.state.phase === 'duck' ? 'Place duck' : 'Move piece'
@@ -138,6 +156,9 @@ function Chass() {
 
   return (
     <div className="app" onPointerDown={unlockAudio}>
+      <div className="sr-only" role="status" aria-live="polite">
+        {announce}
+      </div>
       <header>
         <h1>CHASS</h1>
         <p>The Ultimate Random Chess Experience</p>
@@ -184,8 +205,8 @@ function Chass() {
             <h2>Controls</h2>
             <div className="grid2">
               <button className="btn primary" onClick={() => chass.newGame(variantIds)}>New Game</button>
-              <button className="btn" onClick={chass.undo} disabled={game.records.length === 0}>Undo</button>
-              <button className="btn" onClick={() => chass.setFlipped(!chass.flipped)}>Flip Board</button>
+              <button className="btn" onClick={chass.undo} disabled={!chass.canUndo}>Undo</button>
+              <button className="btn" onClick={() => chass.setFlipped(!chass.flipped)} disabled={!!chass.cine}>Flip Board</button>
               <button className="btn" onClick={() => setSettingsOpen(true)}>Settings</button>
               <button className="btn wide" onClick={chass.resign} disabled={!!result}>Resign</button>
             </div>
@@ -218,7 +239,7 @@ function Chass() {
         <main className="center">
           <div className="board-wrap">
             {ready ? <Board ref={boardRef} chass={chass} set={pieceSet} /> : <div className="board loading">Loading pieces...</div>}
-            <MemeOverlay meme={memes.active} muted={!settings.sound} onDismiss={memes.dismiss} />
+            <MemeOverlay meme={memes.active} muted={!settings.sound} volume={settings.volume} onDismiss={memes.dismiss} />
           </div>
           <div className={`banner ${resultText ? 'show' : ''}`} role="status">{resultText ?? ' '}</div>
         </main>

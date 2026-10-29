@@ -43,6 +43,12 @@ export const dragonBishop: Variant = {
     for (const { leg, to } of horseTargets(from)) if (legOpen(state, leg)) addTo(to)
   },
 
+  attacksFrom(state, from, p, target) {
+    if (p.kind !== 'd') return false
+    for (const h of horseTargets(from)) if (h.to === target && legOpen(state, h.leg)) return true
+    return false
+  },
+
   extraAttackers(state, target, by) {
     // Horse reach is a knight offset, so candidates are the 8 knight squares around target.
     // The leg belongs to the dragon's square, so recompute targets from there.
