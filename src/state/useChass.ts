@@ -3,7 +3,7 @@ import { Game } from '../engine'
 import type { Color, GameAction, GameEvent, Move, ParsedPgn, Piece, PieceKind, Square } from '../engine'
 import { resolveVariants } from '../engine/variants'
 import { pickCinematic } from '../content/select'
-import type { Cinematic } from '../content/types'
+import type { Cinematic, CineEvent } from '../content/types'
 import { AiClient } from '../ai/client'
 import { chooseAction, LEVELS, type AiAction } from '../ai/search'
 import { parseTimeControl, type Settings } from './settings'
@@ -22,6 +22,7 @@ export interface DisplayPiece extends TrackedPiece {
 
 export interface CineRequest {
   key: number
+  event: CineEvent
   cin: Cinematic
   attackerId: number
   victimId: number
@@ -101,7 +102,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const [selected, setSelected] = useState<Square | null>(null)
   const [promotion, setPromotion] = useState<{ from: Square; to: Square } | null>(null)
   const [flipped, setFlippedState] = useState(settings.opponent !== 'human' && settings.playAs === 'b')
-  const [cine, setCine] = useState<{ req: CineRequest; hold: TrackedPiece[] } | null>(null)
+  // hold = the board as it was before a capture (so the gag can play it out), or null for event gags on the final position
+  const [cine, setCine] = useState<{ req: CineRequest; hold: TrackedPiece[] | null } | null>(null)
+  const cineNext = useRef<CineRequest | null>(null)
+  const deferring = useRef(false)
   const cineRef = useRef(cine)
   cineRef.current = cine
   const [poses, setPoses] = useState<Record<number, string>>({})
@@ -145,7 +149,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
 
   const emit = useCallback(
     (e: GameEvent) => {
-      if (cineRef.current || metaRef.current.cinematic) deferred.current.push(e)
+      if (deferring.current || cineRef.current) deferred.current.push(e)
       else deliver(e)
     },
     [deliver],
@@ -224,16 +228,79 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     if (inc && c) publishClock({ ...c, [color]: c[color] + inc })
   }
 
-  const finishCine = useCallback(() => {
-    if (!cineRef.current) return
-    cineRef.current = null
-    setCine(null)
-    metaRef.current = { cinematic: cineSounded.current }
-    const pending = deferred.current
-    deferred.current = []
-    for (const e of pending) deliver(e)
-    metaRef.current = { cinematic: false }
-  }, [deliver])
+  /** Hand every event that waited for the gag to the listeners (sounds, memes). */
+  const flush = useCallback(
+    (cinematic: boolean) => {
+      deferring.current = false
+      metaRef.current = { cinematic }
+      const pending = deferred.current
+      deferred.current = []
+      for (const e of pending) deliver(e)
+      metaRef.current = { cinematic: false }
+    },
+    [deliver],
+  )
+
+  const startCine = useCallback((req: CineRequest, hold: TrackedPiece[] | null) => {
+    const entry = { req, hold }
+    cineRef.current = entry
+    setCine(entry)
+  }, [])
+
+  /** Ends the current gag. A queued event gag (mate after a capture, say) starts next unless the player skipped. */
+  const finishCine = useCallback(
+    (skipAll = false) => {
+      if (!cineRef.current) return
+      const next = cineNext.current
+      cineNext.current = null
+      if (next && !skipAll) {
+        startCine(next, null)
+        return
+      }
+      cineRef.current = null
+      setCine(null)
+      flush(cineSounded.current)
+    },
+    [flush, startCine],
+  )
+
+  /** Picks a gag for what the move did besides capturing: mate, stalemate, promotion, castling or check. */
+  const chooseEventCine = (g: Game, m: Move, events: GameEvent[], next: TrackedPiece[], attackerId: number): CineRequest | null => {
+    const has = (t: GameEvent['type']) => events.some((e) => e.type === t)
+    const event: CineEvent | null = has('checkmate') ? 'checkmate' : has('stalemate') ? 'stalemate' : has('promotion') ? 'promotion' : has('castling') ? 'castling' : has('check') ? 'check' : null
+    if (!event) return null
+
+    const color = m.piece.color
+    let attacker: Piece = m.piece
+    let victim: Piece
+    let victimId = attackerId
+    let victimSq: Square = m.to
+    if (event === 'promotion') {
+      attacker = { color, kind: m.promotion ?? 'q' }
+      victim = { color, kind: 'p' }
+    } else if (event === 'castling') {
+      const rook = next.find((p) => p.color === color && p.kind === 'r' && p.sq === m.castle?.rookTo)
+      if (!rook) return null
+      victim = { color, kind: 'r' }
+      victimId = rook.id
+      victimSq = rook.sq
+    } else {
+      const king = next.find((p) => p.kind === 'k' && p.color === g.state.turn)
+      if (!king) return null
+      victim = { color: king.color, kind: 'k' }
+      victimId = king.id
+      victimSq = king.sq
+    }
+
+    const cin = pickCinematic(
+      cinRef.current,
+      { attacker: attacker.kind, victim: victim.kind, attackerColor: attacker.color, victimColor: victim.color, variants: g.variantIds, event },
+      Math.random,
+    )
+    if (!cin || Math.random() >= (cin.chance ?? 1)) return null
+    // The pieces already stand on their final squares, so 'attacker' anchors at the square the mover ended on.
+    return { key: ++cineKey.current, event, cin, attackerId, victimId, from: m.to, to: m.to, victimSq, attacker, victim }
+  }
 
   const perform = useCallback(
     (m: Move) => {
@@ -241,9 +308,11 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       const s = settingsRef.current
       const prev = trackedRef.current
       const { next, attackerId, captured } = applyTracked(prev, m)
+      const allowed = s.cinematics && !suppressCine.current
+      const roll = () => Math.random() < s.cinematicChance
 
-      let request: CineRequest | null = null
-      if (m.capture && captured && s.cinematics && !suppressCine.current && Math.random() < s.cinematicChance) {
+      let captureReq: CineRequest | null = null
+      if (m.capture && captured && allowed && roll()) {
         const cin = pickCinematic(
           cinRef.current,
           {
@@ -252,12 +321,15 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
             attackerColor: m.piece.color,
             victimColor: m.capture.color,
             variants: g.variantIds,
+            event: 'capture',
+            enPassant: !!m.enPassant,
           },
           Math.random,
         )
-        if (cin) {
-          request = {
+        if (cin && Math.random() < (cin.chance ?? 1)) {
+          captureReq = {
             key: ++cineKey.current,
+            event: 'capture',
             cin,
             attackerId,
             victimId: captured.id,
@@ -271,22 +343,35 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       }
 
       cineSounded.current = false
-      metaRef.current = { cinematic: !!request }
+      deferring.current = true // sounds and memes for this move wait until we know whether a gag plays
+      metaRef.current = { cinematic: !!captureReq }
       const mover = g.turn
       stackRef.current.push({ pieces: prev, clock: clockRef.current ? { ...clockRef.current } : null })
-      const events = g.play(m)
+      let events: GameEvent[]
+      try {
+        events = g.play(m)
+      } catch (err) {
+        deferring.current = false
+        stackRef.current.pop()
+        throw err
+      }
       trackedRef.current = next
       if (!g.variantIds.includes('duck')) addIncrement(mover)
       recomputePoses(attackerId, events)
       setSelected(null)
       setPromotion(null)
-      if (request) {
-        cineRef.current = { req: request, hold: prev }
-        setCine({ req: request, hold: prev })
-      } else metaRef.current = { cinematic: false }
+
+      const eventReq = allowed && roll() ? chooseEventCine(g, m, events, next, attackerId) : null
+      const first = captureReq ?? eventReq
+      if (first) {
+        cineNext.current = captureReq ? eventReq : null
+        startCine(first, captureReq ? prev : null)
+      } else {
+        flush(false)
+      }
       bump()
     },
-    [recomputePoses],
+    [recomputePoses, startCine, flush],
   )
 
   const placeDuck = useCallback(
@@ -307,7 +392,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     (sq: Square) => {
       const g = gameRef.current!
       if (cineRef.current) {
-        finishCine()
+        finishCine(true)
         return
       }
       if (g.result || replayRef.current) return // replays are read-only until you press Play from here
@@ -351,6 +436,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     const g = gameRef.current!
     const cfg = settingsRef.current
     deferred.current = []
+    deferring.current = false
+    cineNext.current = null
     metaRef.current = { cinematic: false }
     cineRef.current = null
     setCine(null)
@@ -433,7 +520,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     const r = replayRef.current
     const g = gameRef.current!
     if (!r || r.cursor >= r.actions.length) return
-    if (cineRef.current) finishCine()
+    if (cineRef.current) finishCine(true)
     const a = r.actions[r.cursor]!
     if (a.kind === 'duck') placeDuck(a.square)
     else {
@@ -450,7 +537,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     const r = replayRef.current
     const g = gameRef.current!
     if (!r || r.cursor === 0) return
-    if (cineRef.current) finishCine()
+    if (cineRef.current) finishCine(true)
     deferred.current = []
     if (!g.undo()) return
     const entry = stackRef.current.pop()
@@ -601,7 +688,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   }, [])
 
   // What the board draws.
-  const shown = cine ? cine.hold : trackedRef.current
+  const shown = cine?.hold ?? trackedRef.current
   const display: DisplayPiece[] = shown.map((p) => {
     const d: DisplayPiece = { ...p, pose: poses[p.id] }
     if (cine) {
@@ -644,7 +731,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     },
     undo,
     resign,
-    skipCine: finishCine,
+    skipCine: () => finishCine(true),
+    endCine: () => finishCine(false),
     noteCineSound,
     replay,
     loadReplay,

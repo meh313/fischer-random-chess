@@ -1,7 +1,8 @@
 import type { Color, PieceKind } from '../engine'
 import type { GameEvent } from '../engine/events'
 import { MAX_CINEMATIC_MS } from './types'
-import type { Cinematic, CinematicMatch, KindMatch, MemeEntry } from './types'
+import { CINE_EVENTS } from './types'
+import type { Cinematic, CinematicMatch, CineEvent, KindMatch, MemeEntry } from './types'
 
 export interface CaptureContext {
   attacker: PieceKind
@@ -9,6 +10,9 @@ export interface CaptureContext {
   attackerColor: Color
   victimColor: Color
   variants: readonly string[]
+  /** Defaults to 'capture'. */
+  event?: CineEvent
+  enPassant?: boolean
 }
 
 const isWild = (m: KindMatch | undefined) => m === undefined || m === '*'
@@ -17,6 +21,11 @@ const kindHits = (m: KindMatch, k: PieceKind) => (Array.isArray(m) ? m.includes(
 /** -1 = no match. Higher = more specific. attacker +4, victim +2, variant +1. */
 export function scoreMatch(match: CinematicMatch, ctx: CaptureContext): number {
   let score = 0
+  if ((match.event ?? 'capture') !== (ctx.event ?? 'capture')) return -1
+  if (match.enPassant !== undefined) {
+    if (match.enPassant !== !!ctx.enPassant) return -1
+    if (match.enPassant) score += 7 // beats even attacker+victim matches (6): en passant is rare and deserves its own gag
+  }
   if (!isWild(match.attacker)) {
     if (!kindHits(match.attacker!, ctx.attacker)) return -1
     score += 4
@@ -89,13 +98,16 @@ const STEP_FIELDS: Record<string, string[]> = {
   sound: ['sfx'],
   despawn: ['target'],
 }
-const ANCHOR = /^(attacker|victim|from|to|between|[a-h][1-8]|aim:-?\d+(\.\d+)?)$/
+const ANCHOR = /^(attacker|victim|from|to|between|[a-h][1-8]|aim:-?\d+(\.\d+)?)(\+-?\d+(\.\d+)?,-?\d+(\.\d+)?)?$/
 
 /** Human-readable problems with one cinematic (empty array = fine). */
 export function checkCinematic(c: Cinematic): string[] {
   const out: string[] = []
   if (!Array.isArray(c.steps)) return [`"${c.id}" needs steps[]`]
   const spawned = new Set<string>()
+  const ev = c.match?.event
+  if (ev !== undefined && !CINE_EVENTS.includes(ev)) out.push(`"${c.id}" has unknown event "${String(ev)}"`)
+  if (c.chance !== undefined && !(c.chance >= 0 && c.chance <= 1)) out.push(`"${c.id}" has a chance outside 0..1`)
   for (const [i, step] of c.steps.entries()) {
     const at = `"${c.id}" step ${i + 1}`
     const st = step as unknown as Record<string, unknown>

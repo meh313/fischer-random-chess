@@ -54,7 +54,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
     const dist = Math.hypot(V.x - A.x, V.y - A.y) || 1
 
     /** Anchors: attacker, victim, from, to, between, a square name, or "aim:<reach>" (see docs). */
-    const anchor = (name: string): Pt => {
+    const baseAnchor = (name: string): Pt => {
       if (name === 'attacker' || name === 'from') return A
       if (name === 'victim') return V
       if (name === 'to') return center(request.to)
@@ -67,6 +67,13 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
       }
       if (/^[a-h][1-8]$/.test(name)) return center((name.charCodeAt(1) - 49) * 8 + (name.charCodeAt(0) - 97))
       return A
+    }
+
+    // "victim+0,-0.8" means 0.8 squares above the victim (x then y, in squares, y grows downward).
+    const anchor = (raw: string): Pt => {
+      const m = /^(.*?)(?:\+(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?))?$/.exec(raw)
+      const base = baseAnchor(m?.[1] ?? raw)
+      return m?.[2] === undefined ? base : { x: base.x + Number(m[2]), y: base.y + Number(m[3]) }
     }
 
     const spawned = new Map<string, HTMLElement>()

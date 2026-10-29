@@ -132,7 +132,7 @@ export const Board = forwardRef<HTMLDivElement, Props>(function Board({ chass, s
         )}
       </div>
       {chass.aims.length > 0 && <AimLayer aims={chass.aims} flipped={flipped} />}
-      {cine && <CinematicLayer key={cine.key} request={cine} flipped={flipped} setPose={chass.setPose} onDone={chass.skipCine} onSound={chass.noteCineSound} />}
+      {cine && <CinematicLayer key={cine.key} request={cine} flipped={flipped} setPose={chass.setPose} onDone={chass.endCine} onSound={chass.noteCineSound} />}
       {duckPhase && !game.result && (
         <div className="board-hint" role="status">
           Place the duck on an empty square

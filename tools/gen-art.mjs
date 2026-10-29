@@ -178,6 +178,57 @@ out(
   ),
 )
 
+// Sprites for event gags (original vector drawings).
+out(
+  'sprites/crown.svg',
+  svg(
+    '0 0 100 100',
+    `<g stroke="#7a5a00" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M12 72L8 30l22 20 20-30 20 30 22-20-4 42z" fill="#ffd23f"/>
+      <rect x="12" y="72" width="76" height="13" rx="4" fill="#f0b400"/>
+      <circle cx="8" cy="28" r="6" fill="#e8461e"/><circle cx="50" cy="16" r="6" fill="#e8461e"/><circle cx="92" cy="28" r="6" fill="#e8461e"/>
+      <circle cx="50" cy="78" r="5" fill="#2aa7ff"/>
+    </g>`,
+  ),
+)
+out(
+  'sprites/sparkle.svg',
+  svg(
+    '0 0 100 100',
+    `<path d="M50 4L58 42 96 50 58 58 50 96 42 58 4 50 42 42z" fill="#fff3a0" stroke="#f0b400" stroke-width="4" stroke-linejoin="round"/>`,
+  ),
+)
+out(
+  'sprites/white-flag.svg',
+  svg(
+    '0 0 100 100',
+    `<g stroke="#222" stroke-width="3" stroke-linejoin="round">
+      <rect x="20" y="8" width="6" height="86" fill="#5b4636"/>
+      <path d="M26 12C46 4 62 22 86 12V52C62 62 46 44 26 54z" fill="#fff"/>
+    </g>`,
+  ),
+)
+out(
+  'sprites/exclamation.svg',
+  svg(
+    '0 0 100 100',
+    `<circle cx="50" cy="50" r="42" fill="#e53935" stroke="#7f1010" stroke-width="5"/>
+     <rect x="45" y="20" width="10" height="38" rx="5" fill="#fff"/><circle cx="50" cy="72" r="6.5" fill="#fff"/>`,
+  ),
+)
+out(
+  'sprites/tombstone.svg',
+  svg(
+    '0 0 100 100',
+    `<g stroke="#3c4043" stroke-width="4" stroke-linejoin="round">
+      <path d="M22 92V42a28 28 0 0 1 56 0v50z" fill="#9aa0a6"/>
+      <path d="M50 28v26M40 38h20" fill="none" stroke-linecap="round"/>
+      <path d="M14 92h72" stroke-linecap="round"/>
+    </g>
+    <text x="50" y="76" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="15" fill="#3c4043">RIP</text>`,
+  ),
+)
+
 // ------------------------------------------------- meme placeholders (labeled)
 const memeCard = (bg, big, small) =>
   svg(

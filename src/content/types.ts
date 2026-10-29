@@ -7,7 +7,16 @@ import type { GameEventType } from '../engine/events'
 
 export type KindMatch = PieceKind | '*' | PieceKind[]
 
+/** What triggers a cinematic. Entries without an event are capture gags. */
+export type CineEvent = 'capture' | 'castling' | 'promotion' | 'check' | 'checkmate' | 'stalemate'
+export const CINE_EVENTS: readonly CineEvent[] = ['capture', 'castling', 'promotion', 'check', 'checkmate', 'stalemate']
+
 export interface CinematicMatch {
+  /** Default 'capture'. For castling, attacker is the king and victim the rook. For promotion, attacker is the new piece
+   * and victim the pawn. For check, checkmate and stalemate, attacker is the piece that moved and victim the king. */
+  event?: CineEvent
+  /** Capture gags only: true matches en passant captures, false matches ordinary ones. */
+  enPassant?: boolean
   attacker?: KindMatch
   victim?: KindMatch
   attackerColor?: Color
@@ -16,7 +25,10 @@ export interface CinematicMatch {
   variant?: string | string[]
 }
 
-/** 'attacker' | 'victim' | 'from' | 'to' | 'between' | a square name like "e4". */
+/**
+ * 'attacker' | 'victim' | 'from' | 'to' | 'between' | a square name like "e4" | 'aim:<reach>'.
+ * Add an offset in squares with +x,y, for example "victim+0,-0.8" (a little above the victim).
+ */
 export type Anchor = string
 
 interface StepBase {
@@ -60,6 +72,8 @@ export interface Cinematic {
   match: CinematicMatch
   /** Relative chance among equally specific matches. Default 1. */
   weight?: number
+  /** Chance (0..1) that this gag plays when it is picked. Default 1. Handy for frequent events like check. */
+  chance?: number
   /** Total length in ms. Hard-capped at MAX_CINEMATIC_MS. */
   duration: number
   steps: CinematicStep[]
