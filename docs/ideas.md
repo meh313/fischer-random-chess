@@ -133,7 +133,7 @@ Effort: S is under a day, M is a few days, L is a week or more. All art and audi
 
 ## Open decisions (need the owner)
 
-- [ ] **Licence.** No LICENSE file yet, so the code is all rights reserved by default. If you want others to use it, MIT is the simple permissive choice. Fairy-Stockfish is GPL-3.0, so shipping it in the bundle would force GPL; a server-side engine or our own minimax avoids that.
+- [x] **Licence.** Decided 2026-10-29: stay unlicensed (all rights reserved) for now. Revisit before sharing the code. If you want others to use it, MIT is the simple permissive choice. Fairy-Stockfish is GPL-3.0, so shipping it in the bundle would force GPL; a server-side engine or our own minimax avoids that.
 - [ ] **Final art and audio.** The Chad Horse, gun-hand sprite, piece sets, meme cards and sounds are placeholders. Replace files in public/ (see docs/content-guide.md).
 - [ ] **Real device testing.** Mobile layout was checked in browser emulation only. Sounds have not been auditioned by ear.
 - [ ] **Stray folders.** D:\Random%20Projects (from an old script bug) and the empty "chass with react" folder in the project were not deleted because the safety check blocked it. Delete them by hand.
