@@ -709,3 +709,27 @@ input[type='range'] {
     opacity: 1;
   }
 }
+
+/* ------------------------------------------------------------- opponent */
+
+.ai-tag {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #374151;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+  vertical-align: middle;
+}
+.field.opp {
+  margin: 12px 0 0;
+}
+.field.opp select {
+  width: 100%;
+  background: #374151;
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 10px;
+}

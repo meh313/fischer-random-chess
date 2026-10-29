@@ -189,6 +189,15 @@ function Chass() {
               <button className="btn" onClick={() => setSettingsOpen(true)}>Settings</button>
               <button className="btn wide" onClick={chass.resign} disabled={!!result}>Resign</button>
             </div>
+            <label className="field opp">
+              <span>Opponent</span>
+              <select value={settings.opponent} onChange={(e) => update({ opponent: e.target.value as typeof settings.opponent })} aria-label="Opponent">
+                <option value="human">Another person</option>
+                <option value="easy">Computer: easy</option>
+                <option value="medium">Computer: medium</option>
+                <option value="hard">Computer: hard</option>
+              </select>
+            </label>
           </section>
 
           <section className="card">
@@ -218,7 +227,10 @@ function Chass() {
           {(['w', 'b'] as const).map((c) => (
             <section className={`card player ${chass.activeClock === c ? 'active' : ''}`} key={c}>
               <div className="phead">
-                <h2>{c === 'w' ? 'White' : 'Black'} Player</h2>
+                <h2>
+                  {c === 'w' ? 'White' : 'Black'} Player
+                  {settings.opponent !== 'human' && c !== settings.playAs && <span className="ai-tag">{chass.thinking ? 'Computer: thinking...' : 'Computer'}</span>}
+                </h2>
                 <span className={`dot ${c}`} />
               </div>
               <label className="field">

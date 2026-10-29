@@ -3,6 +3,7 @@ import { Game } from '../engine'
 import type { Color, GameEvent, Move, Piece, PieceKind, Square } from '../engine'
 import { pickCinematic } from '../content/select'
 import type { Cinematic } from '../content/types'
+import { AiClient } from '../ai/client'
 import { parseTimeControl, type Settings } from './settings'
 
 export interface TrackedPiece {
@@ -66,13 +67,16 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const cinRef = useRef(cinematics)
   cinRef.current = cinematics
 
-  const [, bump] = useReducer((n: number) => n + 1, 0)
+  const [version, bump] = useReducer((n: number) => n + 1, 0)
   const gameRef = useRef<Game | null>(null)
   const trackedRef = useRef<TrackedPiece[]>([])
   const stackRef = useRef<TrackedPiece[][]>([])
   const listeners = useRef(new Set<Listener>())
   const metaRef = useRef<EventMeta>({ cinematic: false })
   const cineKey = useRef(0)
+  const ai = useRef<AiClient | null>(null)
+  const duckHint = useRef<number | null>(null)
+  const [thinking, setThinking] = useState(false)
 
   const [selected, setSelected] = useState<Square | null>(null)
   const [promotion, setPromotion] = useState<{ from: Square; to: Square } | null>(null)
@@ -100,6 +104,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setPromotion(null)
       setCine(null)
       setPoses({})
+      duckHint.current = null
+      setFlipped(settingsRef.current.opponent !== 'human' && settingsRef.current.playAs === 'b')
       bump()
     },
     [emit],
@@ -211,6 +217,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         return
       }
       if (g.result) return
+      const cfg = settingsRef.current
+      if (cfg.opponent !== 'human' && g.turn !== cfg.playAs) return // the computer's turn
       if (g.state.phase === 'duck') {
         if (g.duckSquares().includes(sq)) placeDuck(sq)
         return
@@ -243,9 +251,17 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
 
   const undo = useCallback(() => {
     const g = gameRef.current!
-    if (!g.undo()) return
-    const prev = stackRef.current.pop()
-    if (prev) trackedRef.current = prev
+    const cfg = settingsRef.current
+    // Against the computer, step back until it is the human's move again.
+    let undone = false
+    do {
+      if (!g.undo()) break
+      undone = true
+      const prev = stackRef.current.pop()
+      if (prev) trackedRef.current = prev
+    } while (cfg.opponent !== 'human' && !(g.turn === cfg.playAs && g.state.phase === 'move'))
+    if (!undone) return
+    duckHint.current = null
     setSelected(null)
     setPromotion(null)
     setCine(null)
@@ -297,6 +313,56 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     }
   }, [clock])
 
+  // Computer opponent: think in a worker, wait for any cinematic to finish, then play.
+  const aiTurn = settings.opponent !== 'human' && !game.result && game.turn !== settings.playAs
+  useEffect(() => {
+    const g = gameRef.current!
+    const cfg = settingsRef.current
+    if (cfg.opponent === 'human' || g.result || cine || promotion || g.turn === cfg.playAs) {
+      setThinking(false)
+      return
+    }
+    if (!ai.current) ai.current = new AiClient()
+    const client = ai.current
+    let cancelled = false
+    setThinking(true)
+    const pace = (fn: () => void) => window.setTimeout(() => !cancelled && fn(), 350)
+    let timer = 0
+
+    if (g.state.phase === 'duck' && duckHint.current !== null && g.duckSquares().includes(duckHint.current)) {
+      const sq = duckHint.current
+      duckHint.current = null
+      timer = pace(() => placeDuck(sq))
+    } else {
+      client
+        .think(g.state, g.variantIds, cfg.opponent)
+        .then((action) => {
+          if (cancelled) return
+          timer = pace(() => {
+            if (action.kind === 'duck') {
+              placeDuck(action.square)
+              return
+            }
+            const m = g.legalMoves().find((x) => x.from === action.move.from && x.to === action.move.to && x.promotion === action.move.promotion && !x.castle === !action.move.castle)
+            if (!m) return
+            duckHint.current = action.duck ?? null
+            perform(m)
+          })
+        })
+        .catch(() => {
+          /* cancelled or worker restarted */
+        })
+    }
+    return () => {
+      cancelled = true
+      clearTimeout(timer)
+      client.cancel()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [version, cine, promotion, settings.opponent, settings.playAs])
+
+  useEffect(() => () => ai.current?.cancel(), [])
+
   const subscribe = useCallback((l: Listener) => {
     listeners.current.add(l)
     return () => {
@@ -333,6 +399,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     setFlipped,
     cine: cine?.req ?? null,
     clock,
+    thinking,
+    aiTurn,
     activeClock: active,
     duckTargets: game.duckSquares(),
     newGame,

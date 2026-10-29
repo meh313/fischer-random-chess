@@ -15,6 +15,10 @@ export interface Settings {
   names: { w: string; b: string }
   /** "minutes+increment" or "inf". */
   timeControl: string
+  /** Who you play against. */
+  opponent: 'human' | 'easy' | 'medium' | 'hard'
+  /** Your color against the computer. */
+  playAs: 'w' | 'b'
   /** A gun hand aims at the mover's attacked, undefended pieces. */
   aimMode: boolean
 }
@@ -30,6 +34,8 @@ export const DEFAULT_SETTINGS: Settings = {
   pieceSet: 'chad',
   names: { w: 'Player 1', b: 'Player 2' },
   timeControl: '10+0',
+  opponent: 'human',
+  playAs: 'w',
   aimMode: false,
 }
 

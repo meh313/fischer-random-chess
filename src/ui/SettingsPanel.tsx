@@ -55,6 +55,24 @@ export function SettingsPanel({ open, onClose, pieceSets }: Props) {
         <Toggle id="set-sound" label="Sound" checked={s.sound} onChange={(v) => update({ sound: v })} />
         <Slider label="Volume" value={s.volume} min={0} max={1} step={0.05} fmt={pct} onChange={(v) => update({ volume: v })} />
 
+        <h3>Opponent</h3>
+        <div className="row">
+          <div className="label">Play against</div>
+          <select value={s.opponent} onChange={(e) => update({ opponent: e.target.value as typeof s.opponent })} aria-label="Opponent">
+            <option value="human">Another person</option>
+            <option value="easy">Computer: easy</option>
+            <option value="medium">Computer: medium</option>
+            <option value="hard">Computer: hard</option>
+          </select>
+        </div>
+        <div className="row">
+          <div className="label">I play</div>
+          <select value={s.playAs} onChange={(e) => update({ playAs: e.target.value as typeof s.playAs })} aria-label="Play as">
+            <option value="w">White</option>
+            <option value="b">Black</option>
+          </select>
+        </div>
+
         <h3>Pieces and clock</h3>
         <div className="row">
           <div className="label">Piece set</div>

@@ -10,6 +10,7 @@ npm run build
 ```
 
 - `src/engine`: pure TypeScript rules engine (no DOM). Variants are plug-in modules in `src/engine/variants`. Typed events in `events.ts`.
+- `src/ai`: license-free minimax opponent (easy, medium, hard) running in a web worker; plays every variant.
 - `src/cinematics`, `src/memes`, `src/content`: data-driven gags (plus optional aim mode in Settings). See `docs/content-guide.md`.
 - `public/`: all content (cinematics, memes, piece sets, sprites). Adding content needs no code.
 - `legacy/`: the original plain-JS version, kept as is.
