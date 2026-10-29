@@ -690,3 +690,22 @@ header p {
 input[type='range'] {
   accent-color: var(--accent);
 }
+
+/* -------------------------------------------------------------- aim mode */
+
+.aim-layer {
+  z-index: 12;
+}
+.aim-sprite img {
+  opacity: 0.88;
+  animation: aimPulse 1.1s ease-in-out infinite;
+}
+@keyframes aimPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}

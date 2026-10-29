@@ -318,9 +318,12 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const last = game.records[game.records.length - 1]
   const targets = selected !== null && !cine && game.state.phase === 'move' ? game.targetsFrom(selected) : []
 
+  const aims = settings.aimMode && !cine && !game.result ? game.aimTargets() : []
+
   return {
     game,
     display,
+    aims,
     selected,
     targets,
     lastMove: last ? { from: last.move.from, to: last.move.to } : null,

@@ -72,6 +72,78 @@ export function isAttacked(state: State, target: Square, by: Color, vs: readonly
   return false
 }
 
+/** Squares of every `by` piece that attacks `target` (own pieces count too: they are defenders). */
+export function attackersOf(state: State, target: Square, by: Color, vs: readonly Variant[]): Square[] {
+  const out: Square[] = []
+  const b = state.board
+  const tf = fileOf(target)
+  const tr = rankOf(target)
+  const at = (f: number, r: number, kinds: string) => {
+    if (f < 0 || f > 7 || r < 0 || r > 7) return
+    const p = b[r * 8 + f]
+    if (p && p.color === by && kinds.includes(p.kind)) out.push(r * 8 + f)
+  }
+  const pr = by === 'w' ? tr - 1 : tr + 1
+  at(tf - 1, pr, 'p')
+  at(tf + 1, pr, 'p')
+  for (const [df, dr] of KNIGHT) at(tf + df, tr + dr, 'n')
+  for (const [df, dr] of KING) at(tf + df, tr + dr, 'k')
+  const scan = (dirs: Dir[], kinds: string) => {
+    for (const [df, dr] of dirs) {
+      let f = tf + df
+      let r = tr + dr
+      while (f >= 0 && f < 8 && r >= 0 && r < 8) {
+        const s = r * 8 + f
+        if (state.duck === s) break
+        const p = b[s]
+        if (p) {
+          if (p.color === by && kinds.includes(p.kind)) out.push(s)
+          break
+        }
+        f += df
+        r += dr
+      }
+    }
+  }
+  scan(ORTH, 'rq')
+  scan(DIAG, 'bqd')
+  // Variant attackers (dragon horse): find the dragons that reach `target`.
+  for (let s = 0; s < 64; s++) {
+    const p = b[s]
+    if (!p || p.color !== by || p.kind !== 'd' || out.includes(s)) continue
+    const probe: State = { ...state, board: b.map((q, i) => (i === s ? q : null)) }
+    if (vs.some((v) => v.extraAttackers?.(probe, target, by))) out.push(s)
+  }
+  return out
+}
+
+const VALUE: Record<PieceKind, number> = { p: 1, n: 3, b: 3, d: 3, r: 5, q: 9, k: 100 }
+
+export interface AimTarget {
+  attacker: Square
+  victim: Square
+}
+
+/**
+ * Pieces of the side to move that are attacked and not defended (kings excluded).
+ * The aimer is the cheapest attacker. Used by the optional "aim mode" gun hand.
+ */
+export function aimTargets(state: State, vs: readonly Variant[]): AimTarget[] {
+  const us = state.turn
+  const them = opposite(us)
+  const out: (AimTarget & { value: number })[] = []
+  for (let s = 0; s < 64; s++) {
+    const p = state.board[s]
+    if (!p || p.color !== us || p.kind === 'k') continue
+    const attackers = attackersOf(state, s, them, vs)
+    if (!attackers.length) continue
+    if (attackersOf(state, s, us, vs).length) continue
+    const attacker = attackers.reduce((a, c) => (VALUE[state.board[c]!.kind] < VALUE[state.board[a]!.kind] ? c : a))
+    out.push({ attacker, victim: s, value: VALUE[p.kind] })
+  }
+  return out.sort((a, b) => b.value - a.value).map(({ attacker, victim }) => ({ attacker, victim }))
+}
+
 export function inCheck(state: State, vs: readonly Variant[], color: Color = state.turn): boolean {
   if (hasNoCheck(vs)) return false
   const k = state.kings[color]

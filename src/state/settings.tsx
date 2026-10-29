@@ -15,6 +15,8 @@ export interface Settings {
   names: { w: string; b: string }
   /** "minutes+increment" or "inf". */
   timeControl: string
+  /** A gun hand aims at the mover's attacked, undefended pieces. */
+  aimMode: boolean
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -28,6 +30,7 @@ export const DEFAULT_SETTINGS: Settings = {
   pieceSet: 'chad',
   names: { w: 'Player 1', b: 'Player 2' },
   timeControl: '10+0',
+  aimMode: false,
 }
 
 const KEY = 'chass.settings.v1'

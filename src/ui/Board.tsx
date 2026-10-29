@@ -4,6 +4,7 @@ import type { PieceKind, Square } from '../engine'
 import type { ResolvedPieceSet } from '../content/types'
 import type { ChassController } from '../state/useChass'
 import { CinematicLayer } from '../cinematics/CinematicLayer'
+import { AimLayer } from '../cinematics/AimLayer'
 import { PieceImg } from './PieceImg'
 
 interface Props {
@@ -70,6 +71,7 @@ export const Board = forwardRef<HTMLDivElement, Props>(function Board({ chass, s
           </div>
         )}
       </div>
+      {chass.aims.length > 0 && <AimLayer aims={chass.aims} flipped={flipped} />}
       {cine && <CinematicLayer key={cine.key} request={cine} flipped={flipped} setPose={chass.setPose} onDone={chass.skipCine} />}
       {duckPhase && !game.result && <div className="board-hint">Place the duck on an empty square</div>}
       {promotion && (
