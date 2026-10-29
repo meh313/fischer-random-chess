@@ -733,3 +733,132 @@ input[type='range'] {
   border-radius: 6px;
   padding: 8px 10px;
 }
+
+/* ----------------------------------------------------------------- mobile */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  -webkit-tap-highlight-color: transparent;
+}
+.board,
+.piece {
+  -webkit-touch-callout: none;
+}
+
+@media (max-width: 1050px) {
+  .app {
+    padding: 10px 8px 28px;
+  }
+  header {
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-size: 1.9rem;
+  }
+  header p {
+    font-size: 0.9rem;
+  }
+  .layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .col {
+    display: contents;
+  }
+  .center {
+    order: 1;
+  }
+  .player {
+    order: var(--pos, 0);
+  }
+  .c-controls {
+    order: 3;
+  }
+  .c-status {
+    order: 4;
+  }
+  .c-history {
+    order: 5;
+  }
+  .c-variants {
+    order: 6;
+  }
+  .c-instr {
+    order: 7;
+  }
+  .c-legend {
+    order: 8;
+  }
+  .card {
+    padding: 12px;
+  }
+
+  /* Player bars sit right above and below the board: name left, clock right. */
+  .player {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 4px 12px;
+    padding: 8px 12px;
+  }
+  .player .phead {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .player .phead h2 {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  .player .dot {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+  }
+  .player label.field {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+  }
+  .player .field > span {
+    display: none;
+  }
+  .player .field:not(label) {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    margin: 0;
+  }
+  .player .clock {
+    font-size: 1.35rem;
+    padding: 6px 12px;
+    min-width: 92px;
+  }
+  .banner {
+    margin-top: 10px;
+    min-height: 0;
+    padding: 10px;
+    font-size: 1rem;
+  }
+  .banner:not(.show) {
+    display: none;
+  }
+  .promo-row button {
+    width: 58px;
+    height: 58px;
+  }
+  .history {
+    max-height: 180px;
+  }
+  .btn {
+    padding: 11px 12px;
+  }
+  .modal-box {
+    padding: 14px;
+  }
+  .row.slider {
+    grid-template-columns: 1fr 110px 40px;
+  }
+}

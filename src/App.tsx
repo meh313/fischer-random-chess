@@ -153,7 +153,7 @@ function Chass() {
 
       <div className="layout">
         <aside className="col">
-          <section className="card">
+          <section className="card c-status">
             <h2>Game Status</h2>
             <div className="kv"><span>Turn</span><b className={game.turn === 'w' ? '' : 'dim'}>{game.turn === 'w' ? 'White' : 'Black'}</b></div>
             <div className="kv"><span>Phase</span><b className={game.state.phase === 'duck' ? 'accent' : ''}>{phaseLabel}</b></div>
@@ -161,7 +161,7 @@ function Chass() {
             <div className="kv"><span>Variant</span><b>{variantLabel}</b></div>
           </section>
 
-          <section className="card">
+          <section className="card c-variants">
             <h2>Game Variants</h2>
             {VARIANT_ORDER.map((id) => {
               const v = VARIANTS[id]!
@@ -180,7 +180,7 @@ function Chass() {
             })}
           </section>
 
-          <section className="card">
+          <section className="card c-controls">
             <h2>Controls</h2>
             <div className="grid2">
               <button className="btn primary" onClick={() => chass.newGame(variantIds)}>New Game</button>
@@ -200,7 +200,7 @@ function Chass() {
             </label>
           </section>
 
-          <section className="card">
+          <section className="card c-history">
             <h2>Move History</h2>
             <div className="history" aria-label="Move history">
               {pairs.length === 0 && <div className="empty">No moves yet</div>}
@@ -225,7 +225,11 @@ function Chass() {
 
         <aside className="col">
           {(['w', 'b'] as const).map((c) => (
-            <section className={`card player ${chass.activeClock === c ? 'active' : ''}`} key={c}>
+            <section
+              className={`card player ${chass.activeClock === c ? 'active' : ''}`}
+              key={c}
+              style={{ ['--pos' as string]: (c === 'w') === !chass.flipped ? 2 : 0 }}
+            >
               <div className="phead">
                 <h2>
                   {c === 'w' ? 'White' : 'Black'} Player
@@ -251,7 +255,7 @@ function Chass() {
             </section>
           ))}
 
-          <section className="card">
+          <section className="card c-instr">
             <h2>Instructions</h2>
             <div className="instr">
               <p><b>Standard Chess:</b> Click a piece, then a highlighted square. Captures may trigger a gag. Click or press Esc to skip it.</p>
@@ -261,7 +265,7 @@ function Chass() {
             </div>
           </section>
 
-          <section className="card">
+          <section className="card c-legend">
             <h2>Piece Legend</h2>
             <div className="legend">
               {(['k', 'q', 'r', 'd', 'n', 'p'] as const).map((k) => (
