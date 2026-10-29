@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { Game } from '../engine'
-import type { Color, GameEvent, Move, Piece, PieceKind, Square } from '../engine'
+import type { Color, GameAction, GameEvent, Move, ParsedPgn, Piece, PieceKind, Square } from '../engine'
 import { resolveVariants } from '../engine/variants'
 import { pickCinematic } from '../content/select'
 import type { Cinematic } from '../content/types'
@@ -74,6 +74,13 @@ const displayKey = (ms: number) => (ms < 10_000 ? Math.floor(ms / 100) : 100_000
 
 const FLAG_GRACE_MS = 10_000
 
+export interface ReplayState {
+  actions: GameAction[]
+  /** Number of actions already played on the board. */
+  cursor: number
+  title: string
+}
+
 export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const settingsRef = useRef(settings)
   settingsRef.current = settings
@@ -106,6 +113,9 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const shownKeys = useRef({ w: 0, b: 0 })
 
   // Events (sounds, memes) wait for a cinematic to finish so they do not cover it.
+  const [replay, setReplay] = useState<ReplayState | null>(null)
+  const replayRef = useRef<ReplayState | null>(null)
+  const suppressCine = useRef(false)
   const deferred = useRef<GameEvent[]>([])
   const cineSounded = useRef(false)
 
@@ -149,6 +159,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
 
   const newGame = useCallback(
     (variants: readonly string[], seed?: number) => {
+      replayRef.current = null
+      setReplay(null)
       const game = new Game({ variants, seed })
       game.on(emit)
       gameRef.current = game
@@ -231,7 +243,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       const { next, attackerId, captured } = applyTracked(prev, m)
 
       let request: CineRequest | null = null
-      if (m.capture && captured && s.cinematics && Math.random() < s.cinematicChance) {
+      if (m.capture && captured && s.cinematics && !suppressCine.current && Math.random() < s.cinematicChance) {
         const cin = pickCinematic(
           cinRef.current,
           {
@@ -298,7 +310,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         finishCine()
         return
       }
-      if (g.result) return
+      if (g.result || replayRef.current) return // replays are read-only until you press Play from here
       const cfg = settingsRef.current
       if (cfg.opponent !== 'human' && g.turn !== cfg.playAs) return // the computer's turn
       if (g.state.phase === 'duck') {
@@ -333,7 +345,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
 
   /** Against the computer you can only undo back to a position where it is your move. */
   const humanHasMoved = (g: Game) => settingsRef.current.opponent === 'human' || g.records.some((r) => r.color === settingsRef.current.playAs)
-  const canUndo = game.records.length > 0 && humanHasMoved(game)
+  const canUndo = !replay && game.records.length > 0 && humanHasMoved(game)
 
   const undo = useCallback(() => {
     const g = gameRef.current!
@@ -386,6 +398,98 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     })
   }, [])
 
+  // ---- replay viewer: step through an imported (or finished) game with the same animations and gags
+  const loadReplay = useCallback(
+    (parsed: ParsedPgn) => {
+      const fresh = new Game({ variants: parsed.game.variantIds, fen: parsed.game.startFen })
+      fresh.on(emit)
+      gameRef.current = fresh
+      trackedRef.current = trackFromGame(fresh)
+      stackRef.current = []
+      deferred.current = []
+      metaRef.current = { cinematic: false }
+      cineRef.current = null
+      clockCfg.current = null
+      publishClock(null, true)
+      setSelected(null)
+      setPromotion(null)
+      setCine(null)
+      setPoses({})
+      duckHint.current = null
+      setFlippedState(false)
+      const state: ReplayState = {
+        actions: parsed.actions,
+        cursor: 0,
+        title: `${parsed.headers.White ?? 'White'} vs ${parsed.headers.Black ?? 'Black'}`,
+      }
+      replayRef.current = state
+      setReplay(state)
+      bump()
+    },
+    [emit, publishClock],
+  )
+
+  const replayForward = useCallback(() => {
+    const r = replayRef.current
+    const g = gameRef.current!
+    if (!r || r.cursor >= r.actions.length) return
+    if (cineRef.current) finishCine()
+    const a = r.actions[r.cursor]!
+    if (a.kind === 'duck') placeDuck(a.square)
+    else {
+      const m = g.legalMoves().find((x) => x.from === a.from && x.to === a.to && x.promotion === a.promotion && !x.castle === !a.castle)
+      if (!m) return
+      perform(m)
+    }
+    const next = { ...r, cursor: r.cursor + 1 }
+    replayRef.current = next
+    setReplay(next)
+  }, [finishCine, perform, placeDuck])
+
+  const replayBack = useCallback(() => {
+    const r = replayRef.current
+    const g = gameRef.current!
+    if (!r || r.cursor === 0) return
+    if (cineRef.current) finishCine()
+    deferred.current = []
+    if (!g.undo()) return
+    const entry = stackRef.current.pop()
+    if (entry) trackedRef.current = entry.pieces
+    const next = { ...r, cursor: r.cursor - 1 }
+    replayRef.current = next
+    setReplay(next)
+    setSelected(null)
+    recomputePoses()
+    bump()
+  }, [finishCine, recomputePoses])
+
+  /** Jump to an action index without playing gags on the way. */
+  const replayTo = useCallback(
+    (target: number) => {
+      const r = replayRef.current
+      if (!r) return
+      const goal = Math.max(0, Math.min(r.actions.length, target))
+      suppressCine.current = true
+      try {
+        let guard = r.actions.length + 2
+        while (replayRef.current && replayRef.current.cursor !== goal && guard-- > 0) {
+          if (replayRef.current.cursor < goal) replayForward()
+          else replayBack()
+        }
+      } finally {
+        suppressCine.current = false
+      }
+    },
+    [replayBack, replayForward],
+  )
+
+  /** Leave the viewer and keep playing from the current position. */
+  const exitReplay = useCallback(() => {
+    replayRef.current = null
+    setReplay(null)
+    bump()
+  }, [])
+
   const noteCineSound = useCallback(() => {
     cineSounded.current = true
   }, [])
@@ -418,7 +522,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   useEffect(() => {
     const g = gameRef.current!
     const cfg = settingsRef.current
-    if (cfg.opponent === 'human' || g.result || cine || promotion || g.turn === cfg.playAs) {
+    if (replayRef.current || cfg.opponent === 'human' || g.result || cine || promotion || g.turn === cfg.playAs) {
       setThinking(false)
       return
     }
@@ -485,7 +589,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       client.cancel()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [version, cine, promotion, settings.opponent, settings.playAs])
+  }, [version, cine, promotion, replay, settings.opponent, settings.playAs])
 
   useEffect(() => () => ai.current?.dispose(), [])
 
@@ -542,6 +646,12 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     resign,
     skipCine: finishCine,
     noteCineSound,
+    replay,
+    loadReplay,
+    replayForward,
+    replayBack,
+    replayTo,
+    exitReplay,
     setPose,
     subscribe,
   }

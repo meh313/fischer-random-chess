@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { VARIANTS, newChaosSeed, parseChaosSeed, rollVariants, squareName } from './engine'
+import { VARIANTS, fromPgn, newChaosSeed, parseChaosSeed, rollVariants, squareName, toPgn } from './engine'
 import { loadCinematics, loadMemes, loadPieceSet, loadPieceSetIndex } from './content/loaders'
 import type { Cinematic, MemeEntry, ResolvedPieceSet } from './content/types'
 import { configureAudio, playSfx, unlockAudio } from './audio/sfx'
@@ -10,6 +10,8 @@ import { useChass } from './state/useChass'
 import { Board } from './ui/Board'
 import { PieceImg } from './ui/PieceImg'
 import { DiceOverlay } from './ui/DiceOverlay'
+import { PgnDialog } from './ui/PgnDialog'
+import { ReplayBar } from './ui/ReplayBar'
 import { SettingsPanel } from './ui/SettingsPanel'
 import { COLOR_NAME } from './ui/names'
 
@@ -35,6 +37,8 @@ function Chass() {
   const [rolling, setRolling] = useState<{ seed: number; ids: string[] } | null>(null)
   const [chaos, setChaos] = useState<{ seed: number; ids: string[] } | null>(null)
   const [copied, setCopied] = useState(false)
+  const [pgnOpen, setPgnOpen] = useState(false)
+  const [autoplay, setAutoplay] = useState(false)
   const boardRef = useRef<HTMLDivElement>(null)
 
   const chass = useChass(cinematics, settings)
@@ -165,6 +169,38 @@ function Chass() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const today = () => {
+    const d = new Date()
+    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`
+  }
+
+  const importPgn = (text: string): string | null => {
+    try {
+      const parsed = fromPgn(text)
+      chass.loadReplay(parsed)
+      setVariantIds(parsed.game.variantIds)
+      clearChaos()
+      setAutoplay(false)
+      setPgnOpen(false)
+      return null
+    } catch (e) {
+      return (e as Error).message
+    }
+  }
+
+  // Autoplay steps forward after any gag has finished, and stops at the end.
+  useEffect(() => {
+    const r = chass.replay
+    if (!autoplay || !r) return
+    if (r.cursor >= r.actions.length) {
+      setAutoplay(false)
+      return
+    }
+    if (chass.cine) return
+    const t = window.setTimeout(() => chass.replayForward(), 900)
+    return () => clearTimeout(t)
+  }, [autoplay, chass.replay, chass.cine, chass.replayForward])
+
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href)
@@ -291,7 +327,8 @@ function Chass() {
               <button className="btn" onClick={chass.undo} disabled={!chass.canUndo}>Undo</button>
               <button className="btn" onClick={() => chass.setFlipped(!chass.flipped)} disabled={!!chass.cine}>Flip Board</button>
               <button className="btn" onClick={() => setSettingsOpen(true)}>Settings</button>
-              <button className="btn wide" onClick={chass.resign} disabled={!!result}>Resign</button>
+              <button className="btn" onClick={() => setPgnOpen(true)}>PGN</button>
+              <button className="btn" onClick={chass.resign} disabled={!!result || !!chass.replay}>Resign</button>
             </div>
             <label className="field opp">
               <span>Opponent</span>
@@ -320,6 +357,23 @@ function Chass() {
         </aside>
 
         <main className="center">
+          {chass.replay && (
+            <ReplayBar
+              replay={chass.replay}
+              autoplay={autoplay}
+              onAutoplay={setAutoplay}
+              onBack={chass.replayBack}
+              onForward={chass.replayForward}
+              onJump={(i) => {
+                setAutoplay(false)
+                chass.replayTo(i)
+              }}
+              onPlayFromHere={() => {
+                setAutoplay(false)
+                chass.exitReplay()
+              }}
+            />
+          )}
           <div className="board-wrap">
             {ready ? <Board ref={boardRef} chass={chass} set={pieceSet} /> : <div className="board loading">Loading pieces...</div>}
             {rolling && <DiceOverlay key={rolling.seed} ids={rolling.ids} seed={rolling.seed} onDone={finishRoll} />}
@@ -385,6 +439,12 @@ function Chass() {
         </aside>
       </div>
 
+      <PgnDialog
+        open={pgnOpen}
+        onClose={() => setPgnOpen(false)}
+        current={pgnOpen ? toPgn(game, { white: settings.names.w, black: settings.names.b, date: today() }) : ''}
+        onImport={importPgn}
+      />
       <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} pieceSets={setIndex} />
     </div>
   )
