@@ -90,3 +90,33 @@ describe('event handler isolation', () => {
     expect(g.records).toHaveLength(1)
   })
 })
+
+describe('duck FEN round trip', () => {
+  it('writes the duck as * and restores it', () => {
+    const g = new Game({ variants: ['duck'] })
+    g.playUci('e2e4')
+    g.placeDuck(S('a6'))
+    expect(g.fen.split(' ')[0]).toContain('*')
+    const copy = new Game({ variants: ['duck'], fen: g.fen })
+    expect(copy.state.duck).toBe(S('a6'))
+    expect(copy.turn).toBe('b')
+    expect(copy.fen).toBe(g.fen)
+    expect(copy.legalMoves().length).toBe(g.legalMoves().length)
+  })
+
+  it('remembers that the duck still has to be placed', () => {
+    const g = new Game({ variants: ['duck'] })
+    g.playUci('e2e4')
+    expect(g.fen.endsWith(' D')).toBe(true)
+    const copy = new Game({ variants: ['duck'], fen: g.fen })
+    expect(copy.state.phase).toBe('duck')
+    expect(copy.turn).toBe('w')
+    copy.placeDuck(S('h6'))
+    expect(copy.turn).toBe('b')
+  })
+
+  it('standard FEN is unchanged and a second duck is rejected', () => {
+    expect(new Game().fen).toBe('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')
+    expect(() => parseFen('4k3/8/8/**6/8/8/8/4K3 w - - 0 1')).toThrow(/duck/)
+  })
+})

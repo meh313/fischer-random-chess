@@ -16,17 +16,25 @@ function kingSquares(board: readonly (Piece | null)[]): { w: Square; b: Square }
  * file letters (HAha), so Chess960 positions load. Piece letter D = Dragon Bishop.
  */
 export function parseFen(fen: string): State {
-  const [placement, turn = 'w', cast = '-', ep = '-', half = '0', full = '1'] = fen.trim().split(/\s+/)
+  const [placement, turn = 'w', cast = '-', ep = '-', half = '0', full = '1', extra = ''] = fen.trim().split(/\s+/)
   const ranks = placement!.split('/')
   if (ranks.length !== 8) throw new Error(`Bad FEN placement: ${fen}`)
 
   const board: (Piece | null)[] = Array(64).fill(null)
+  let duck: Square | null = null
   ranks.forEach((row, i) => {
     const r = 7 - i
     let f = 0
     for (const ch of row) {
       if (ch >= '1' && ch <= '8') {
         f += Number(ch)
+        continue
+      }
+      if (ch === '*') {
+        // Duck chess: '*' marks the duck's square (same convention Fairy-Stockfish uses for walls).
+        if (duck !== null || f > 7) throw new Error(`Bad FEN duck in ${fen}`)
+        duck = r * 8 + f
+        f++
         continue
       }
       const kind = ch.toLowerCase()
@@ -70,8 +78,9 @@ export function parseFen(fen: string): State {
     halfmove: Number(half) || 0,
     fullmove: Number(full) || 1,
     kings,
-    phase: 'move',
-    duck: null,
+    // An optional 7th field 'D' means the mover still has to place the duck.
+    phase: extra === 'D' ? 'duck' : 'move',
+    duck,
   }
 }
 
@@ -81,6 +90,14 @@ export function fenPlacement(state: State): string {
     let row = ''
     let empty = 0
     for (let f = 0; f < 8; f++) {
+      if (state.duck === r * 8 + f) {
+        if (empty) {
+          row += empty
+          empty = 0
+        }
+        row += '*'
+        continue
+      }
       const p = state.board[r * 8 + f]
       if (!p) {
         empty++
@@ -120,7 +137,8 @@ export function fenCastling(state: State): string {
 
 export function toFen(state: State): string {
   const ep = state.ep === null ? '-' : squareName(state.ep)
-  return `${fenPlacement(state)} ${state.turn} ${fenCastling(state)} ${ep} ${state.halfmove} ${state.fullmove}`
+  const duckPhase = state.phase === 'duck' ? ' D' : ''
+  return `${fenPlacement(state)} ${state.turn} ${fenCastling(state)} ${ep} ${state.halfmove} ${state.fullmove}${duckPhase}`
 }
 
 /** Chess960 back rank from an RNG, as lowercase piece letters. */
