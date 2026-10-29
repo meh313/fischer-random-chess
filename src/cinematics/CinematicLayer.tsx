@@ -142,7 +142,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
         case 'shake': {
           if (reduced) break
           const a = s.amp ?? 6
-          const frames: Keyframe[] = [0, -1, 1, -1, 1, -0.5, 0.5, 0].map((m) => ({ translate: `${m * a}px ${m * a * 0.3}px` }))
+          const frames: Keyframe[] = [0, -1, 0.7, -0.4, 0.15, 0].map((m) => ({ translate: `${m * a}px ${m * a * 0.3}px` }))
           run(targetEl(s.target), frames, { duration: s.ms, fill: 'none' })
           break
         }

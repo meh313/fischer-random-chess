@@ -138,32 +138,7 @@ out('piecesets/chad/set.json', JSON.stringify(chad, null, 2) + '\n')
 out('piecesets/index.json', JSON.stringify(['classic', 'chad'], null, 2) + '\n')
 
 // --------------------------------------------------------------- sprites
-// Cartoon hand with a pistol, facing right. Original vector drawing.
-const skin = '#f2c6a0'
-const skinShade = '#d9a67f'
-out(
-  'sprites/hand-gun.svg',
-  svg(
-    '0 0 300 150',
-    `<g stroke="#2a1d16" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">
-      <path d="M0 58L88 50L104 56V104L88 102L0 96z" fill="${skin}"/>
-      <path d="M0 58L88 50" fill="none" stroke="${skinShade}" stroke-width="0"/>
-      <path d="M104 56h12l-6 52h-6z" fill="${skinShade}" stroke="none"/>
-      <rect x="112" y="70" width="40" height="64" rx="8" fill="#2e2e32" transform="rotate(8 132 100)"/>
-      <path d="M104 70h160v16H128z" fill="#3a3a40"/>
-      <rect x="96" y="36" width="182" height="34" rx="5" fill="#26262a"/>
-      <rect x="268" y="43" width="22" height="20" rx="3" fill="#18181b"/>
-      <path d="M150 44h50v6h-50z" fill="#4b4b53" stroke="none"/>
-      <path d="M104 40l6-8h14l4 8z" fill="#18181b"/>
-      <path d="M158 86q0 24 22 24h4" fill="none" stroke="#18181b" stroke-width="5"/>
-      <rect x="110" y="80" width="46" height="13" rx="6.5" fill="${skin}"/>
-      <rect x="106" y="95" width="40" height="13" rx="6.5" fill="${skin}"/>
-      <rect x="106" y="110" width="36" height="13" rx="6.5" fill="${skin}"/>
-      <path d="M100 76q-2-18 14-22l24 2q6 8-2 14l-14 4z" fill="${skin}"/>
-      <path d="M118 62h20" fill="none" stroke="${skinShade}" stroke-width="2.4"/>
-    </g>`,
-  ),
-)
+// hand-gun.png is supplied artwork (cropped and downscaled from reference/hand-gun-original.png), not generated.
 
 out(
   'sprites/duck.svg',

@@ -8,9 +8,9 @@ interface Props {
 }
 
 const SIZE = 1.4
-const PIVOT: [number, number] = [0.3, 0.45]
+const PIVOT: [number, number] = [0.3, 0.2]
 /** Muzzle distance from the pivot, in squares (sprite is 300 wide, muzzle at x=288). */
-const MUZZLE = ((288 - PIVOT[0] * 300) / 300) * SIZE
+const MUZZLE = (1 - PIVOT[0]) * SIZE
 
 /** Static gun hands pointing from each attacker at its undefended target. Uses the same sprite as the cinematics. */
 export function AimLayer({ aims, flipped }: Props) {
@@ -36,7 +36,7 @@ export function AimLayer({ aims, flipped }: Props) {
             style={{ left: `${x * 12.5}%`, top: `${y * 12.5}%`, transform: `rotate(${deg}deg)` }}
           >
             <img
-              src={asset('sprites/hand-gun.svg')}
+              src={asset('sprites/hand-gun.png')}
               alt=""
               draggable={false}
               style={{ ['--size' as string]: SIZE, left: `${-PIVOT[0] * 100}%`, top: `${-PIVOT[1] * 100}%` }}

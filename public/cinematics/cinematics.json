@@ -2,298 +2,425 @@
   "version": 1,
   "cinematics": [
     {
-      "id": "pawn-shoots-knight",
-      "match": { "attacker": "p", "victim": "n" },
-      "weight": 3,
-      "duration": 1900,
+  "id": "pawn-shoots-knight",
+  "match": {
+    "attacker": "p",
+    "victim": "n"
+  },
+  "weight": 3,
+  "duration": 1570,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
-        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
-        { "at": 480, "do": "sound", "sfx": "bang" },
-        { "at": 480, "do": "caption", "text": "then you die", "ms": 1200 },
-        { "at": 480, "do": "shake", "target": "victim", "ms": 450, "amp": 7 },
-        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 700 },
-        { "at": 1500, "do": "despawn", "target": "hand" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
+        {"at":150,"do":"sound","sfx":"bang"},
+        {"at":150,"do":"caption","text":"then you die","ms":1200},
+        {"at":150,"do":"shake","target":"victim","ms":260,"amp":4},
+        {"at":270,"do":"fade","target":"victim","to":0,"ms":450},
+        {"at":1170,"do":"despawn","target":"hand"}
       ]
     },
     {
-      "id": "gun-any",
-      "match": {},
-      "weight": 3,
-      "duration": 1800,
+  "id": "gun-any",
+  "match": {},
+  "weight": 3,
+  "duration": 1470,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
-        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
-        { "at": 480, "do": "sound", "sfx": "bang" },
-        { "at": 480, "do": "caption", "text": ["then you die", "nothing personal", "sit down", "skill issue", "get out"], "ms": 1100 },
-        { "at": 480, "do": "shake", "target": "victim", "ms": 450, "amp": 6 },
-        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 650 },
-        { "at": 1400, "do": "despawn", "target": "hand" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
+        {"at":150,"do":"sound","sfx":"bang"},
+        {"at":150,"do":"caption","text":["then you die","nothing personal","sit down","skill issue","get out"],"ms":1100},
+        {"at":150,"do":"shake","target":"victim","ms":260,"amp":4},
+        {"at":270,"do":"fade","target":"victim","to":0,"ms":450},
+        {"at":1070,"do":"despawn","target":"hand"}
       ]
     },
     {
-      "id": "chad-flex",
-      "match": { "attacker": "n", "victim": "*" },
-      "weight": 2,
-      "duration": 1700,
+  "id": "chad-flex",
+  "match": {
+    "attacker": "n",
+    "victim": "*"
+  },
+  "weight": 2,
+  "duration": 1700,
       "steps": [
-        { "at": 0, "do": "pose", "target": "attacker", "pose": "smug" },
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "scale", "target": "attacker", "to": 1.3, "ms": 300 },
-        { "at": 250, "do": "sound", "sfx": "capture" },
-        { "at": 250, "do": "caption", "text": ["too easy", "gigachad", "skill diff", "nothing personal, kid"], "ms": 1200 },
-        { "at": 250, "do": "shake", "target": "victim", "ms": 400, "amp": 8 },
-        { "at": 350, "do": "fade", "target": "victim", "to": 0, "ms": 600 },
-        { "at": 1200, "do": "scale", "target": "attacker", "to": 1, "ms": 300 }
+        {"at":0,"do":"pose","target":"attacker","pose":"smug"},
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"scale","target":"attacker","to":1.3,"ms":300},
+        {"at":250,"do":"sound","sfx":"capture"},
+        {"at":250,"do":"caption","text":["too easy","gigachad","skill diff","nothing personal, kid"],"ms":1200},
+        {"at":250,"do":"shake","target":"victim","ms":400,"amp":8},
+        {"at":350,"do":"fade","target":"victim","to":0,"ms":600},
+        {"at":1200,"do":"scale","target":"attacker","to":1,"ms":300}
       ]
     },
     {
-      "id": "queen-slay",
-      "match": { "attacker": "q", "victim": "*" },
-      "weight": 2,
-      "duration": 1800,
+  "id": "queen-slay",
+  "match": {
+    "attacker": "q",
+    "victim": "*"
+  },
+  "weight": 2,
+  "duration": 1470,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
-        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
-        { "at": 480, "do": "sound", "sfx": "bang" },
-        { "at": 480, "do": "caption", "text": ["slay", "he is mine", "you were never my type"], "ms": 1100 },
-        { "at": 480, "do": "shake", "target": "victim", "ms": 450, "amp": 6 },
-        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 650 },
-        { "at": 1400, "do": "despawn", "target": "hand" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
+        {"at":150,"do":"sound","sfx":"bang"},
+        {"at":150,"do":"caption","text":["slay","he is mine","you were never my type"],"ms":1100},
+        {"at":150,"do":"shake","target":"victim","ms":260,"amp":4},
+        {"at":270,"do":"fade","target":"victim","to":0,"ms":450},
+        {"at":1070,"do":"despawn","target":"hand"}
       ]
     },
     {
-      "id": "queen-lost",
-      "match": { "attacker": "*", "victim": "q" },
-      "weight": 2,
-      "duration": 2000,
+  "id": "queen-lost",
+  "match": {
+    "attacker": "*",
+    "victim": "q"
+  },
+  "weight": 2,
+  "duration": 1670,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
-        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
-        { "at": 480, "do": "sound", "sfx": "bang" },
-        { "at": 480, "do": "caption", "text": ["not the queen", "NOOOO", "my queen!"], "ms": 1300, "style": "red" },
-        { "at": 480, "do": "shake", "target": "victim", "ms": 600, "amp": 10 },
-        { "at": 700, "do": "fade", "target": "victim", "to": 0, "ms": 800 },
-        { "at": 1600, "do": "despawn", "target": "hand" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
+        {"at":150,"do":"sound","sfx":"bang"},
+        {"at":150,"do":"caption","text":["not the queen","NOOOO","my queen!"],"ms":1300,"style":"red"},
+        {"at":150,"do":"shake","target":"victim","ms":260,"amp":6},
+        {"at":370,"do":"fade","target":"victim","to":0,"ms":450},
+        {"at":1270,"do":"despawn","target":"hand"}
       ]
     },
     {
-      "id": "king-down",
-      "match": { "attacker": "*", "victim": "k" },
-      "weight": 1,
-      "duration": 2200,
+  "id": "king-down",
+  "match": {
+    "attacker": "*",
+    "victim": "k"
+  },
+  "weight": 1,
+  "duration": 1870,
       "steps": [
-        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
-        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450 },
-        { "at": 480, "do": "sound", "sfx": "bang" },
-        { "at": 480, "do": "caption", "text": "long live the king", "ms": 1500, "pos": "center", "style": "red" },
-        { "at": 480, "do": "shake", "target": "victim", "ms": 700, "amp": 12 },
-        { "at": 800, "do": "fade", "target": "victim", "to": 0, "ms": 900 },
-        { "at": 1800, "do": "despawn", "target": "hand" }
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
+        {"at":150,"do":"sound","sfx":"bang"},
+        {"at":150,"do":"caption","text":"long live the king","ms":1500,"pos":"center","style":"red"},
+        {"at":150,"do":"shake","target":"victim","ms":260,"amp":7},
+        {"at":470,"do":"fade","target":"victim","to":0,"ms":450},
+        {"at":1470,"do":"despawn","target":"hand"}
       ]
     },
     {
-      "id": "gun-duck-games",
-      "match": { "variant": "duck" },
-      "weight": 3,
-      "duration": 1800,
+  "id": "gun-duck-games",
+  "match": {
+    "variant": "duck"
+  },
+  "weight": 3,
+  "duration": 1470,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3, 0.45] },
-        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
-        { "at": 480, "do": "sound", "sfx": "bang" },
-        { "at": 480, "do": "caption", "text": ["then you die", "the duck saw that", "sit down"], "ms": 1100 },
-        { "at": 480, "do": "shake", "target": "victim", "ms": 450, "amp": 6 },
-        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 650 },
-        { "at": 1400, "do": "despawn", "target": "hand" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
+        {"at":150,"do":"sound","sfx":"bang"},
+        {"at":150,"do":"caption","text":["then you die","the duck saw that","sit down"],"ms":1100},
+        {"at":150,"do":"shake","target":"victim","ms":260,"amp":4},
+        {"at":270,"do":"fade","target":"victim","to":0,"ms":450},
+        {"at":1070,"do":"despawn","target":"hand"}
       ]
     },
     {
-      "id": "duck-witness",
-      "match": { "variant": "duck" },
-      "weight": 2,
-      "duration": 1700,
+  "id": "duck-witness",
+  "match": {
+    "variant": "duck"
+  },
+  "weight": 2,
+  "duration": 1700,
       "steps": [
-        { "at": 0, "do": "spawn", "id": "witness", "sprite": "duck.svg", "anchor": "between", "size": 1.1 },
-        { "at": 0, "do": "scale", "target": "witness", "to": 1.4, "ms": 400 },
-        { "at": 300, "do": "sound", "sfx": "duck" },
-        { "at": 300, "do": "caption", "text": ["quack", "i saw nothing", "witness protection"], "ms": 1100 },
-        { "at": 300, "do": "shake", "target": "victim", "ms": 400, "amp": 6 },
-        { "at": 400, "do": "fade", "target": "victim", "to": 0, "ms": 600 },
-        { "at": 1300, "do": "despawn", "target": "witness" }
+        {"at":0,"do":"spawn","id":"witness","sprite":"duck.svg","anchor":"between","size":1.1},
+        {"at":0,"do":"scale","target":"witness","to":1.4,"ms":400},
+        {"at":300,"do":"sound","sfx":"duck"},
+        {"at":300,"do":"caption","text":["quack","i saw nothing","witness protection"],"ms":1100},
+        {"at":300,"do":"shake","target":"victim","ms":400,"amp":6},
+        {"at":400,"do":"fade","target":"victim","to":0,"ms":600},
+        {"at":1300,"do":"despawn","target":"witness"}
       ]
     },
-    {"id":"en-passant","match":{"enPassant":true},"weight":3,"duration":2000,
+    {
+  "id": "en-passant",
+  "match": {
+    "enPassant": true
+  },
+  "weight": 3,
+  "duration": 2000,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "rotate", "target": "attacker", "deg": 360, "ms": 600 },
-        { "at": 400, "do": "sound", "sfx": "capture" },
-        { "at": 400, "do": "caption", "text": ["en passant!", "illegal? nope", "holy hell"], "ms": 1300 },
-        { "at": 400, "do": "shake", "target": "victim", "ms": 450, "amp": 8 },
-        { "at": 500, "do": "fade", "target": "victim", "to": 0, "ms": 700 }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"rotate","target":"attacker","deg":360,"ms":600},
+        {"at":400,"do":"sound","sfx":"capture"},
+        {"at":400,"do":"caption","text":["en passant!","illegal? nope","holy hell"],"ms":1300},
+        {"at":400,"do":"shake","target":"victim","ms":450,"amp":8},
+        {"at":500,"do":"fade","target":"victim","to":0,"ms":700}
       ]
     },
-    {"id":"rook-steamroller","match":{"attacker":"r","victim":"p"},"weight":2,"duration":1700,
+    {
+  "id": "rook-steamroller",
+  "match": {
+    "attacker": "r",
+    "victim": "p"
+  },
+  "weight": 2,
+  "duration": 1700,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "scale", "target": "attacker", "to": 1.35, "ms": 250 },
-        { "at": 150, "do": "move", "target": "attacker", "to": "victim", "ms": 450, "ease": "inQuad" },
-        { "at": 600, "do": "sound", "sfx": "capture" },
-        { "at": 600, "do": "caption", "text": ["steamroller", "flattened", "road work ahead"], "ms": 1000 },
-        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 300 },
-        { "at": 1200, "do": "scale", "target": "attacker", "to": 1, "ms": 300 }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"scale","target":"attacker","to":1.35,"ms":250},
+        {"at":150,"do":"move","target":"attacker","to":"victim","ms":450,"ease":"inQuad"},
+        {"at":600,"do":"sound","sfx":"capture"},
+        {"at":600,"do":"caption","text":["steamroller","flattened","road work ahead"],"ms":1000},
+        {"at":600,"do":"fade","target":"victim","to":0,"ms":300},
+        {"at":1200,"do":"scale","target":"attacker","to":1,"ms":300}
       ]
     },
-    {"id":"bishop-duel","match":{"attacker":["b","d"],"victim":["b","d"]},"weight":2,"duration":1900,
+    {
+  "id": "bishop-duel",
+  "match": {
+    "attacker": [
+      "b",
+      "d"
+    ],
+    "victim": [
+      "b",
+      "d"
+    ]
+  },
+  "weight": 2,
+  "duration": 1900,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "rotate", "target": "attacker", "deg": 360, "ms": 700 },
-        { "at": 0, "do": "rotate", "target": "victim", "deg": -360, "ms": 700 },
-        { "at": 700, "do": "sound", "sfx": "capture" },
-        { "at": 700, "do": "caption", "text": ["mirror match", "only one bishop per diagonal", "diagonal diplomacy failed"], "ms": 1100 },
-        { "at": 700, "do": "shake", "target": "victim", "ms": 400, "amp": 7 },
-        { "at": 800, "do": "fade", "target": "victim", "to": 0, "ms": 600 }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"rotate","target":"attacker","deg":360,"ms":700},
+        {"at":0,"do":"rotate","target":"victim","deg":-360,"ms":700},
+        {"at":700,"do":"sound","sfx":"capture"},
+        {"at":700,"do":"caption","text":["mirror match","only one bishop per diagonal","diagonal diplomacy failed"],"ms":1100},
+        {"at":700,"do":"shake","target":"victim","ms":400,"amp":7},
+        {"at":800,"do":"fade","target":"victim","to":0,"ms":600}
       ]
     },
-    {"id":"queen-vs-queen","match":{"attacker":"q","victim":"q"},"weight":3,"duration":2100,
+    {
+  "id": "queen-vs-queen",
+  "match": {
+    "attacker": "q",
+    "victim": "q"
+  },
+  "weight": 3,
+  "duration": 2100,
       "steps": [
-        { "at": 0, "do": "pose", "target": "attacker", "pose": "smug" },
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "shake", "target": "attacker", "ms": 500, "amp": 5 },
-        { "at": 0, "do": "shake", "target": "victim", "ms": 500, "amp": 5 },
-        { "at": 500, "do": "sound", "sfx": "bang" },
-        { "at": 500, "do": "caption", "text": ["drama queens", "we do not share", "the building is not big enough"], "ms": 1300, "style": "red" },
-        { "at": 600, "do": "fade", "target": "victim", "to": 0, "ms": 800 }
+        {"at":0,"do":"pose","target":"attacker","pose":"smug"},
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"shake","target":"attacker","ms":500,"amp":5},
+        {"at":0,"do":"shake","target":"victim","ms":500,"amp":5},
+        {"at":500,"do":"sound","sfx":"bang"},
+        {"at":500,"do":"caption","text":["drama queens","we do not share","the building is not big enough"],"ms":1300,"style":"red"},
+        {"at":600,"do":"fade","target":"victim","to":0,"ms":800}
       ]
     },
-    {"id":"pawn-brawl","match":{"attacker":"p","victim":"p"},"weight":2,"duration":1600,
+    {
+  "id": "pawn-brawl",
+  "match": {
+    "attacker": "p",
+    "victim": "p"
+  },
+  "weight": 2,
+  "duration": 1600,
       "steps": [
-        { "at": 0, "do": "shake", "target": "attacker", "ms": 400, "amp": 4 },
-        { "at": 0, "do": "shake", "target": "victim", "ms": 400, "amp": 4 },
-        { "at": 350, "do": "sound", "sfx": "capture" },
-        { "at": 350, "do": "caption", "text": ["pawn stars", "blue collar crime", "fair fight"], "ms": 1000 },
-        { "at": 450, "do": "fade", "target": "victim", "to": 0, "ms": 500 }
+        {"at":0,"do":"shake","target":"attacker","ms":400,"amp":4},
+        {"at":0,"do":"shake","target":"victim","ms":400,"amp":4},
+        {"at":350,"do":"sound","sfx":"capture"},
+        {"at":350,"do":"caption","text":["pawn stars","blue collar crime","fair fight"],"ms":1000},
+        {"at":450,"do":"fade","target":"victim","to":0,"ms":500}
       ]
     },
-    {"id":"horse-fight","match":{"attacker":"n","victim":"n"},"weight":3,"duration":1900,
+    {
+  "id": "horse-fight",
+  "match": {
+    "attacker": "n",
+    "victim": "n"
+  },
+  "weight": 3,
+  "duration": 1900,
       "steps": [
-        { "at": 0, "do": "pose", "target": "attacker", "pose": "smug" },
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "scale", "target": "attacker", "to": 1.3, "ms": 300 },
-        { "at": 300, "do": "sound", "sfx": "capture" },
-        { "at": 300, "do": "caption", "text": ["neigh.", "only one chad per board", "stay in your lane"], "ms": 1300 },
-        { "at": 400, "do": "shake", "target": "victim", "ms": 400, "amp": 8 },
-        { "at": 500, "do": "fade", "target": "victim", "to": 0, "ms": 600 },
-        { "at": 1400, "do": "scale", "target": "attacker", "to": 1, "ms": 300 }
+        {"at":0,"do":"pose","target":"attacker","pose":"smug"},
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"scale","target":"attacker","to":1.3,"ms":300},
+        {"at":300,"do":"sound","sfx":"capture"},
+        {"at":300,"do":"caption","text":["neigh.","only one chad per board","stay in your lane"],"ms":1300},
+        {"at":400,"do":"shake","target":"victim","ms":400,"amp":8},
+        {"at":500,"do":"fade","target":"victim","to":0,"ms":600},
+        {"at":1400,"do":"scale","target":"attacker","to":1,"ms":300}
       ]
     },
-    {"id":"bishop-sniper","match":{"attacker":["b","d"],"victim":"*"},"weight":2,"duration":1900,
+    {
+  "id": "bishop-sniper",
+  "match": {
+    "attacker": [
+      "b",
+      "d"
+    ],
+    "victim": "*"
+  },
+  "weight": 2,
+  "duration": 1450,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3,0.45] },
-        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 450, "ease": "outQuad" },
-        { "at": 600, "do": "sound", "sfx": "bang" },
-        { "at": 600, "do": "caption", "text": ["headshot", "diagonal justice", "church is out"], "ms": 1100 },
-        { "at": 600, "do": "shake", "target": "victim", "ms": 450, "amp": 6 },
-        { "at": 700, "do": "fade", "target": "victim", "to": 0, "ms": 650 },
-        { "at": 1500, "do": "despawn", "target": "hand" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
+        {"at":150,"do":"sound","sfx":"bang"},
+        {"at":150,"do":"caption","text":["headshot","diagonal justice","church is out"],"ms":1100},
+        {"at":150,"do":"shake","target":"victim","ms":260,"amp":4},
+        {"at":250,"do":"fade","target":"victim","to":0,"ms":450},
+        {"at":1050,"do":"despawn","target":"hand"}
       ]
     },
-    {"id":"king-does-it-himself","match":{"attacker":"k","victim":"*"},"weight":3,"duration":1800,
+    {
+  "id": "king-does-it-himself",
+  "match": {
+    "attacker": "k",
+    "victim": "*"
+  },
+  "weight": 3,
+  "duration": 1800,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "pose", "target": "attacker", "pose": "smug" },
-        { "at": 200, "do": "sound", "sfx": "capture" },
-        { "at": 200, "do": "caption", "text": ["the king does it himself", "finally some exercise", "hands on royalty"], "ms": 1300 },
-        { "at": 300, "do": "shake", "target": "victim", "ms": 400, "amp": 6 },
-        { "at": 400, "do": "fade", "target": "victim", "to": 0, "ms": 600 }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"pose","target":"attacker","pose":"smug"},
+        {"at":200,"do":"sound","sfx":"capture"},
+        {"at":200,"do":"caption","text":["the king does it himself","finally some exercise","hands on royalty"],"ms":1300},
+        {"at":300,"do":"shake","target":"victim","ms":400,"amp":6},
+        {"at":400,"do":"fade","target":"victim","to":0,"ms":600}
       ]
     },
-    {"id":"castle-sparkle","match":{"event":"castling"},"weight":2,"duration":1600,
+    {
+  "id": "castle-sparkle",
+  "match": {
+    "event": "castling"
+  },
+  "weight": 2,
+  "duration": 1600,
       "steps": [
-        { "at": 0, "do": "pose", "target": "attacker", "pose": "smug" },
-        { "at": 0, "do": "spawn", "id": "spark", "sprite": "sparkle.svg", "anchor": "to", "size": 1.1 },
-        { "at": 0, "do": "scale", "target": "spark", "to": 1.6, "ms": 500 },
-        { "at": 0, "do": "rotate", "target": "spark", "deg": 180, "ms": 700 },
-        { "at": 100, "do": "sound", "sfx": "castle" },
-        { "at": 100, "do": "caption", "text": ["safe house", "rook on the roof", "bunker mode"], "ms": 1100, "pos": "top" },
-        { "at": 1000, "do": "fade", "target": "spark", "to": 0, "ms": 300 },
-        { "at": 1400, "do": "despawn", "target": "spark" }
+        {"at":0,"do":"pose","target":"attacker","pose":"smug"},
+        {"at":0,"do":"spawn","id":"spark","sprite":"sparkle.svg","anchor":"to","size":1.1},
+        {"at":0,"do":"scale","target":"spark","to":1.6,"ms":500},
+        {"at":0,"do":"rotate","target":"spark","deg":180,"ms":700},
+        {"at":100,"do":"sound","sfx":"castle"},
+        {"at":100,"do":"caption","text":["safe house","rook on the roof","bunker mode"],"ms":1100,"pos":"top"},
+        {"at":1000,"do":"fade","target":"spark","to":0,"ms":300},
+        {"at":1400,"do":"despawn","target":"spark"}
       ]
     },
-    {"id":"promotion-crown","match":{"event":"promotion"},"weight":3,"duration":2000,
+    {
+  "id": "promotion-crown",
+  "match": {
+    "event": "promotion"
+  },
+  "weight": 3,
+  "duration": 2000,
       "steps": [
-        { "at": 0, "do": "pose", "target": "attacker", "pose": "smug" },
-        { "at": 0, "do": "scale", "target": "attacker", "to": 1.35, "ms": 350 },
-        { "at": 0, "do": "spawn", "id": "crown", "sprite": "crown.svg", "anchor": "attacker+0,-0.9", "size": 0.9 },
-        { "at": 0, "do": "scale", "target": "crown", "to": 1.3, "ms": 500 },
-        { "at": 0, "do": "spawn", "id": "spark", "sprite": "sparkle.svg", "anchor": "attacker+0.5,-0.4", "size": 0.6 },
-        { "at": 0, "do": "rotate", "target": "spark", "deg": 270, "ms": 900 },
-        { "at": 100, "do": "sound", "sfx": "promote" },
-        { "at": 100, "do": "caption", "text": ["level up", "pawn to boss", "promoted!"], "ms": 1300, "pos": "top" },
-        { "at": 1300, "do": "scale", "target": "attacker", "to": 1, "ms": 300 },
-        { "at": 1500, "do": "despawn", "target": "crown" },
-        { "at": 1500, "do": "despawn", "target": "spark" }
+        {"at":0,"do":"pose","target":"attacker","pose":"smug"},
+        {"at":0,"do":"scale","target":"attacker","to":1.35,"ms":350},
+        {"at":0,"do":"spawn","id":"crown","sprite":"crown.svg","anchor":"attacker+0,-0.9","size":0.9},
+        {"at":0,"do":"scale","target":"crown","to":1.3,"ms":500},
+        {"at":0,"do":"spawn","id":"spark","sprite":"sparkle.svg","anchor":"attacker+0.5,-0.4","size":0.6},
+        {"at":0,"do":"rotate","target":"spark","deg":270,"ms":900},
+        {"at":100,"do":"sound","sfx":"promote"},
+        {"at":100,"do":"caption","text":["level up","pawn to boss","promoted!"],"ms":1300,"pos":"top"},
+        {"at":1300,"do":"scale","target":"attacker","to":1,"ms":300},
+        {"at":1500,"do":"despawn","target":"crown"},
+        {"at":1500,"do":"despawn","target":"spark"}
       ]
     },
-    {"id":"promotion-chad","match":{"event":"promotion","attacker":"n"},"weight":3,"duration":2000,
+    {
+  "id": "promotion-chad",
+  "match": {
+    "event": "promotion",
+    "attacker": "n"
+  },
+  "weight": 3,
+  "duration": 2000,
       "steps": [
-        { "at": 0, "do": "pose", "target": "attacker", "pose": "smug" },
-        { "at": 0, "do": "scale", "target": "attacker", "to": 1.4, "ms": 350 },
-        { "at": 0, "do": "spawn", "id": "crown", "sprite": "crown.svg", "anchor": "attacker+0,-0.9", "size": 0.9 },
-        { "at": 100, "do": "sound", "sfx": "promote" },
-        { "at": 100, "do": "caption", "text": ["chad horse unlocked", "the pawn became a chad", "gigachad promotion"], "ms": 1300, "pos": "top" },
-        { "at": 1300, "do": "scale", "target": "attacker", "to": 1, "ms": 300 },
-        { "at": 1500, "do": "despawn", "target": "crown" }
+        {"at":0,"do":"pose","target":"attacker","pose":"smug"},
+        {"at":0,"do":"scale","target":"attacker","to":1.4,"ms":350},
+        {"at":0,"do":"spawn","id":"crown","sprite":"crown.svg","anchor":"attacker+0,-0.9","size":0.9},
+        {"at":100,"do":"sound","sfx":"promote"},
+        {"at":100,"do":"caption","text":["chad horse unlocked","the pawn became a chad","gigachad promotion"],"ms":1300,"pos":"top"},
+        {"at":1300,"do":"scale","target":"attacker","to":1,"ms":300},
+        {"at":1500,"do":"despawn","target":"crown"}
       ]
     },
-    {"id":"check-alarm","match":{"event":"check"},"weight":1,"chance":0.5,"duration":1300,
+    {
+  "id": "check-alarm",
+  "match": {
+    "event": "check"
+  },
+  "weight": 1,
+  "chance": 0.5,
+  "duration": 1300,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "alarm", "sprite": "exclamation.svg", "anchor": "victim+0.45,-0.55", "size": 0.7 },
-        { "at": 0, "do": "scale", "target": "alarm", "to": 1.35, "ms": 250 },
-        { "at": 0, "do": "sound", "sfx": "check" },
-        { "at": 0, "do": "caption", "text": ["check!", "your king is in danger", "knock knock"], "ms": 900, "pos": "top", "style": "small" },
-        { "at": 0, "do": "shake", "target": "victim", "ms": 450, "amp": 5 },
-        { "at": 1000, "do": "despawn", "target": "alarm" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"alarm","sprite":"exclamation.svg","anchor":"victim+0.45,-0.55","size":0.7},
+        {"at":0,"do":"scale","target":"alarm","to":1.35,"ms":250},
+        {"at":0,"do":"sound","sfx":"check"},
+        {"at":0,"do":"caption","text":["check!","your king is in danger","knock knock"],"ms":900,"pos":"top","style":"small"},
+        {"at":0,"do":"shake","target":"victim","ms":450,"amp":5},
+        {"at":1000,"do":"despawn","target":"alarm"}
       ]
     },
-    {"id":"mate-gun","match":{"event":"checkmate"},"weight":3,"duration":2600,
+    {
+  "id": "mate-gun",
+  "match": {
+    "event": "checkmate"
+  },
+  "weight": 3,
+  "duration": 2150,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "hand", "sprite": "hand-gun.svg", "anchor": "attacker", "size": 2, "rotate": "toTarget", "pivot": [0.3,0.45] },
-        { "at": 0, "do": "move", "target": "hand", "from": "attacker", "to": "aim:1.2", "ms": 500, "ease": "outQuad" },
-        { "at": 600, "do": "sound", "sfx": "bang" },
-        { "at": 600, "do": "caption", "text": ["checkmate", "it is over", "game over, king"], "ms": 1700, "pos": "center", "style": "red" },
-        { "at": 600, "do": "shake", "target": "victim", "ms": 700, "amp": 12 },
-        { "at": 800, "do": "fade", "target": "victim", "to": 0.35, "ms": 700 },
-        { "at": 2100, "do": "despawn", "target": "hand" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
+        {"at":150,"do":"sound","sfx":"bang"},
+        {"at":150,"do":"caption","text":["checkmate","it is over","game over, king"],"ms":1700,"pos":"center","style":"red"},
+        {"at":150,"do":"shake","target":"victim","ms":260,"amp":7},
+        {"at":350,"do":"fade","target":"victim","to":0.35,"ms":450},
+        {"at":1650,"do":"despawn","target":"hand"}
       ]
     },
-    {"id":"mate-tombstone","match":{"event":"checkmate"},"weight":2,"duration":2600,
+    {
+  "id": "mate-tombstone",
+  "match": {
+    "event": "checkmate"
+  },
+  "weight": 2,
+  "duration": 2600,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "shake", "target": "victim", "ms": 600, "amp": 9 },
-        { "at": 300, "do": "spawn", "id": "rip", "sprite": "tombstone.svg", "anchor": "victim+0,-0.7", "size": 1.2 },
-        { "at": 300, "do": "scale", "target": "rip", "to": 1.25, "ms": 400 },
-        { "at": 400, "do": "sound", "sfx": "mate" },
-        { "at": 400, "do": "caption", "text": ["rest in peace", "long live the king", "gg no re"], "ms": 1800, "pos": "center", "style": "red" },
-        { "at": 700, "do": "fade", "target": "victim", "to": 0.35, "ms": 600 },
-        { "at": 2200, "do": "despawn", "target": "rip" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"shake","target":"victim","ms":600,"amp":9},
+        {"at":300,"do":"spawn","id":"rip","sprite":"tombstone.svg","anchor":"victim+0,-0.7","size":1.2},
+        {"at":300,"do":"scale","target":"rip","to":1.25,"ms":400},
+        {"at":400,"do":"sound","sfx":"mate"},
+        {"at":400,"do":"caption","text":["rest in peace","long live the king","gg no re"],"ms":1800,"pos":"center","style":"red"},
+        {"at":700,"do":"fade","target":"victim","to":0.35,"ms":600},
+        {"at":2200,"do":"despawn","target":"rip"}
       ]
     },
-    {"id":"stalemate-flag","match":{"event":"stalemate"},"weight":1,"duration":2200,
+    {
+  "id": "stalemate-flag",
+  "match": {
+    "event": "stalemate"
+  },
+  "weight": 1,
+  "duration": 2200,
       "steps": [
-        { "at": 0, "do": "pose", "target": "victim", "pose": "shocked" },
-        { "at": 0, "do": "spawn", "id": "flag", "sprite": "white-flag.svg", "anchor": "victim+0.35,-0.6", "size": 1 },
-        { "at": 0, "do": "rotate", "target": "flag", "deg": 14, "ms": 500 },
-        { "at": 200, "do": "sound", "sfx": "draw" },
-        { "at": 200, "do": "caption", "text": ["stalemate", "nobody wins. boring.", "the king has nowhere to go"], "ms": 1700, "pos": "center" },
-        { "at": 1800, "do": "despawn", "target": "flag" }
+        {"at":0,"do":"pose","target":"victim","pose":"shocked"},
+        {"at":0,"do":"spawn","id":"flag","sprite":"white-flag.svg","anchor":"victim+0.35,-0.6","size":1},
+        {"at":0,"do":"rotate","target":"flag","deg":14,"ms":500},
+        {"at":200,"do":"sound","sfx":"draw"},
+        {"at":200,"do":"caption","text":["stalemate","nobody wins. boring.","the king has nowhere to go"],"ms":1700,"pos":"center"},
+        {"at":1800,"do":"despawn","target":"flag"}
       ]
     }
   ]
