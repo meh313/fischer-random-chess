@@ -1,4 +1,5 @@
 import { fileOf, opposite, parseSquare, rankOf, sq } from './board'
+import { detectMoments } from './moments'
 import type { GameEvent, GameEventHandler } from './events'
 import { fenCastling, fenPlacement, parseFen, STANDARD_FEN, toFen } from './fen'
 import { createRng } from './rng'
@@ -241,6 +242,7 @@ export class Game {
       if (inCheck(after, this.vs)) events.push({ type: 'check', color: after.turn, kingSq: after.kings[after.turn] })
       this.maybeBlunder(before, after, color, m, events)
     }
+    for (const mo of detectMoments(before, after, m, this.records.slice(0, -1), this.vs)) events.push({ type: 'moment', color: mo.color, moment: mo.id })
     this.resultEvents(events)
     this.emit(events)
     return events

@@ -96,8 +96,8 @@ describe('meme selection', () => {
     { id: 'b', on: ['draw', 'stalemate'], media: 'b.png' },
   ]
   it('maps events to memes', () => {
-    expect(pickMeme(memes, { type: 'checkmate', winner: 'w', loser: 'b', kingSq: 0 })!.id).toBe('a')
-    expect(pickMeme(memes, { type: 'draw', reason: 'threefold' })!.id).toBe('b')
-    expect(pickMeme(memes, { type: 'check', color: 'w', kingSq: 0 })).toBeUndefined()
+    expect(pickMeme(memes, 'checkmate')!.id).toBe('a')
+    expect(pickMeme(memes, 'draw')!.id).toBe('b')
+    expect(pickMeme(memes, 'check')).toBeUndefined()
   })
 })

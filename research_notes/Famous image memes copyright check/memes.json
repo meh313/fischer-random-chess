@@ -1,0 +1,2425 @@
+[
+  {
+    "name": "Trade Offer (bradeazy still)",
+    "origin": "TikTok. Format started with @natebellamy4 (Nov 12, 2020, NBA draft jingle). The widely used still comes from TikTok creator bradeazy's video (mid-March 2021), which became the standard exploitable in early April 2021.",
+    "owner": "Probably bradeazy (the creator who filmed himself). He sold a one-of-one NFT of the 'original template' on OpenSea from May 3, 2021, so it is unclear whether any rights were transferred to the buyer. No registration found.",
+    "license_path": "None known. No stock listing and no public licence. The only route is to contact bradeazy directly (he sells merch on his own site) and get a written licence and likeness release.",
+    "enforcement": "None found. In the April 2021 KYM interview he sounded relaxed about people using the meme.",
+    "real_person": "Yes. bradeazy is an identifiable living person whose face is the whole meme. Commercial use in a game raises right-of-publicity concerns (US state laws) without his consent.",
+    "risk": "medium",
+    "risk_reason": "The owner is known and not aggressive, but there is no ready licence, the NFT sale muddies who holds the rights, and he is an identifiable real person.",
+    "sources": [
+      "https://knowyourmeme.com/memes/trade-offer",
+      "https://knowyourmeme.com/editorials/bradeazy-the-ceo-of-trade-offers-sits-down-to-discuss-how-he-became-one-of-2021s-most-viral-memes-and-whats-next-for-his-content"
+    ],
+    "verified": false
+  },
+  {
+    "name": "For the Better, Right? (Anakin and Padme 4-Panel)",
+    "origin": "Stills from the picnic scene of Star Wars: Episode II, Attack of the Clones (2002). Meme format first posted on Twitter by @starwarsposting on Apr 21, 2021. Its setup echoes a Mr. Lovenstein comic ('Change', Aug 5, 2019).",
+    "owner": "Lucasfilm Ltd. (The Walt Disney Company). Actors Hayden Christensen and Natalie Portman also have likeness rights.",
+    "license_path": "None practical. Film stills are licensed only through Disney/Lucasfilm studio licensing, which isn't open to small indie games. Not on stock sites for commercial use.",
+    "enforcement": "Nothing specific to this meme was found. Disney/Lucasfilm is widely known for vigorous IP enforcement (not verified in this pass).",
+    "real_person": "Yes. Celebrity actors' faces are shown, so publicity rights apply as well as the studio copyright.",
+    "risk": "high",
+    "risk_reason": "Studio film still showing celebrities, with no licence path for a monetized game.",
+    "sources": [
+      "https://knowyourmeme.com/memes/for-the-better-right"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/for-the-better-right",
+    "origin_type": "film or TV still",
+    "peak_years": "2020-2023",
+    "meaning": "Naive hopeful assumption met by ominous silence.",
+    "chess_moments": [
+      "poisoned_bait",
+      "free_piece",
+      "big_sac",
+      "throw"
+    ]
+  },
+  {
+    "name": "Wait, It's All Ohio? Always Has Been (Astronauts)",
+    "origin": "Base astronaut template: an MS Paint drawing posted to r/dankmemes by Reddit user Wiegand6 on Dec 11, 2016 (flat Earth, 'Sry fam'). The 'Always Has Been' version was posted anonymously on 4chan on Aug 7, 2018. The Ohio variant spread around 2021 to 2022.",
+    "owner": "Unknown. The original drawing may belong to Reddit user Wiegand6, but the common templates are redrawn by unknown people.",
+    "license_path": "None known. No stock listing, no CC licence found. Safest route: commission or draw an original scene in the same spirit (two astronauts, Earth, gun) instead of copying a specific template image. The idea and format aren't protected; a specific drawing is.",
+    "enforcement": "None found.",
+    "real_person": "No.",
+    "risk": "medium",
+    "risk_reason": "Amateur artwork with an unknown owner and no enforcement history, but there is still no licence path, so copying a specific template image carries some risk. An original redraw of the concept is much lower risk.",
+    "sources": [
+      "https://knowyourmeme.com/memes/wait-its-all-ohio-always-has-been"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/wait-its-all-ohio-always-has-been",
+    "origin_type": "artwork or comic",
+    "peak_years": "2020-2023",
+    "meaning": "Shocking realization that something was true all along, with betrayal.",
+    "chess_moments": [
+      "poisoned_bait",
+      "fork",
+      "stalemate",
+      "engine_vibes"
+    ]
+  },
+  {
+    "name": "Think, Mark",
+    "origin": "Still from Invincible season 1, episode 8 (Omni-Man to Mark), premiered Apr 30, 2021 on Amazon Prime Video.",
+    "owner": "Amazon MGM Studios and Skybound Entertainment (Invincible comic by Robert Kirkman). KYM doesn't name the rights holder; the show's ownership is general knowledge, not verified here.",
+    "license_path": "None practical. TV stills are only licensed through studio licensing. No stock listing.",
+    "enforcement": "Nothing specific to this meme was found.",
+    "real_person": "No (animated character), though J.K. Simmons voices it. A still image doesn't use his voice.",
+    "risk": "high",
+    "risk_reason": "Studio TV still with no accessible licence path for a commercial game.",
+    "sources": [
+      "https://knowyourmeme.com/memes/think-mark"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/think-mark",
+    "origin_type": "film or TV still",
+    "peak_years": "2021-2022",
+    "meaning": "Exasperated lecture at someone missing the obvious.",
+    "chess_moments": [
+      "blunder",
+      "hanging_piece",
+      "hung_queen",
+      "long_think",
+      "poisoned_bait"
+    ]
+  },
+  {
+    "name": "Mr. Incredible Becoming Uncanny",
+    "origin": "Mr. Incredible from Pixar's The Incredibles. Grew out of Traumatized Mr. Incredible (reverse-toonified image by @CitizenPlain on Twitter, Oct 15, 2020). The 'Becoming Uncanny' video was uploaded to YouTube by 'músicos Cínicos' on Sep 27, 2021.",
+    "owner": "Disney/Pixar own the character and film imagery. Fan edits (like the reverse-toonified versions) are derivative works with unknown authors.",
+    "license_path": "None practical. Disney character licensing isn't open to small indie games. No stock listing.",
+    "enforcement": "Nothing specific to this meme was found. Disney is known for strict character enforcement (not verified in this pass).",
+    "real_person": "No.",
+    "risk": "high",
+    "risk_reason": "Disney/Pixar character imagery with no licence path, and the fan-edit derivatives have unknown authors on top of that.",
+    "sources": [
+      "https://knowyourmeme.com/memes/mr-incredible-becoming-uncanny"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/mr-incredible-becoming-uncanny",
+    "origin_type": "film or TV still",
+    "peak_years": "2021-2023",
+    "meaning": "Escalating panels of growing dread (or joy in the Canny variant).",
+    "chess_moments": [
+      "mega_blunder",
+      "throw",
+      "comeback",
+      "check_spam",
+      "blunder",
+      "long_chase_mate",
+      "small_slip",
+      "hung_queen"
+    ]
+  },
+  {
+    "name": "GigaChad",
+    "origin": "Photos from Russian photographer Krista Sudmalis's project SLEEK'N'TEARS / the Instagram berlin.1969 (Ernest Khalimov), probably shot around 2016. Went viral on r/bodybuilding and 4chan in Oct 2017, then widely from 2018 onward.",
+    "owner": "Krista Sudmalis (photographer). In her Oct 2024 KYM interview she says Ernest is a real person, not a composite, and complains that people often erase her logo from the photos.",
+    "license_path": "None public. No stock listing or CC licence found. She describes herself as a commercial photographer and says Ernest works only with the GIGA Fitness team (berlin.1969 partnership announced Jun 28, 2024). The only route is to contact Sudmalis or berlin.1969 directly for a paid licence plus a model release.",
+    "enforcement": "No lawsuits or DMCA cases found. She actively commercializes the images (GIGA Fitness, GIGA token, merch) and objects to her logo being removed.",
+    "real_person": "Yes. Ernest Khalimov is an identifiable person and his likeness is the core of the meme. Commercial use without his consent raises right-of-publicity concerns. In the EU, GDPR and image rights add to this.",
+    "risk": "high",
+    "risk_reason": "Professional photographer who actively commercializes the images through an exclusive partnership, an identifiable real person with publicity rights, and no public licence.",
+    "sources": [
+      "https://knowyourmeme.com/memes/gigachad",
+      "https://knowyourmeme.com/editorials/gigachad-creator-and-fitness-photographer-krista-sudmalis-on-making-one-of-the-most-viral-memes-of-all-time"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/gigachad",
+    "origin_type": "personal photo",
+    "peak_years": "2021-2024",
+    "meaning": "Ideal, supremely confident alpha figure.",
+    "chess_moments": [
+      "brilliant",
+      "big_sac",
+      "steamroll",
+      "underpromotion",
+      "fast_mate",
+      "checkmate",
+      "promotion"
+    ]
+  },
+  {
+    "name": "Average Fan vs. Average Enjoyer",
+    "origin": "Left image: a still from a YouTube video by James' YouNiverse. Right image: a viral photo of Iranian influencer Saman Ghasemzadeh ('Zara Boss', Rich Kids of Tehran). First paired by Twitter user @ocenotvevo on Sep 30, 2019; heavily used from 2020 onward.",
+    "owner": "Left: probably the YouTuber James' YouNiverse. Right: unknown photographer, possibly Ghasemzadeh himself. Neither is confirmed.",
+    "license_path": "None known. There are two separate rights holders and two real people, so you would need two licences plus two likeness releases.",
+    "enforcement": "None found.",
+    "real_person": "Yes, two identifiable real people. One is mocked as the 'soyboy' side, which adds a false-light or defamation-style concern if used commercially.",
+    "risk": "high",
+    "risk_reason": "Two identifiable real people (one shown in a mocking light), owners unconfirmed, and no licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/average-fan-vs-average-enjoyer"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/average-fan-vs-average-enjoyer",
+    "origin_type": "other",
+    "peak_years": "2021-2022",
+    "meaning": "Weak sad 'fan' contrasted with confident GigaChad 'enjoyer'.",
+    "chess_moments": [
+      "castling",
+      "king_walk",
+      "rook_endgame",
+      "en_passant"
+    ]
+  },
+  {
+    "name": "Bernie Sanders Wearing Mittens Sitting in a Chair",
+    "origin": "Press photo taken January 20, 2021 at Joe Biden's inauguration on Capitol Hill by Brendan Smialowski for AFP, distributed via Getty Images (caption: 'Former presidential candidate, Senator Bernie Sanders (D-Vermont) sits in the bleachers on Capitol Hill'). Peak meme in 2021, still used afterward.",
+    "owner": "Agence France-Presse (AFP), photo by Brendan Smialowski, distributed by Getty Images (credit line 'Brendan Smialowski/AFP via Getty Images').",
+    "license_path": "Getty Images editorial listing (exact listing URL and ID not confirmed). Editorial licences do not cover commercial or in-game use. Commercial use would need a custom deal with AFP/Getty plus Sanders' consent. No CC or public-domain version found.",
+    "enforcement": "No lawsuits over meme use found. AFP treats it as a commercial asset (it auctioned the photo as an NFT with LaCollection). Getty is known for actively pursuing unlicensed use generally.",
+    "real_person": "Yes. Sitting US Senator Bernie Sanders. Using his likeness in a monetized product raises right of publicity and implied endorsement concerns. His campaign sold its own mittens-photo merchandise for charity.",
+    "risk": "high",
+    "risk_reason": "Agency press photo of a real politician, only editorial licensing found, owner (AFP/Getty) monetizes it, plus publicity-right concerns for a commercial game.",
+    "sources": [
+      "https://knowyourmeme.com/memes/bernie-sanders-wearing-mittens-sitting-in-a-chair",
+      "https://rangefinderonline.com/news-features/industry-news/bernie-sanders-mittens-meme-photographer-perspective/",
+      "https://www.cnbc.com/amp/2021/01/23/bernie-sanders-inauguration-meme-heres-the-story-behind-the-photo.html",
+      "https://uk.news.yahoo.com/photographer-took-bernie-sanders-mittens-165448621.html"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/bernie-sanders-wearing-mittens-sitting-in-a-chair",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2021",
+    "meaning": "Bundled-up, unbothered waiting.",
+    "chess_moments": [
+      "long_think",
+      "dead_draw",
+      "rook_endgame",
+      "castling"
+    ]
+  },
+  {
+    "name": "Absolute Cinema",
+    "origin": "Black-and-white photo of Martin Scorsese raising his hands, from a New York Times interview published January 2, 2020. Paired with the 'Absolute Cinema' caption by X user @YashChillinn on December 1, 2022; grew through 2023 to 2025.",
+    "owner": "The New York Times (photo likely by Philip Montgomery, who is credited on other portraits from the same interview; credit for this exact frame not confirmed).",
+    "license_path": "No stock listing found. The only route would be NYT licensing (NYT Licensing Group) for the photo, which typically covers editorial use, plus Scorsese's consent for commercial use. No CC version.",
+    "enforcement": "No known lawsuits or takedowns over the meme found.",
+    "real_person": "Yes. Martin Scorsese, a celebrity. Commercial use of his likeness in a game raises right of publicity concerns.",
+    "risk": "high",
+    "risk_reason": "Newspaper press photo of a celebrity with no commercial licence path, publicity rights on top.",
+    "sources": [
+      "https://knowyourmeme.com/memes/absolute-cinema",
+      "https://www.irishtimes.com/culture/film/martin-scorsese-crime-is-glamorous-at-first-if-you-re-young-and-stupid-1.4133896",
+      "https://artdaily.com/news/119740/Martin-Scorsese-is-letting-go"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/absolute-cinema",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2023-2025",
+    "meaning": "Hands raised in awe at a masterpiece.",
+    "chess_moments": [
+      "brilliant",
+      "checkmate",
+      "long_chase_mate",
+      "big_sac",
+      "comeback"
+    ]
+  },
+  {
+    "name": "Just a Chill Guy",
+    "origin": "Original digital drawing 'my new character' posted on Twitter by artist Phillip Banks on October 4, 2023. Went viral in November 2024 (TikTok, brands, $CHILLGUY memecoin).",
+    "owner": "Phillip Banks (pseudonym), North Carolina artist. He announced on November 21, 2024 that the character was copyrighted.",
+    "license_path": "Direct licence from Phillip Banks. He has done official deals (Youtooz plush, an 'official' Hong Kong pop-up in April to May 2025) and has said brands can use it with credit, but he asks to be contacted for commercial use. His profile bio once listed a licensing email (not confirmed here). No stock or CC listing.",
+    "enforcement": "Yes. From November 2024 he issued takedowns against unauthorized merchandise and memecoins that used the art for profit. No filed lawsuit found. Non-commercial and brand-trend use was not targeted.",
+    "real_person": "No. Cartoon character. Only the creator's rights apply.",
+    "risk": "medium",
+    "risk_reason": "The owner is known and grants licences, but he enforces against for-profit use. It drops to low only with a written licence or permission. Using it without that in a monetized game is high.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Chill_Guy",
+      "https://amp.knowyourmeme.com/news/the-chill-guy-meme-has-been-copyrighted-by-creator-phillip-banks-who-says-hes-dmca-striking-brands-using-it-for-profit",
+      "https://www.theblock.co/post/327554/just-a-chill-guy-legal",
+      "https://insider-gaming.com/chill-guy-meme-copyrighted-creator/",
+      "https://asiaiplaw.com/sector/copyright/no-longer-a-chill-guy-artist-wants-copyright"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/just-a-chill-guy-my-new-character",
+    "origin_type": "artwork or comic",
+    "peak_years": "2024-2025",
+    "meaning": "Unbothered calm in an absurd or bad situation.",
+    "chess_moments": [
+      "hanging_piece",
+      "time_scramble",
+      "dead_draw",
+      "small_slip"
+    ]
+  },
+  {
+    "name": "Baton Roue (Bike Fall)",
+    "origin": "Three-panel comic 'Baton roue' by French illustrator Corentin Penloup, first published January 23, 2011 on his personal art blog. Evergreen template still heavily used in 2021 to 2026.",
+    "owner": "Corentin Penloup (author's rights under French law). The comic carries no licence notice.",
+    "license_path": "None known. Would need direct permission from Corentin Penloup. No stock, CC or public-domain version found.",
+    "enforcement": "None found.",
+    "real_person": "No. Drawn stick figure.",
+    "risk": "medium",
+    "risk_reason": "The owner is known and no enforcement history was found, but there is no ready licence. French and EU author's rights include moral rights (attribution, integrity), so the owner's permission is still needed.",
+    "sources": [
+      "https://knowyourmeme.com/memes/baton-roue"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/baton-roue",
+    "origin_type": "artwork or comic",
+    "peak_years": "2017-2023",
+    "meaning": "Self-inflicted disaster then blaming others.",
+    "chess_moments": [
+      "hung_queen",
+      "mega_blunder",
+      "throw",
+      "stalemate"
+    ]
+  },
+  {
+    "name": "Pointing Rick Dalton (Leonardo DiCaprio Pointing)",
+    "origin": "Still from Quentin Tarantino's Once Upon a Time in Hollywood (US release July 26, 2019). Rick Dalton (DiCaprio) points at the TV while watching himself on 'F.B.I.' with Cliff Booth (Brad Pitt). Meme from February 7, 2020 and widely used through 2021 onward.",
+    "owner": "Studio rights holders of the film (Columbia Pictures / Sony Pictures). The KYM page does not name the studio.",
+    "license_path": "No stock listing found. The only route is Sony Pictures clip and still licensing, which also requires the actors' consent for commercial use. No CC version.",
+    "enforcement": "No meme-specific takedowns or lawsuits found. Studios routinely enforce against commercial use.",
+    "real_person": "Yes. Leonardo DiCaprio (and Brad Pitt in the full frame). Publicity rights and actor (SAG-AFTRA) consent are needed for commercial use.",
+    "risk": "high",
+    "risk_reason": "Major studio film still featuring A-list actors, with no affordable licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/pointing-rick-dalton"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/pointing-rick-dalton",
+    "origin_type": "film or TV still",
+    "peak_years": "2019-2022",
+    "meaning": "Excited recognition of something familiar.",
+    "chess_moments": [
+      "en_passant",
+      "fast_mate",
+      "promotion",
+      "fork",
+      "great_find"
+    ]
+  },
+  {
+    "name": "Leonardo DiCaprio Cheers",
+    "origin": "Still from Baz Luhrmann's The Great Gatsby (2013): Jay Gatsby (DiCaprio) raising a martini glass. Spread on Tumblr in 2013 and remains an evergreen reaction image. The given KYM URL returns 404; the live entry is 'Great Gatsby Reaction / Leonardo DiCaprio Toast'.",
+    "owner": "Studio rights holders of The Great Gatsby (2013): Warner Bros. (distributor) with Village Roadshow Pictures. Exact chain not confirmed from a primary source.",
+    "license_path": "No stock listing found. The only route is studio licensing (Warner Bros.), plus DiCaprio's consent for commercial use. No CC version.",
+    "enforcement": "No meme-specific takedowns or lawsuits found.",
+    "real_person": "Yes. Leonardo DiCaprio. Publicity rights and actor consent are needed for commercial use.",
+    "risk": "high",
+    "risk_reason": "Major studio film still featuring an A-list actor, with no affordable licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/great-gatsby-reaction-leonardo-dicaprio-toast",
+      "https://filmcompanion.in/features/indepth-stories/a-toast-to-the-great-gatsby-meme-leonardo-dicaprio-baz-luhrmann"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/leonardo-dicaprio-cheers",
+    "origin_type": "film or TV still",
+    "peak_years": "2013-2022 (evergreen)",
+    "meaning": "Toast of approval or respect.",
+    "chess_moments": [
+      "great_find",
+      "comeback",
+      "resign"
+    ]
+  },
+  {
+    "name": "Sweating Jordan Peele",
+    "origin": "Frame from the Key and Peele sketch 'Browser History', season 3 premiere, aired September 18, 2013 on Comedy Central. Evergreen reaction image still used in 2021 to 2026.",
+    "owner": "Comedy Central / Paramount (series copyright, produced with Monkeypaw and Martel & Roberts). Exact chain not confirmed.",
+    "license_path": "No stock listing found. The only route is Paramount clip licensing, plus Jordan Peele's consent for commercial use. No CC version.",
+    "enforcement": "No meme-specific takedowns or lawsuits found.",
+    "real_person": "Yes. Jordan Peele. Publicity rights and performer consent are needed for commercial use.",
+    "risk": "high",
+    "risk_reason": "TV studio still of a celebrity with no ready commercial licence.",
+    "sources": [
+      "https://knowyourmeme.com/memes/sweating-jordan-peele"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/sweating-jordan-peele",
+    "origin_type": "film or TV still",
+    "peak_years": "2018-2022",
+    "meaning": "Exaggerated nervous sweating under pressure.",
+    "chess_moments": [
+      "time_scramble",
+      "check_spam",
+      "trapped_piece",
+      "engine_vibes",
+      "long_think"
+    ]
+  },
+  {
+    "name": "Distracted Boyfriend",
+    "origin": "Stock photo shot by Antonio Guillem (Barcelona) in Girona, Spain, mid-2015, uploaded to iStock and Shutterstock. Meme use began in early 2017 and it went viral in August 2017. Heavily used through 2021-2026.",
+    "owner": "Antonio Guillem (photographer), distributed under licence by iStock/Getty Images and Shutterstock",
+    "license_path": "iStock listing 'Disloyal man with his girlfriend looking at another girl', product gm493656728, Essentials collection, about USD 12 for a standard licence: https://www.istockphoto.com/photo/disloyal-man-with-his-girlfriend-looking-at-another-girl-gm493656728-77018851 . Also on Shutterstock as 'Disloyal man walking with his girlfriend and looking amazed at another seductive girl' (I did not retrieve the exact Shutterstock URL). Before buying, check the standard licence terms on use inside a product (games or templates) and on sensitive-subject depictions of models.",
+    "enforcement": "No lawsuits or takedowns found. Guillem says his images are subject to copyright and microstock licence agreements and that unlicensed use is not allowed. He has said he will not pursue good-faith meme users except in extreme bad-faith cases. In 2018 Sweden's advertising ombudsman found an ISP ad (Bahnhof) that used the meme breached gender-discrimination rules. That was an ad-ethics ruling, not a copyright case.",
+    "real_person": "Yes. Two professional models known by the stage names 'Mario' and 'Laura', presumably covered by model releases for stock use. Agency licences usually restrict unflattering or sensitive uses of models, so the infidelity framing should be checked against the licence terms.",
+    "risk": "medium",
+    "risk_reason": "There is a clear, cheap commercial licence on a major stock site, the photographer is known and not aggressive, and the models are professionals photographed for stock. The remaining checks are the licence's product-use and sensitive-use clauses.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Distracted_boyfriend",
+      "https://petapixel.com/2017/09/18/story-behind-viral-distracted-boyfriend-meme-photo/",
+      "https://www.istockphoto.com/hk/%E7%85%A7%E7%89%87/disloyal-man-with-his-girlfriend-looking-at-another-girl-gm493656728-77018851",
+      "https://dailydot.com/distracted-boyfriend-meme-history-mario-and-laura"
+    ],
+    "verified": true,
+    "skeptic": "The low rating rests on a cheap standard licence (about USD 7.49 to 12) that probably does not cover this use. The image is the meme image itself: iStock ID 493656728 by AntonioGuillem, uploaded 1 Nov 2015, royalty-free, not editorial-only.\n- **Resale and distribution limit:** the current iStock agreement (updated July 2026), Section 3(12) \"No Products for Resale\", bars standard-licence use \"in connection with any goods or services intended for resale or distribution\" where the primary value lies in the content. Its own examples include mobile applications. In a meme reaction feature the meme is the main value, so a public game that may earn money likely falls under this.\n- **Extended licence needed:** the licence table marks \"Products for resale/Electronic templates\" as \"Not permitted\" under the standard licence. Only the Extended licence allows \"Unlimited for electronic products such as mobile applications\". Extended licences are sold per file with credits and cost far more than USD 12.\n- **Sensitive use:** Section 3(5) says that when models appear in a context that is \"unflattering or unduly controversial to a reasonable person\", you must show a disclaimer (\"Stock photo. Posed by model.\"). The infidelity framing, and mocking a chess loser with it, plausibly triggers this. It is a real obligation, not a free pass.\n- **Real people:** the two subjects are real models. Model-release scope for this framing is not confirmed.\n- **Enforcement:** Getty Images, which owns iStock, has a well-known history of compliance demand letters. Guillem says unlicensed use is illegal. His promise not to sue covers only good-faith meme sharing, not a commercial product.\n- **No direct cases found:** I found no specific lawsuit or DMCA notice over this image.\n\nSo a licence path exists, but it is the Extended licence plus a disclaimer, with real-person concerns on top. That makes it medium, not low. One more check: buying through Shutterstock needs its own Enhanced or app-use terms checked, and the researcher did not retrieve that listing.",
+    "skeptic_sources": [
+      "https://www.istockphoto.com/photo/disloyal-man-with-his-girlfriend-looking-at-another-girl-gm493656728-77018851",
+      "https://www.istockphoto.com/en/legal/license-agreement",
+      "https://www.istockphoto.com/help/licenses",
+      "https://en.wikipedia.org/wiki/Distracted_boyfriend",
+      "https://petapixel.com/2017/09/18/story-behind-viral-distracted-boyfriend-meme-photo/",
+      "https://money.com/the-photographer-behind-the-distracted-boyfriend-meme-isnt-making-any-money-off-its-popularity/",
+      "https://knowyourmeme.com/memes/distracted-boyfriend"
+    ],
+    "url": "https://knowyourmeme.com/memes/distracted-boyfriend",
+    "origin_type": "stock photo",
+    "peak_years": "2017-2022 (evergreen)",
+    "meaning": "Abandoning what you have for a tempting new option.",
+    "chess_moments": [
+      "poisoned_bait",
+      "free_pawn",
+      "hanging_piece",
+      "throw"
+    ]
+  },
+  {
+    "name": "Hide the Pain Harold",
+    "origin": "Stock photo series of András Arató, a retired Hungarian electrical engineer, made for Dreamstime around 2009-2010. Facepunch users spotted the photos in 2011 because of the Dreamstime watermarks. Arató identified himself in 2016. Imgur named it meme of the decade in 2020, and it stayed in heavy use through 2021-2026.",
+    "owner": "The photographer who shot the series (name not found) and the Dreamstime contributor account. Arató is the model, not the copyright holder.",
+    "license_path": "Probably licensable through Dreamstime as a standard stock licence, but I could not confirm the specific listing URL or contributor (Dreamstime returned 403 to automated fetches). Wikipedia lists a Dreamstime gallery under external links. Arató reportedly agreed to stock use excluding politics, religion and sex. He also takes commercial modelling and ad work (for example Coca-Cola Hungary in 2019), so a direct deal may be possible.",
+    "enforcement": "No lawsuits, takedowns or licensing demands found.",
+    "real_person": "Yes. András Arató is a private individual turned public meme figure. He was initially unhappy about captions but has since accepted the meme. His stated exclusions (politics, religion, sex) do not conflict with chess humour. Using his likeness in a commercial game adds publicity-right considerations beyond the photo licence.",
+    "risk": "medium",
+    "risk_reason": "A stock licence path very likely exists through Dreamstime and the owners are not aggressive, but I did not confirm the listing, contributor or licence terms. The image also features a real, identifiable person.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Hide_the_Pain_Harold",
+      "https://dailydot.com/hide-pain-harold-interview",
+      "https://444.hu/2016/03/10/hogyan-lett-egy-budapesti-nyugdijasbol-hide-the-pain-harold-a-netes-vilagsztar",
+      "https://www.pokernews.com/news/2019/12/hide-the-pain-harold-ept-prague-36227.htm"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/hide-the-pain-harold",
+    "origin_type": "stock photo",
+    "peak_years": "2011-2024 (evergreen)",
+    "meaning": "Smiling through obvious inner pain.",
+    "chess_moments": [
+      "hung_queen",
+      "blunder",
+      "rook_endgame",
+      "dead_draw",
+      "hanging_piece",
+      "throw",
+      "stalemate",
+      "small_slip"
+    ]
+  },
+  {
+    "name": "Woman Yelling at a Cat",
+    "origin": "A composite meme first posted by Twitter user @MISSINGEGIRL on May 1, 2019. The left panel is a screenshot of Taylor Armstrong from The Real Housewives of Beverly Hills, season 2 (December 2011). The right panel is a photo of the cat Smudge that owner Miranda Stillabower posted on Tumblr in June 2018. It won the 2020 Shorty Award for Meme of the Year and stayed in heavy use 2021-2026.",
+    "owner": "Left panel: the producers or network of The Real Housewives of Beverly Hills (Bravo, NBCUniversal; not confirmed from a primary source). Right panel: Miranda Stillabower, who took the Smudge photo.",
+    "license_path": "No known licence for the TV still. The Smudge half might be licensable from Stillabower through smudge-lord.com or the smudge_lord Instagram account (she has done merch and a Hot Topic deal), but I could not confirm a licensing contact. No stock or Creative Commons source found.",
+    "enforcement": "No lawsuits or takedowns found. Smudge's owners sell official merchandise.",
+    "real_person": "Yes. Taylor Armstrong is a reality TV personality. The screenshot comes from an argument tied to domestic violence she experienced. She has been publicly good-humoured about the meme, but commercial use of her image raises publicity-right and sensitivity concerns.",
+    "risk": "high",
+    "risk_reason": "Half of the image is a studio TV still with no licence path, and it shows a real public figure in an emotionally sensitive moment.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Woman_yelling_at_a_cat",
+      "https://knowyourmeme.com/editorials/smudge-the-cat-and-his-owner-give-us-the-full-scoop-on-how-he-became-an-internet-star-and-the-woman-yelling-at-cat-meme"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/woman-yelling-at-a-cat",
+    "origin_type": "film or TV still",
+    "peak_years": "2019-2023",
+    "meaning": "Furious accusation met by a confused, smug reply.",
+    "chess_moments": [
+      "en_passant",
+      "engine_vibes",
+      "stalemate",
+      "payback"
+    ]
+  },
+  {
+    "name": "Drakeposting",
+    "origin": "Frames from Drake's 'Hotline Bling' music video, directed by Director X, financed by Apple and released on Apple Music on October 19, 2015. The reaction image circulated on 4chan from late 2015 and spread widely in 2016. It remained one of the most used templates through 2021-2026.",
+    "owner": "The music video rights holders: Drake/OVO and Cash Money, Young Money and Republic Records (Universal Music Group). Apple financed the video. The exact copyright holder of the video was not confirmed.",
+    "license_path": "None known. Licensing would mean clearing rights with the label or rights holder and Drake's representatives for his likeness. That is not practical or affordable for a small game.",
+    "enforcement": "No meme-specific lawsuits or takedowns found. Major labels and celebrity estates routinely enforce against commercial use.",
+    "real_person": "Yes. Drake is a major celebrity with strong publicity rights, and commercial use of his likeness in a game is a serious risk.",
+    "risk": "high",
+    "risk_reason": "It is a music-video still of a major celebrity owned by a major label, with no licence path. Commercial use creates both copyright and right-of-publicity exposure.",
+    "sources": [
+      "https://knowyourmeme.com/memes/drakeposting",
+      "https://en.wikipedia.org/wiki/Hotline_Bling"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/drakeposting",
+    "origin_type": "film or TV still",
+    "peak_years": "2015-2024 (evergreen)",
+    "meaning": "Rejecting one option, approving another.",
+    "chess_moments": [
+      "underpromotion",
+      "exchange_sac",
+      "castling",
+      "queen_trade"
+    ]
+  },
+  {
+    "name": "Unsettled Tom",
+    "origin": "A paint-style panel of Tom (from Tom and Jerry) drawn by DeviantArt user lazerbot in the fan comic 'Fuds Choice 8' from the Tails Gets Trolled series, uploaded May 10, 2012. It circulated on 4chan /co/ from January 2013 and spread widely on r/dankmemes from March 2019. It was still heavily used 2021-2026.",
+    "owner": "The fan artist lazerbot owns the drawing, but it is a derivative of the Tom character. The character's copyright and trademark sit with Warner Bros. Discovery (Turner Entertainment). I did not confirm the current rights holder from a primary source.",
+    "license_path": "None known. The fan artist cannot license the underlying Warner Bros. character, and Warner Bros. does not offer small-game meme licences.",
+    "enforcement": "No lawsuits or takedowns specific to this image found.",
+    "real_person": "No real person. The issue is studio character IP.",
+    "risk": "high",
+    "risk_reason": "It is an unauthorised derivative of a major studio's trademarked cartoon character, with no licence path from the fan artist or the studio.",
+    "sources": [
+      "https://knowyourmeme.com/memes/unsettled-tom"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/unsettled-tom",
+    "origin_type": "artwork or comic",
+    "peak_years": "2019-2022",
+    "meaning": "Quiet horrified concern at something wrong.",
+    "chess_moments": [
+      "hanging_piece",
+      "hung_queen",
+      "king_walk",
+      "poisoned_bait"
+    ]
+  },
+  {
+    "name": "Panik Kalm",
+    "origin": "A three-panel exploitable featuring Meme Man (a crude grey 3D head render). The earliest known use was by Redditor svenskOST_ on February 19, 2020. Meme Man himself reportedly comes from a 3D head posted on 4chan's /3/ board years earlier (unverified) and was popularised by the Facebook page Special meme fresh in the mid-2010s.",
+    "owner": "Unknown. The creator of the Meme Man 3D head is unidentified, and the Panik Kalm layout comes from an anonymous Redditor.",
+    "license_path": "None known. No stock listing, Creative Commons licence or owner offering licences found. The three-panel joke format (panic, calm, panic) is an idea and can be reproduced with original art, but that would not be the famous image itself.",
+    "enforcement": "None found.",
+    "real_person": "No identifiable real person.",
+    "risk": "medium",
+    "risk_reason": "The owner is unknown and there is no licence path, but I found no enforcement history and the art is an anonymous community render, not a studio or celebrity image.",
+    "sources": [
+      "https://knowyourmeme.com/memes/panik-kalm",
+      "https://knowyourmeme.com/memes/meme-man"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/panik-kalm",
+    "origin_type": "artwork or comic",
+    "peak_years": "2019-2022",
+    "meaning": "Alternating panic and relief as news changes.",
+    "chess_moments": [
+      "comeback",
+      "throw",
+      "payback",
+      "time_scramble",
+      "poisoned_bait"
+    ]
+  },
+  {
+    "name": "Draw 25 (UNO)",
+    "origin": "A two-panel image macro first posted by Facebook user Damien Jones on January 4, 2020. One panel is an edited UNO wild card ('do X or draw 25') and the other is a photo of a man holding a huge hand of UNO cards. It spread on Twitter (@Fujyno, January 5, 2020), Reddit and Instagram that month and was widely used through 2021-2026.",
+    "owner": "Unknown. The photographer of the man with the cards is unidentified, and Know Your Meme does not say whether Damien Jones made the images. The UNO card design and trademark belong to Mattel.",
+    "license_path": "None known. No stock listing or Creative Commons source found for the card-hand photo. Mattel's UNO trade dress would need permission or a fully original card graphic.",
+    "enforcement": "No lawsuits or takedowns found for this meme.",
+    "real_person": "Yes, an unidentified man appears in the photo. With no known model release, there is a consent and publicity-right concern for commercial use.",
+    "risk": "medium",
+    "risk_reason": "The photo owner is unknown and there is no licence. It shows an unidentified real person and uses Mattel's UNO branding, though I found no enforcement history.",
+    "sources": [
+      "https://knowyourmeme.com/memes/draw-25",
+      "https://dailydot.com/?p=692666"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/draw-25",
+    "origin_type": "personal photo",
+    "peak_years": "2020-2022",
+    "meaning": "Choosing a huge penalty over doing the obvious thing.",
+    "chess_moments": [
+      "resign",
+      "timeout",
+      "rook_endgame"
+    ]
+  },
+  {
+    "name": "This Is Fine",
+    "origin": "Panel from KC Green's webcomic Gunshow, 'On Fire' strip, 2013; meme spread 2014 onward, evergreen through 2021-2026",
+    "owner": "KC Green (artist, holds copyright)",
+    "license_path": "No public licensing program found. Direct request to KC Green via kcgreendotcom.com. Official licensed merch exists (Funko, 100% Soft, RP Minis talking figurine, Kickstarter plush), so he does license, but terms are private",
+    "enforcement": "May 2026: Green publicly objected to AI startup Artisan using an altered This Is Fine in NYC subway ads without permission and said he would seek legal representation; ads reportedly removed and dispute resolved around May 31 2026 (settlement terms not verified)",
+    "real_person": "No, cartoon character",
+    "risk": "high",
+    "risk_reason": "Owner is known, actively protective of commercial use in 2026, and no ready licence exists. Could drop to medium or low only with a written licence from Green",
+    "sources": [
+      "https://techcrunch.com/2026/05/03/this-is-fine-creator-says-ai-startup-stole-his-art",
+      "https://meteoraweb.com/en/news/kc-green-reaches-agreement-with-ai-startup-artisan-over-this-is-fine-meme-usage",
+      "https://amp.cbc.ca/radio/asithappens/this-is-fine-meme-anniversary-1.6713594",
+      "https://specialsales.hbgusa.com/titles/kc-green/this-is-fine-talking-figurine/9780762484843"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/this-is-fine",
+    "origin_type": "artwork or comic",
+    "peak_years": "2013-2024 (evergreen)",
+    "meaning": "Pretending all is well amid disaster.",
+    "chess_moments": [
+      "mega_blunder",
+      "time_scramble",
+      "king_walk",
+      "steamroll",
+      "hung_queen"
+    ]
+  },
+  {
+    "name": "Disaster Girl",
+    "origin": "Photo by Dave Roth, January 2005, Mebane, North Carolina, fire department training burn; uploaded to Zooomr 2007, JPG Magazine 2008",
+    "owner": "Dave Roth and Zoe Roth (kept copyright after the April 2021 NFT sale to 3F Music for 180 ETH)",
+    "license_path": "Not sold on stock sites as far as found. Only path is a direct licence request to the Roth family; no public licensing contact found",
+    "enforcement": "No lawsuits or takedowns found. 2021 NFT sale explicitly kept copyright with the Roths",
+    "real_person": "Yes, identifiable real person (Zoe Roth, a minor at the time, now adult). Right of publicity and consent concerns in a commercial game, especially placed next to failure moments",
+    "risk": "high",
+    "risk_reason": "Personal photo of an identifiable real person, copyright held by the family, no ready licence. Would need both copyright licence and model consent from Zoe Roth",
+    "sources": [
+      "https://knowyourmeme.com/memes/disaster-girl",
+      "https://petapixel.com/2021/05/01/disaster-girl-meme-photo-sells-for-500000-as-an-nft/",
+      "https://www.bostonglobe.com/2021/04/29/arts/world-knows-her-disaster-girl-she-sold-an-nft-her-meme-500000"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/disaster-girl",
+    "origin_type": "personal photo",
+    "peak_years": "2008-2021 (NFT sale 2021)",
+    "meaning": "Smirking culprit in front of chaos.",
+    "chess_moments": [
+      "poisoned_bait",
+      "fork",
+      "checkmate",
+      "capture_spree",
+      "steamroll"
+    ]
+  },
+  {
+    "name": "Surprised Pikachu",
+    "origin": "Still from the Pokemon anime (episode 'Pikachu Re-Volts', 1997 era); meme spread 2018, evergreen through 2026",
+    "owner": "The Pokemon Company / Nintendo / Game Freak / Creatures (anime by OLM, distributed by TV Tokyo/ShoPro)",
+    "license_path": "None practical. Only official licensing via The Pokemon Company International, not available to a small indie game for meme use",
+    "enforcement": "Very aggressive: 2015 lawsuit against an unofficial PAX Pokemon party over Pikachu posters ($4,000 demand), hundreds of fan game takedowns (e.g. Pokemon Uranium), 2025-2026 public objections to White House memes using Pikachu",
+    "real_person": "No",
+    "risk": "high",
+    "risk_reason": "TV/studio still of one of the most aggressively enforced IPs in the world, trademark plus copyright",
+    "sources": [
+      "https://www.tweaktown.com/news/47843/spurned-pokemon-fan-raises-4000-pay-copyright-fine/index.html",
+      "https://www.axios.com/2022/01/24/fan-made-game-escapes-nintendo",
+      "https://www.aol.com/articles/pok-mon-company-issues-another-094511427.html"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/surprised-pikachu",
+    "origin_type": "film or TV still",
+    "peak_years": "2018-2024 (evergreen)",
+    "meaning": "Fake shock at an entirely predictable outcome.",
+    "chess_moments": [
+      "hanging_piece",
+      "hung_queen",
+      "fast_mate",
+      "timeout",
+      "poisoned_bait",
+      "stalemate"
+    ]
+  },
+  {
+    "name": "Daily Struggle (Two Buttons)",
+    "origin": "Comic by animator Jake Clark, posted to his Tumblr on October 25, 2014; 'Daily Struggle' name came from reposts",
+    "owner": "Jake Clark",
+    "license_path": "No public licence or stock listing found. Direct request to Jake Clark",
+    "enforcement": "None found",
+    "real_person": "No, drawn character",
+    "risk": "medium",
+    "risk_reason": "Known individual creator with no known enforcement, but no licence path exists; needs his written permission to be low",
+    "sources": [
+      "https://knowyourmeme.com/memes/daily-struggle-two-buttons",
+      "https://meme.com/memes/two-buttons"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/daily-struggle",
+    "origin_type": "artwork or comic",
+    "peak_years": "2016-2023 (evergreen)",
+    "meaning": "Sweating over an impossible choice.",
+    "chess_moments": [
+      "long_think",
+      "fork",
+      "trapped_piece"
+    ]
+  },
+  {
+    "name": "Galaxy Brain (Expanding Brain)",
+    "origin": "Grew out of the 'Whomst' meme on r/dankmemes, January 31 2017 (janskishimanski post is an early popular example); evergreen template",
+    "owner": "Unknown. Composite of brain images from undocumented sources (likely stock or medical/3D renders), assembled by anonymous users",
+    "license_path": "None known for the canonical template. Same concept can be rebuilt legally from licensed stock brain renders (Shutterstock, Adobe Stock) since the format itself is not copyrightable",
+    "enforcement": "None found",
+    "real_person": "No",
+    "risk": "medium",
+    "risk_reason": "Unknown owners of component images and no enforcement history; the format is free to rebuild from licensed stock, which would make a custom version low risk",
+    "sources": [
+      "https://knowyourmeme.com/memes/galaxy-brain"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/galaxy-brain",
+    "origin_type": "other",
+    "peak_years": "2017-2022",
+    "meaning": "Ironically escalating 'smarter' ideas that get dumber.",
+    "chess_moments": [
+      "underpromotion",
+      "big_sac",
+      "king_walk",
+      "exchange_sac"
+    ]
+  },
+  {
+    "name": "Awkward Look Monkey Puppet",
+    "origin": "Puppet 'Kenta' (Pedro in Spanish dub) from NHK educational show Okiku Naru Ko, produced by Studio Nova, 1959-1988; meme edit made by Peruvian musician Daniel Flores around 2016, spread to English internet around 2019",
+    "owner": "NHK / Studio Nova (show footage); Daniel Flores claims creation of the edit",
+    "license_path": "None known. NHK program footage licensing would be a formal broadcaster request, not practical",
+    "enforcement": "None found for the meme",
+    "real_person": "No (puppet)",
+    "risk": "high",
+    "risk_reason": "Broadcaster TV still with no licence path, per the high-risk rule for film/TV stills despite no enforcement found",
+    "sources": [
+      "https://knowyourmeme.com/memes/monkey-puppet",
+      "https://knowyourmeme.com/editorials/the-creator-of-the-awkward-look-monkey-puppet-meme-reveals-the-true-origins-of-his-creation",
+      "https://www.lostmediawiki.com/Ōkiku_naru_Ko_(lost_original_Japanese_version_of_puppet_TV_series;_1959-1988)"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/awkward-look-monkey-puppet",
+    "origin_type": "film or TV still",
+    "peak_years": "2019-2024",
+    "meaning": "Awkward side glance after an embarrassing moment.",
+    "chess_moments": [
+      "small_slip",
+      "hanging_piece",
+      "stalemate",
+      "engine_vibes",
+      "blunder",
+      "poisoned_bait"
+    ]
+  },
+  {
+    "name": "Is This a Pigeon?",
+    "origin": "Screencap from anime The Brave Fighter of Sun Fighbird, episode 3, February 1991; Tumblr screencap December 2011, viral 2018",
+    "owner": "Sunrise (now Bandai Namco Filmworks) and broadcast partners (Nagoya TV)",
+    "license_path": "None. Series never officially licensed in English; no stock listing",
+    "enforcement": "None found for the meme; Sunrise/Bandai Namco is a large studio",
+    "real_person": "No",
+    "risk": "high",
+    "risk_reason": "Anime studio still with no licence path",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Is_this_a_pigeon%3F",
+      "https://knowyourmeme.com/memes/is-this-a-pigeon",
+      "https://meme.com/memes/is-this-a-pigeon"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/is-this-a-pigeon",
+    "origin_type": "film or TV still",
+    "peak_years": "2018-2022",
+    "meaning": "Confidently misidentifying something.",
+    "chess_moments": [
+      "poisoned_bait",
+      "free_piece",
+      "en_passant",
+      "hanging_piece",
+      "underpromotion"
+    ]
+  },
+  {
+    "name": "Stonks",
+    "origin": "Meme Man (surreal 3D head, first posted by the Facebook page Special meme fresh on 9 Aug 2014) placed over a stock photo of a businessman in front of a rising chart. The Stonks image was posted 5 June 2017.",
+    "owner": "Unknown. Credited to the anonymous artist or page 'Special meme fresh'. KYM says the head model came from an old 4chan 3DCG board post. The background is a third-party stock photo whose listing was not identified.",
+    "license_path": "None known. No public licence from Special meme fresh was found, and the background stock photo's agency and listing were not identified. A recreated Meme Man without the stock background would still copy the character.",
+    "enforcement": "None found. Epic used Meme Man's design for a 2021 Fortnite April Fools skin, and no dispute was reported.",
+    "real_person": "No real person in the Meme Man figure. The stock photo background may show a model, but that release would only matter if the background is used.",
+    "risk": "medium",
+    "risk_reason": "No ready licence, the owner is anonymous, and the background is someone else's stock photo. No enforcement history and no real-person issue, so not high. It drops toward low if CHASS uses only the Meme Man head on its own chart and gets permission from Special meme fresh.",
+    "sources": [
+      "https://knowyourmeme.com/memes/stonks",
+      "https://en.wikipedia.org/wiki/Meme_Man"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/stonks",
+    "origin_type": "artwork or comic",
+    "peak_years": "2017-2022 (GameStop surge 2021)",
+    "meaning": "Ironic celebration of a (often dumb) gain.",
+    "chess_moments": [
+      "free_pawn",
+      "free_piece",
+      "promotion",
+      "capture_spree",
+      "steamroll",
+      "comeback"
+    ]
+  },
+  {
+    "name": "Sad Pablo Escobar (Pablo Escobar Waiting)",
+    "origin": "Stills of Wagner Moura as Pablo Escobar from Netflix's Narcos season 2 (released 2 Sept 2016). Made into three-panel macros on Meme Generator around Oct 2016.",
+    "owner": "Netflix and the Narcos production company (Gaumont International Television co-produced). The exact copyright holder was not confirmed from a primary source.",
+    "license_path": "None known. No stock listing. Any clip or still licensing would go through the studio, and no public meme-licensing programme was found.",
+    "enforcement": "No meme-specific takedowns found.",
+    "real_person": "Yes. Actor Wagner Moura is identifiable, which raises a right-of-publicity concern for commercial use. It also depicts a real drug lord, whose family has disputed the show.",
+    "risk": "high",
+    "risk_reason": "This is a TV still owned by a major studio, with an identifiable actor and no licence path.",
+    "sources": [
+      "https://dailydot.com/pablo-escobar-meme",
+      "https://amp.knowyourmeme.com/memes/pablo-escobar-waiting"
+    ],
+    "verified": false
+  },
+  {
+    "name": "Crying Jordan",
+    "origin": "AP photo by Stephan Savoia of Michael Jordan crying during his Basketball Hall of Fame induction speech in Springfield, Mass., 11 Sept 2009. It became a meme around late 2014 and 2015.",
+    "owner": "The Associated Press. AP spokesman Paul Colford told ESPN that AP owns the rights. The caption reads 'Copyright 2009 Associated Press', with no publish or redistribute allowed.",
+    "license_path": "AP licensing (AP Images / AP Newsroom). No specific listing URL for this frame was confirmed. AP normally licenses news photos for editorial use, and commercial or game use would need a separate negotiation. Jordan's likeness would also need clearance.",
+    "enforcement": "AP said it 'could enforce those rights depending on the use'. No specific action against meme use was found. Jordan's spokesperson Estee Portnoy said his camp was monitoring for commercial use of the meme.",
+    "real_person": "Yes, Michael Jordan. He is a very high-profile celebrity known for protecting his name and likeness commercially, so the right-of-publicity concern is strong for a money-making game.",
+    "risk": "high",
+    "risk_reason": "A wire-agency press photo with stated ownership, plus a celebrity likeness whose camp says it watches for commercial use.",
+    "sources": [
+      "https://africa.espn.com/nba/story/_/id/14788779/can-wildly-popular-often-hilarious-crying-michael-jordan-meme-get-sued",
+      "https://en.wikipedia.org/wiki/Crying_Jordan",
+      "https://en.wikipedia.org/wiki/Stephan_Savoia",
+      "https://chicagodefender.com/basketball-hall-to-welcome-four-greats-and-maybe-the-greatest/"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/crying-jordan",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2012-2022 (evergreen)",
+    "meaning": "Defeat and sadness of the loser.",
+    "chess_moments": [
+      "resign",
+      "throw",
+      "timeout",
+      "stalemate"
+    ]
+  },
+  {
+    "name": "Spider-Man Pointing at Spider-Man",
+    "origin": "Frame from 'Double Identity' (episode 19b) of the 1967 ABC Spider-Man animated series, produced by Grantray-Lawrence Animation. The first known meme use was a Feb 2011 Sharenator post.",
+    "owner": "Marvel (The Walt Disney Company) owns the Spider-Man character. Rights to the 1967 series footage are held within the Disney/Marvel catalogue. The exact footage rights holder was not confirmed from a primary source.",
+    "license_path": "None known. There is no stock listing, and licensing would go through Disney/Marvel, which is not realistic for a small game. Officially licensed merchandise of this pose exists (an Iron Studios statue), which shows Marvel treats the pose as licensable IP.",
+    "enforcement": "No meme-specific takedowns found. Disney is broadly known for strict IP enforcement.",
+    "real_person": "No real person.",
+    "risk": "high",
+    "risk_reason": "This is a Disney/Marvel character and studio animation frame, and the pose is commercially licensed as merchandise.",
+    "sources": [
+      "https://meme.com/memes/spider-man-pointing-at-spider-man",
+      "https://www.looper.com/1307292/history-spidermans-pointing-meme-explained/",
+      "https://time.com/6284524/spider-man-meme-pointing-origins"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/spider-man-pointing-at-spider-man",
+    "origin_type": "film or TV still",
+    "peak_years": "2011-2022 (evergreen)",
+    "meaning": "Two identical things accusing each other.",
+    "chess_moments": [
+      "payback",
+      "queen_trade",
+      "even_trade",
+      "dead_draw"
+    ]
+  },
+  {
+    "name": "Ight Imma Head Out",
+    "origin": "Screenshot of SpongeBob getting up from a chair in the SpongeBob SquarePants episode 'The Smoking Peanut' (aired 8 March 2001). Went viral on Twitter in 2019.",
+    "owner": "Nickelodeon (Paramount). Owner inferred from the show's ownership, not from a primary source read in this research.",
+    "license_path": "None known. No stock listing. Licensing would go through Paramount/Nickelodeon consumer products.",
+    "enforcement": "None found specific to this meme.",
+    "real_person": "No real person.",
+    "risk": "high",
+    "risk_reason": "This is a studio TV animation frame of a major licensed character, with no licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/ight-imma-head-out"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/ight-imma-head-out",
+    "origin_type": "film or TV still",
+    "peak_years": "2019-2022",
+    "meaning": "Casually leaving a bad situation.",
+    "chess_moments": [
+      "resign",
+      "timeout",
+      "king_walk"
+    ]
+  },
+  {
+    "name": "Gru's Plan",
+    "origin": "Scene from Despicable Me (2010, Illumination / Universal) where Gru presents his plan on a flip board. The four-panel format began on Reddit r/deepfriedmemes on 9 March 2018.",
+    "owner": "Universal Pictures / Illumination. Owner inferred from the film's ownership, and no studio statement on meme use was found.",
+    "license_path": "None known. No stock listing. The Minions/Despicable Me IP is licensed only through Universal's consumer products deals. Meme template sites that call it 'free' are not rights holders.",
+    "enforcement": "None found specific to this meme.",
+    "real_person": "No real person (animated character). The voice actor is not involved in a still image.",
+    "risk": "high",
+    "risk_reason": "This is a major studio film still from a heavily licensed franchise, with no licence path.",
+    "sources": [
+      "https://amp.knowyourmeme.com/memes/grus-plan",
+      "https://meme.com/memes/grus-plan/md",
+      "https://dailydot.com/gru-plan-meme"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/grus-plan",
+    "origin_type": "film or TV still",
+    "peak_years": "2017-2022",
+    "meaning": "A plan whose last step reveals a fatal flaw.",
+    "chess_moments": [
+      "throw",
+      "poisoned_bait",
+      "stalemate",
+      "big_sac",
+      "mega_blunder"
+    ]
+  },
+  {
+    "name": "Math Lady / Confused Lady (Nazare Confusa)",
+    "origin": "Scene of Renata Sorrah as Nazare Tedesco in the Brazilian telenovela Senhora do Destino (TV Globo, 2004). The earliest known reaction use was 31 Oct 2013 on UKMix, and the math overlays were added later.",
+    "owner": "TV Globo, as producer and broadcaster. Owner inferred and not confirmed from a primary source.",
+    "license_path": "None known. No stock listing. Clearance would be needed from Globo for the footage and from Sorrah for her likeness.",
+    "enforcement": "None found. Sorrah has said of the meme 'I don't have control of it, but it doesn't bother me', which is tolerance, not a licence.",
+    "real_person": "Yes, actress Renata Sorrah is identifiable. Commercial use raises personality or image-rights issues, which are strong under Brazilian law and in EU jurisdictions.",
+    "risk": "high",
+    "risk_reason": "This is a TV still from a major broadcaster, with an identifiable actress and no licence path. Her tolerant attitude does not amount to permission.",
+    "sources": [
+      "https://knowyourmeme.com/memes/math-lady-confused-lady",
+      "https://en.wikipedia.org/wiki/Math_Lady",
+      "https://en.wikipedia.org/wiki/Renata_Sorrah"
+    ],
+    "verified": false
+  },
+  {
+    "name": "Bugs Bunny's 'No'",
+    "origin": "Still from the Looney Tunes short 'The Big Snooze' (US premiere 5 Oct 1946). First posted as a rotated reaction still by Tumblr user whyx3 on 14 Feb 2015. The 'No' caption took off from Redditor asofi00 on 14 Apr 2019.",
+    "owner": "Warner Bros. (Looney Tunes catalogue). The 1946 short is still under US copyright, since works from 1946 get 95 years. Bugs Bunny is also a Warner Bros. trademark. Warner ownership of the catalogue is general knowledge; the KYM page names the cartoon but not the studio.",
+    "license_path": "No stock listing, CC licence or public licence found. The only legal route is a negotiated character licence from Warner Bros. Discovery Global Consumer Products, which is not realistic for a small indie game.",
+    "enforcement": "Warner Bros. actively enforces Bugs Bunny rights. It made a copyright claim against the MeatCanyon parody video, sued over knockoff Bugs Bunny jewelry, and registered a trademark on the 'Big Chungus' meme. No action found against this particular meme.",
+    "real_person": "No real person.",
+    "risk": "high",
+    "risk_reason": "A studio-owned animation still of a trademarked character from an aggressive rights holder, with no affordable licence. Using it in a monetized game would also be a trademark use.",
+    "sources": [
+      "https://knowyourmeme.com/memes/bugs-bunnys-no",
+      "https://reclaimthenet.org/meatcanyon-bugs-bunny-wabbit-season-copyright-claim",
+      "https://news.bloomberglaw.com/ip-law/bugs-bunny-jewelry-ripped-off-famous-rabbit-warner-bros-alleges"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/bugs-bunnys-no",
+    "origin_type": "film or TV still",
+    "peak_years": "2019-2021",
+    "meaning": "Smug flat refusal.",
+    "chess_moments": [
+      "resign",
+      "poisoned_bait",
+      "dead_draw"
+    ]
+  },
+  {
+    "name": "Elmo Rise",
+    "origin": "Not a Sesame Street frame. It is a photo of a crude Elmo cake decoration, first posted by Jen of CakeWrecks.com on 1 Nov 2012, later edited onto a black background with flames by an unknown person.",
+    "owner": "Mixed and unclear. The cake photo belongs to the CakeWrecks blogger or the original photographer. The flame edit is by an unknown person. Elmo the character (copyright and trademark) belongs to Sesame Workshop.",
+    "license_path": "None known. No stock listing or CC licence. You would need permission from the CakeWrecks owner for the photo plus a character licence from Sesame Workshop, and the second is unlikely for this use.",
+    "enforcement": "No action against this meme found. Sesame Workshop is known to protect its characters (from general knowledge, not checked in this pass).",
+    "real_person": "No real person.",
+    "risk": "high",
+    "risk_reason": "It shows a famous trademarked children's character, and the edit's chain of title is unclear. Commercial use in a game ties Elmo to your product.",
+    "sources": [
+      "https://knowyourmeme.com/memes/elmo-rise",
+      "https://knowyourmeme.com/editorials/where-did-the-elmo-rise-meme-come-from-the-classic-image-of-elmo-surrounded-by-fire-explained"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/elmo-rise",
+    "origin_type": "film or TV still",
+    "peak_years": "2019-2022",
+    "meaning": "Chaotic villain power-up amid fire.",
+    "chess_moments": [
+      "capture_spree",
+      "check_spam",
+      "steamroll",
+      "checkmate",
+      "big_sac"
+    ]
+  },
+  {
+    "name": "Drake Hotline Bling (Drakeposting)",
+    "origin": "Two frames from Drake's 'Hotline Bling' music video (2015). From general knowledge, not confirmed this session: directed by Director X, released October 2015 under Young Money, Cash Money and Republic Records (Universal).",
+    "owner": "The record label or video production owner (likely Universal Music Group or its labels). Drake holds publicity rights in his likeness.",
+    "license_path": "No stock or CC listing found. The only route is a licence from the label for the frames plus Drake's likeness consent, which is not realistic.",
+    "enforcement": "No lawsuit or DMCA action found over the meme itself. Drake was reported (Eastern Mirror) to be pursuing a company for unauthorized commercial use of his images, which is relevant to commercial use of his face.",
+    "real_person": "Yes. Drake is identifiable, and using his likeness in a commercial game raises a US right-of-publicity issue and EU personality and image rights.",
+    "risk": "high",
+    "risk_reason": "A music-video still of a global celebrity. It combines label copyright with publicity rights, and there is no licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/drakeposting",
+      "https://www.slate.com/blogs/browbeat/2015/10/22/drake_s_hotline_bling_video_resembles_james_turrell_s_light_installations.html",
+      "https://www.easternmirrornagaland.com/drake-to-sue-company-for-unauthorised-use-of-his-images",
+      "https://www.law360.ca/ca/articles/1751775"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/drakeposting",
+    "origin_type": "film or TV still",
+    "peak_years": "2015-2024 (Imgflip #1 template as of Oct 2026)",
+    "meaning": "Reject the bad option, approve the better one.",
+    "chess_moments": [
+      "even_trade",
+      "queen_trade",
+      "castling",
+      "great_find",
+      "free_pawn"
+    ]
+  },
+  {
+    "name": "Two Buttons (Daily Struggle)",
+    "origin": "Original comic by animator Jake Clark, posted to his Tumblr on 25 Oct 2014. It went viral after Imgur user Robban39 reposted it as 'Daily Struggle' on 1 Feb 2015. Clark later worked on Cuphead and at Innersloth (Among Us).",
+    "owner": "Jake Clark (the comic's creator)",
+    "license_path": "No stock listing, CC licence or public licensing terms found. The realistic route is to email Jake Clark directly for written permission, perhaps through Innersloth or his social accounts. A fresh original drawing of 'sweating person choosing between two buttons' is another option, because the concept is not copyrightable, only his drawing is.",
+    "enforcement": "None found.",
+    "real_person": "No. It is a cartoon character.",
+    "risk": "medium",
+    "risk_reason": "The owner is a known individual artist with no enforcement found, but there is no ready licence, so permission is needed for a commercial game.",
+    "sources": [
+      "https://knowyourmeme.com/memes/daily-struggle-two-buttons",
+      "https://meme.com/memes/two-buttons"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/daily-struggle",
+    "origin_type": "artwork or comic",
+    "peak_years": "2016-2026 (Imgflip #2)",
+    "meaning": "Sweating over two equally tempting choices.",
+    "chess_moments": [
+      "long_think",
+      "poisoned_bait",
+      "time_scramble",
+      "exchange_sac"
+    ]
+  },
+  {
+    "name": "Bernie I Am Once Again Asking",
+    "origin": "Frame from a Bernie Sanders 2020 campaign fundraising video posted 30 Dec 2019 to his Twitter, Instagram and Facebook ahead of the FEC deadline. It became a meme in January 2020.",
+    "owner": "Probably the Bernie 2020 campaign committee or whoever produced the video. Not confirmed.",
+    "license_path": "No stock listing or CC licence found on any source read. The only route is permission from the campaign or Sanders's office, which is unlikely for a commercial game.",
+    "enforcement": "No takedowns found. Sanders monetized a different meme (the January 2021 inauguration mittens photo) through his official store for charity, raising $1.8M, so his team is aware of meme value.",
+    "real_person": "Yes. He is a sitting US senator. Commercial use of his likeness raises right-of-publicity concerns and could imply political endorsement. EU image rights also apply.",
+    "risk": "high",
+    "risk_reason": "A press or campaign image of an identifiable politician with no licence path, and real-person and endorsement concerns in a monetized product.",
+    "sources": [
+      "https://knowyourmeme.com/memes/i-am-once-again-asking-for-your-financial-support",
+      "https://forward.com/news/439363/twitters-meme-du-jour-takes-inpsiration-from-a-bernie-sanders-campaign",
+      "https://time.com/5779804/bernie-sanders-memes/",
+      "https://revolt.tv/news/2021/1/27/22253065/bernie-sanders-meme-merchandise-charity"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/i-am-once-again-asking-for-your-financial-support",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2019-2025 (Imgflip #4)",
+    "meaning": "Repeatedly pleading for the same thing again.",
+    "chess_moments": [
+      "check_spam",
+      "dead_draw",
+      "blunder"
+    ]
+  },
+  {
+    "name": "UNO Draw 25 Cards",
+    "origin": "Two-panel image macro first posted on Facebook by Damien Jones on 4 Jan 2020 ('call/text your ex or draw 25'), reposted to Twitter by @Fujyno on 5 Jan 2020. Panel 1 is an UNO wild card with custom text. Panel 2 is a person holding a huge hand of cards, and that photo's source was not identified.",
+    "owner": "Unknown for the panel images. Mattel owns the UNO trademark and card trade dress.",
+    "license_path": "None known. No stock listing, CC licence or Mattel licence for this use found.",
+    "enforcement": "No action against the meme found, and no evidence of official UNO or Mattel use of it. Mattel is a large IP holder (general knowledge, not checked for this meme).",
+    "real_person": "Panel 2 may show a real person (a hand or person holding cards). Their identity and consent are unknown.",
+    "risk": "high",
+    "risk_reason": "The photo owner is unknown, and using a Mattel-trademarked card design in a commercial game is a trademark exposure. A low-risk alternative is a fresh, unbranded drawing of a generic card saying 'or draw 25', without UNO branding.",
+    "sources": [
+      "https://knowyourmeme.com/memes/draw-25",
+      "https://meme.com/memes/draw-25-cards"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/draw-25",
+    "origin_type": "other",
+    "peak_years": "2020-2026 (Imgflip #5)",
+    "meaning": "Choosing a huge penalty rather than doing the obvious thing.",
+    "chess_moments": [
+      "resign",
+      "hung_queen",
+      "king_walk",
+      "mega_blunder"
+    ]
+  },
+  {
+    "name": "Always Has Been (Wait, It's All Ohio)",
+    "origin": "MS Paint drawing of two astronauts (one holding a gun) by Redditor Wiegand6, posted to r/dankmemes on 11 Dec 2016. A realistic 3D-render version with EMU-suited astronauts and Earth spread in 2020. 'Ohio' variants followed later.",
+    "owner": "Original drawing: Wiegand6, real identity unknown. The realistic 2020 render's creator is unknown. It is not a confirmed NASA photo, so the NASA public domain status does not apply to it.",
+    "license_path": "No stock listing, CC licence or owner licence found. Legal workaround: the gag itself (astronaut realizing something, second astronaut with a gun saying 'always has been') is not copyrightable. A new illustration, or a composite built from genuinely public domain NASA photos (check each NASA image's own page), would be a low-risk path. The gun may also clash with platform and age-rating content policies.",
+    "enforcement": "None found.",
+    "real_person": "No identifiable person (helmeted astronauts).",
+    "risk": "medium",
+    "risk_reason": "The owner is unknown, but there is no enforcement history, and a clean recreation route exists. Using the circulating image as-is has no licence.",
+    "sources": [
+      "https://knowyourmeme.com/memes/wait-its-all-ohio-always-has-been",
+      "https://knowyourmeme.com/editorials/what-is-wait-its-all-ohio-the-always-has-been-meme-explained",
+      "https://dailydot.com/?p=850336"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/wait-its-all-ohio-always-has-been",
+    "origin_type": "artwork or comic",
+    "peak_years": "2020-2024 (Imgflip #6)",
+    "meaning": "Shocked realization that it was this way all along. Note: one astronaut holds a gun (age flag B).",
+    "chess_moments": [
+      "poisoned_bait",
+      "checkmate",
+      "fork",
+      "engine_vibes"
+    ]
+  },
+  {
+    "name": "Left Exit 12 Off Ramp",
+    "origin": "Composite built from a 2013 YouTube video, \"How to exit freeway like a boss\", uploaded by Fredrik Sorlie on July 4, 2013. The earliest known meme edit was posted December 29, 2017 (per Know Your Meme). It is a Photoshop composite of a car drifting onto an unsigned off-ramp.",
+    "owner": "Unclear. The underlying video frame likely belongs to the uploader, Fredrik Sorlie. The road-sign composite was made by an unknown editor. No rights holder has publicly claimed the image.",
+    "license_path": "None known. There is no stock listing and no CC licence. The only route would be contacting the video uploader through YouTube, and the composite editor is unidentified. A safer option is to commission a redraw of the format (car swerving onto an off-ramp) as original art.",
+    "enforcement": "None found.",
+    "real_person": "No identifiable person is shown (a car on a highway).",
+    "risk": "medium",
+    "risk_reason": "No ready licence exists and the owner of the composite is unknown. However, there is no enforcement history, no studio involvement and no person in the image. The format is easy to recreate as original art, which removes most of the risk.",
+    "sources": [
+      "https://knowyourmeme.com/memes/left-exit-12-off-ramp"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/left-exit-12-off-ramp",
+    "origin_type": "other",
+    "peak_years": "2018-2025 (Imgflip #7)",
+    "meaning": "Swerving away from the sensible path at the last second.",
+    "chess_moments": [
+      "throw",
+      "mega_blunder",
+      "king_walk",
+      "big_sac"
+    ]
+  },
+  {
+    "name": "Anakin Padme 4 Panel (For the Better, Right?)",
+    "origin": "Stills from Star Wars: Episode II, Attack of the Clones (2002). The 4-panel format was first posted on Twitter by @starwarsposting on April 21, 2021, per Know Your Meme.",
+    "owner": "Lucasfilm Ltd. (The Walt Disney Company). The Know Your Meme page names the film but not the studio, so ownership is general knowledge rather than confirmed here.",
+    "license_path": "None practical. Clip and still licensing from Disney/Lucasfilm is a negotiated studio deal with no self-serve option for a small game. There is no stock or CC route.",
+    "enforcement": "No takedown aimed at this meme was found. Disney is widely known to protect its IP aggressively, but no case specific to this meme was checked.",
+    "real_person": "Yes. Hayden Christensen and Natalie Portman are identifiable actors, so right-of-publicity concerns apply to commercial use in the US.",
+    "risk": "high",
+    "risk_reason": "This is a studio film still showing celebrity actors, with no licence path. Commercial use in a monetised game faces both copyright and publicity-right exposure.",
+    "sources": [
+      "https://knowyourmeme.com/memes/for-the-better-right"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/for-the-better-right",
+    "origin_type": "film or TV still",
+    "peak_years": "2021-2025 (Imgflip #8)",
+    "meaning": "Growing dread when the hoped-for answer never comes.",
+    "chess_moments": [
+      "poisoned_bait",
+      "exchange_sac",
+      "small_slip",
+      "blunder"
+    ]
+  },
+  {
+    "name": "Waiting Skeleton",
+    "origin": "A skeleton sitting on a bench, tied to the \"Waiting for OP\" image macros. Know Your Meme records the skeleton-on-bench image on a Meme Generator page created July 4, 2010. The phrase dates to 2005 forums. The provided Know Your Meme URL (memes/waiting-skeleton) returned 404.",
+    "owner": "Unknown. The original photographer or stock source could not be identified.",
+    "license_path": "None confirmed. No stock listing was found for the exact image. Generic stock photos of a skeleton on a bench do exist and could be licensed instead. A staged or illustrated original version is also trivial to make.",
+    "enforcement": "None found.",
+    "real_person": "No (a skeleton prop).",
+    "risk": "medium",
+    "risk_reason": "The owner is unknown and no licence was found, but there is no enforcement history and no person involved. Replacing it with a licensed stock skeleton photo or an original drawing would bring the risk down to low.",
+    "sources": [
+      "https://knowyourmeme.com/memes/waiting-for-op",
+      "https://knowyourmeme.com/memes/skeletons",
+      "https://knowyourmeme.com/memes/waiting-skeleton"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/waiting-skeleton",
+    "origin_type": "other",
+    "peak_years": "2014-2025 (Imgflip #13)",
+    "meaning": "Waited so long you turned to bones.",
+    "chess_moments": [
+      "long_think",
+      "rook_endgame",
+      "dead_draw"
+    ]
+  },
+  {
+    "name": "Woman Yelling at Cat",
+    "origin": "A composite of two images. The left half is a screenshot of Taylor Armstrong from The Real Housewives of Beverly Hills (Bravo, December 2011 episode). The right half is a photo of Smudge the cat posted to Tumblr in June 2018. The meme spread from 2019.",
+    "owner": "Left half: NBCUniversal/Bravo, the TV network. Right half: Miranda Stillabower, Smudge's owner, who posted the photo.",
+    "license_path": "Left half: none practical, since it needs a network clip licence plus the cast member's consent. Right half: Smudge's owner has done licensing deals (Hot Topic shirts, a neon sign company) and runs an Etsy/Shopify merch shop, so contacting her through Smudge's social accounts could secure the cat half only. Using the cat photo alone (Smudge at the table) is a plausible licensed option.",
+    "enforcement": "None found against meme use. The cat's owner commercialises the image herself.",
+    "real_person": "Yes. Taylor Armstrong and Kyle Richards are identifiable reality-TV personalities, so publicity rights are a concern for commercial use.",
+    "risk": "high",
+    "risk_reason": "The full two-panel meme includes a TV network still showing real celebrities. The Smudge half on its own would be medium risk with a possible licence from the owner.",
+    "sources": [
+      "https://knowyourmeme.com/editorials/smudge-the-cat-and-his-owner-give-us-the-full-scoop-on-how-he-became-an-internet-star-and-the-woman-yelling-at-cat-meme",
+      "https://en.wikipedia.org/wiki/Woman_yelling_at_a_cat",
+      "https://dailydot.com/meme-history-mocking-spongebob"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/woman-yelling-at-a-cat",
+    "origin_type": "film or TV still",
+    "peak_years": "2019-2025 (Imgflip #19)",
+    "meaning": "Furious accusation met by a calm, unbothered reply. Composite of a TV still and a personal cat photo.",
+    "chess_moments": [
+      "en_passant",
+      "engine_vibes",
+      "stalemate",
+      "timeout"
+    ]
+  },
+  {
+    "name": "Mocking SpongeBob",
+    "origin": "A still from the SpongeBob SquarePants episode \"Little Yellow Book\" (2012). It became a meme in May 2017.",
+    "owner": "Nickelodeon / Paramount Global.",
+    "license_path": "None for a small developer. Nickelodeon licenses SpongeBob only through formal brand partnerships. Nickelodeon has embraced the meme commercially itself (official vinyl figures, a taunt in Nickelodeon All-Star Brawl), but that does not grant rights to third parties.",
+    "enforcement": "No takedown aimed at this meme was found. Paramount did flag a fan-made recreation of the SpongeBob movie for infringement, which shows it does enforce SpongeBob IP.",
+    "real_person": "No (a cartoon character).",
+    "risk": "high",
+    "risk_reason": "This is a studio animation still from a heavily merchandised franchise, with no licence path. The owner monetises the meme itself, which makes unlicensed commercial use more likely to draw action.",
+    "sources": [
+      "https://knowyourmeme.com/memes/mocking-spongebob",
+      "https://www.dailydot.com/entertainment/meme-history-mocking-spongebob/",
+      "https://au.complex.com/pop-culture/a/fnr-tigg/nickelodeon-releases-official-spongebob-meme-figures"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/mocking-spongebob",
+    "origin_type": "film or TV still",
+    "peak_years": "2017-2025 (Imgflip #24)",
+    "meaning": "Sarcastically parroting someone's words back.",
+    "chess_moments": [
+      "payback",
+      "blunder",
+      "resign"
+    ]
+  },
+  {
+    "name": "Swole Doge vs. Cheems (Buff Doge vs. Cheems)",
+    "origin": "An edited format from 2020 (earliest known post February 5, 2020, by the Facebook page \"Doges artesanales\"; it spread from May 2020). The Cheems face comes from a photo of Balltze posted September 4, 2017, on Instagram @balltze by his Hong Kong owner Kathy. The Swole Doge figure is an edit referencing Kabosu (photographed by Atsuko Sato, 2010). Both dogs have died: Balltze in August 2023, Kabosu in May 2024.",
+    "owner": "Cheems source photo: likely Kathy, Balltze's owner (inferred, not confirmed). Doge/Kabosu image: Atsuko Sato. Own The Doge DAO announced exclusive licensing and rights to the Doge image under an agreement with Sato. The swole edit itself is by an unknown editor.",
+    "license_path": "Doge: Own The Doge (ownthedoge.com) says it holds exclusive licensing rights and is open to brand partnerships, so a licence request is possible there. Cheems: no licensing channel was found beyond contacting the owner through Instagram @balltze. The edited swole artwork has no identifiable licensor.",
+    "enforcement": "Own The Doge publicly said it does not intend to enforce its copyright against existing users or brands that promote the Dogecoin ethos. No enforcement over Cheems was found.",
+    "real_person": "No people, though both dogs belong to identifiable owners. There are no publicity-right issues for animals in the US.",
+    "risk": "medium",
+    "risk_reason": "The owners are known and not aggressive, and a licensing body exists for Doge. However, no licence covers the composite, and the Cheems photo owner has no licensing channel. Fair use is not relied on.",
+    "sources": [
+      "https://knowyourmeme.com/memes/swole-doge-vs-cheems",
+      "https://coinmarketcap.com/academy/article/own-the-doge-dao-secures-legal-rights-to-iconic-shiba-inu-kabosu-meme-image",
+      "https://www.cnbc.com/2021/06/11/iconic-doge-meme-nft-breaks-record-selling-for-roughly-4-million.html",
+      "https://en.wikipedia.org/wiki/Cheems",
+      "https://knowyourmeme.com/editorials/chatting-with-cheems-balltzes-owner-gives-us-some-personal-insight-into-life-with-one-of-the-webs-favorite-shibas"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/swole-doge-vs-cheems",
+    "origin_type": "other",
+    "peak_years": "2020-2025 (Imgflip #29)",
+    "meaning": "Mighty past (or strong side) versus weak present (or weak side).",
+    "chess_moments": [
+      "steamroll",
+      "comeback",
+      "throw",
+      "promotion"
+    ]
+  },
+  {
+    "name": "Tuxedo Winnie the Pooh",
+    "origin": "An edit of a still from Disney's Winnie the Pooh and Tigger Too (December 20, 1974), later included in The Many Adventures of Winnie the Pooh (1977). The tuxedo edit was made by an anonymous 4chan user.",
+    "owner": "The Walt Disney Company owns the 1974 animation and the Disney character design. The original 1926 A. A. Milne/E. H. Shepard Pooh book entered the US public domain in 2022, but that covers only the book version, not Disney's design or the red shirt.",
+    "license_path": "None from Disney. A legal alternative is new original art based only on the public-domain 1926 Shepard Pooh, avoiding Disney's look entirely. That would not be the famous meme image.",
+    "enforcement": "No takedown aimed at this meme was found. Disney is known to protect its character IP closely.",
+    "real_person": "No (a cartoon character).",
+    "risk": "high",
+    "risk_reason": "This is a Disney animation still of a Disney-styled character, with no licence path. The public-domain status of the 1926 book does not extend to Disney's 1974 artwork.",
+    "sources": [
+      "https://knowyourmeme.com/memes/tuxedo-winnie-the-pooh"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/tuxedo-winnie-the-pooh",
+    "origin_type": "artwork or comic",
+    "peak_years": "2018-2025 (Imgflip #39)",
+    "meaning": "Same thing, but the fancy, classy version.",
+    "chess_moments": [
+      "underpromotion",
+      "brilliant",
+      "castling",
+      "great_find"
+    ]
+  },
+  {
+    "name": "Pawn Stars Best I Can Do",
+    "origin": "Still of Rick Harrison from the History Channel reality series Pawn Stars (2009 onward); the meme format dates to about mid-2010 (Advice Animals) and is still in heavy use 2021-2026",
+    "owner": "Footage: A+E Networks / History (produced by Leftfield Pictures). Likeness: Rick Harrison, a real living person",
+    "license_path": "None known for the TV still. The Gold & Silver Pawn Shop sells its own 'best I can do' sticker merch (gspawn.com), which shows the phrase is commercialised by the Harrisons, but it is not a licence for the image. Would need A+E clip licensing plus Harrison's consent",
+    "enforcement": "None specific to this meme found. A+E is a major broadcaster that licenses its footage commercially",
+    "real_person": "Yes. Rick Harrison is identifiable; using his face in a monetised game raises US right-of-publicity (endorsement) concerns",
+    "risk": "high",
+    "risk_reason": "TV network still of a celebrity, no licence path, and the real person sells his own catchphrase merch",
+    "sources": [
+      "https://knowyourmeme.com/memes/best-i-can-do-is",
+      "https://dailydot.com/best-i-can-do-is-meme",
+      "https://gspawn.com/products/rick-sticker-best-i-can-do"
+    ],
+    "verified": false,
+    "url": "https://imgflip.com/meme/77045868/Pawn-Stars-Best-I-Can-Do",
+    "origin_type": "film or TV still",
+    "peak_years": "2015-2025 (Imgflip #41)",
+    "meaning": "Lowball counteroffer from a pawn-shop haggler (natural pawn pun).",
+    "chess_moments": [
+      "free_pawn",
+      "exchange_sac",
+      "even_trade",
+      "resign"
+    ]
+  },
+  {
+    "name": "Roll Safe Think About It",
+    "origin": "Screenshot of Kayode Ewumi as Reece Simpson in the mockumentary web series Hood Documentary, from a clip BBC Three uploaded to YouTube on 1 June 2016; viral from 2017, still a common template",
+    "owner": "Likely shared between the BBC (BBC Three commissioned series 2) and creators Kayode Ewumi and Tyrell Williams. Exact rights holder not confirmed",
+    "license_path": "None known. No stock listing or public licence found. Would need BBC licensing and/or the creators' permission",
+    "enforcement": "None found",
+    "real_person": "Yes. Kayode Ewumi is an identifiable working actor; a commercial use needs his consent (publicity rights in the US, image rights in the EU)",
+    "risk": "high",
+    "risk_reason": "Broadcaster footage of a real actor, no licence path found",
+    "sources": [
+      "https://knowyourmeme.com/memes/roll-safe",
+      "https://dailydot.com/meme-history-roll-safe",
+      "https://www.buzzfeed.com/ikrd/kayode-ewumi-wants-to-change-the-face-of-uk-comedy"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/roll-safe",
+    "origin_type": "film or TV still",
+    "peak_years": "2017-2025 (Imgflip #46)",
+    "meaning": "Smugly clever logic that is actually terrible.",
+    "chess_moments": [
+      "king_walk",
+      "hanging_piece",
+      "stalemate",
+      "small_slip"
+    ]
+  },
+  {
+    "name": "Clown Applying Makeup (Putting on Clown Makeup)",
+    "origin": "Stills from the 'Male Clown Make-up Tutorial' video posted by the SmiffysFancyDress YouTube channel on 28 Oct 2015; first meme version on Facebook 21 May 2019, huge use 2019-2026. Not a stock photo, contrary to the label",
+    "owner": "Most likely Smiffys (UK costume company) as the publisher of the tutorial. The model is not named; some sources credit a presenter, Alex Faction (unconfirmed)",
+    "license_path": "None known. Not on a stock site. You could ask Smiffys directly for a licence for the stills (unconfirmed whether they would agree)",
+    "enforcement": "None found. No public reaction from Smiffys to the meme found",
+    "real_person": "Yes. An identifiable model in clown makeup; the meme's 'you are a clown' meaning is mocking, so model consent matters",
+    "risk": "medium",
+    "risk_reason": "Owner is a known, non-aggressive company with no enforcement history, but no licence exists and the model's consent is unknown",
+    "sources": [
+      "https://knowyourmeme.com/memes/putting-on-clown-makeup",
+      "https://dailydot.com/memes/putting-on-clown-makeup-meme",
+      "https://smiffys.com.au/blogs/make-up-tutorials/male-clown-make-tutorial"
+    ],
+    "verified": false
+  },
+  {
+    "name": "Evil Kermit",
+    "origin": "Still from the film Muppets Most Wanted (2014): Kermit facing his look-alike Constantine in a dark hood. Meme started on Twitter on 6 Nov 2016, still in use",
+    "owner": "The Walt Disney Company (owns the Muppets and the film)",
+    "license_path": "None practical. Disney does not license film stills or characters for indie games outside formal licensing deals",
+    "enforcement": "Disney has a history of takedowns, for example Sad Kermit videos removed in 2007 after Disney claims, and DMCA notices over Star Wars fan photos. Also a trademark issue, since Kermit is a registered character",
+    "real_person": "No real person, but the character is protected by both copyright and trademark",
+    "risk": "high",
+    "risk_reason": "Disney film still and trademarked character, with a known enforcement history",
+    "sources": [
+      "https://knowyourmeme.com/memes/evil-kermit",
+      "https://knowyourmeme.com/memes/17823",
+      "https://amp.cbc.ca/news/trending/disney-sends-star-wars-fans-dmca-copyright-notices-over-walmart-toy-1.3366717"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/evil-kermit",
+    "origin_type": "film or TV still",
+    "peak_years": "2016-2024 (Imgflip #57)",
+    "meaning": "Your dark side tempting you into a bad idea.",
+    "chess_moments": [
+      "poisoned_bait",
+      "exchange_sac",
+      "big_sac",
+      "check_spam"
+    ]
+  },
+  {
+    "name": "Expanding Brain (Galaxy Brain)",
+    "origin": "Reddit r/dankmemes, January 2017 (popular early post by janskishimanski on 31 Jan 2017), grew out of the 'Whomst' meme. The brain images are unattributed scan or render images",
+    "owner": "Unknown. The source images were never traced to a photographer or stock agency",
+    "license_path": "None known for the meme panels. Safe alternative: rebuild the four-panel format with your own licensed images (stock brain renders from Adobe Stock or Shutterstock under a standard licence, or CC0). The format and idea are not copyrightable, only the specific images",
+    "enforcement": "None found",
+    "real_person": "No",
+    "risk": "medium",
+    "risk_reason": "Owner of the images is unknown with no enforcement found; the format is easy to rebuild from licensed stock, which would be low risk",
+    "sources": [
+      "https://knowyourmeme.com/memes/galaxy-brain",
+      "https://dailydot.com/galaxy-brain-meme-history",
+      "https://www.dictionary.com/e/?p=110673"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/galaxy-brain",
+    "origin_type": "artwork or comic",
+    "peak_years": "2017-2025 (Imgflip #33)",
+    "meaning": "Escalating ideas from normal to absurdly enlightened.",
+    "chess_moments": [
+      "underpromotion",
+      "big_sac",
+      "brilliant",
+      "king_walk"
+    ]
+  },
+  {
+    "name": "Batman Slapping Robin",
+    "origin": "Panel from DC's World's Finest Comics #153 (November 1965), art by Curt Swan (inks possibly George Klein), written by Edmond Hamilton. The meme version is flipped with an edited speech balloon",
+    "owner": "DC Comics (Warner Bros. Discovery)",
+    "license_path": "None for indie use. DC licenses the image itself commercially: WizKids sells an official DC HeroClix Iconix figure set of the slap, and DC put out a facsimile reprint of the issue. That shows the image is an actively licensed DC asset, available only through a corporate licensing deal",
+    "enforcement": "No lawsuit over the meme itself found, but DC/WB actively license this exact image and Batman and Robin are trademarked characters",
+    "real_person": "No",
+    "risk": "high",
+    "risk_reason": "Studio-owned comic art and trademarked characters that the owner actively sells",
+    "sources": [
+      "https://knowyourmeme.com/memes/my-parents-are-dead-batman-slapping-robin",
+      "https://en.wikipedia.org/wiki/World%27s_Finest_Comics",
+      "https://shop.wizkids.com/products/dc-heroclix-iconix-batman-and-robin",
+      "https://13thdimension.com/worlds-finest-153-comic-with-infamous-batman-slapping-robin-meme-to-be-published-as-facsimile-edition/"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/batman-slapping-robin",
+    "origin_type": "artwork or comic",
+    "peak_years": "2008-2025 (Imgflip #22)",
+    "meaning": "Abruptly shutting down a bad suggestion. Cartoon slap (age flag B for mild violence).",
+    "chess_moments": [
+      "payback",
+      "fork",
+      "checkmate",
+      "resign"
+    ]
+  },
+  {
+    "name": "Bike Fall (Baton Roue)",
+    "origin": "Webcomic by French illustrator Corentin Penloup, first posted on his personal art blog on 23 Jan 2011; became a widespread edit format from the mid-2010s and is still used",
+    "owner": "Corentin Penloup (individual artist; French law applies, including moral rights)",
+    "license_path": "None published. No CC licence found. Best path: contact Penloup directly for a paid licence. In a 2018 interview he called people's reuse of the comic 'hyper cool' (per KYM), which suggests he may be open to a deal, but that is not a licence",
+    "enforcement": "None found",
+    "real_person": "No. It is a drawing",
+    "risk": "medium",
+    "risk_reason": "Owner is a known individual artist who is not aggressive and seems friendly to reuse, but no licence exists yet. Could become low risk with his written permission",
+    "sources": [
+      "https://knowyourmeme.com/memes/baton-roue",
+      "https://meme.com/memes/baton-roue/md"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/baton-roue",
+    "origin_type": "artwork or comic",
+    "peak_years": "2017-2025 (Imgflip #28)",
+    "meaning": "Sabotaging yourself, then blaming something else.",
+    "chess_moments": [
+      "hanging_piece",
+      "hung_queen",
+      "throw",
+      "timeout"
+    ]
+  },
+  {
+    "name": "Panik Kalm Panik",
+    "origin": "Reddit r/dankmemes, first known post by u/svenskOST_ on 19 Feb 2020. Uses the Meme Man 3D head (part of the Stonks / Meme Man Wurds family), which is said to come from an old crude 3D head posted on 4chan's /3/ board. 2021 to 2026: still an evergreen template.",
+    "owner": "Unknown. The panel format is a meme layout. Whoever made the Meme Man head (origin disputed: 4chan /3/ post, a Panzoid default head, or a 3D head scan) is unidentified.",
+    "license_path": "None known. There is no stock listing and no owner to license from. Safest legal route: rebuild the three-panel PANIK / KALM / PANIK layout with original in-house art and text, since a layout and short words are not protectable. The Meme Man head itself cannot be licensed.",
+    "enforcement": "None found.",
+    "real_person": "Probably no identifiable person. One unverified claim says the head is a 3D scan of a real person, but nobody has been identified.",
+    "risk": "medium",
+    "risk_reason": "No clear owner and no enforcement history, but also no licence path. Using the format with your own art is low risk. Using the actual Meme Man render is medium risk because a copyright owner could surface.",
+    "sources": [
+      "https://knowyourmeme.com/memes/panik-kalm",
+      "https://knowyourmeme.com/memes/meme-man",
+      "https://en.wikipedia.org/wiki/Meme_Man"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/panik-kalm-panik",
+    "origin_type": "artwork or comic",
+    "peak_years": "2019-2024",
+    "meaning": "Panic, then relief, then worse panic.",
+    "chess_moments": [
+      "comeback",
+      "throw",
+      "stalemate",
+      "time_scramble"
+    ]
+  },
+  {
+    "name": "Yes Chad (Nordic Gamer)",
+    "origin": "A wojak-style drawing edited from the older Nordic / Mediterranean 4chan exploitable. The 'Yes' format was first posted by Twitter user @yachs_91 on 1 Aug 2019. KYM credits Instagram user snake.oils with the first three Nordic Gamer edits. Still in heavy use through 2021 to 2026.",
+    "owner": "Unknown. The original drawer is unidentified (anonymous 4chan exploitable).",
+    "license_path": "None known. Safest route: commission or draw an original blond, bearded, stoic 'Yes.' character in CHASS style. The project's Chad horse already does this.",
+    "enforcement": "None found.",
+    "real_person": "No real person. Note the reputational concern: Daily Dot traces Nordic / Mediterranean and wojak comics to racist and antisemitic origins, and Trad Girl / Yes Chad carry alt-right associations.",
+    "risk": "medium",
+    "risk_reason": "Unknown owner and no enforcement, but no licence. The bigger issue is reputational, because the source exploitable has racist roots. An original Chad-style redraw is the practical low-risk path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/yes-chad",
+      "https://knowyourmeme.com/memes/nordic-gamer",
+      "https://dailydot.com/meme-history-chad-memes",
+      "https://melmagazine.com/en-us/story/yes-chad-meme-explained"
+    ],
+    "verified": false
+  },
+  {
+    "name": "Absolute Cinema (Kino Is Served)",
+    "origin": "Black-and-white photo of Martin Scorsese raising his hands, shot by Philip Montgomery for The New York Times in New York on 11 Dec 2019. It ran with Dave Itzkoff's piece 'Martin Scorsese Is Letting Go' on 2 Jan 2020. The 'Absolute Cinema' caption was added by X user @YashChillinn in Dec 2022, and the meme went viral in 2023 and 2024.",
+    "owner": "The New York Times (photographer Philip Montgomery). Credit line 'Philip Montgomery/The New York Times', confirmed from reprints.",
+    "license_path": "No stock listing found. You would have to ask NYT licensing for photo rights, which are typically editorial only. Commercial use in a game would also need Scorsese's consent for use of his likeness. In practice, no realistic path.",
+    "enforcement": "No meme-specific lawsuit found. NYT is a major publisher that actively protects its content.",
+    "real_person": "Yes, Martin Scorsese, a living celebrity. Using his likeness in a monetized product raises right-of-publicity concerns (US state law, for example NY Civil Rights Law sections 50 and 51).",
+    "risk": "high",
+    "risk_reason": "Press photo owned by the NYT, showing a living celebrity, with no commercial licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/absolute-cinema-kino-is-served",
+      "https://artdaily.com/news/119740/Martin-Scorsese-is-letting-go",
+      "https://fandomwire.com/martin-scorsese-absolute-cinema-meme-creator-speaks-out/"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/absolute-cinema-kino-is-served",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2024-2025",
+    "meaning": "Martin Scorsese with both hands raised, praising something as a masterpiece (KYM top 20 of 2024, #9).",
+    "chess_moments": [
+      "brilliant",
+      "big_sac",
+      "great_find",
+      "long_chase_mate",
+      "checkmate"
+    ]
+  },
+  {
+    "name": "James Doakes Reaction Images (But You Can't Prove It)",
+    "origin": "Stills of Detective James Doakes (played by Erik King) glaring in the Showtime series Dexter (2006 to 2013). The earliest meme post was on Reddit on 23 Sep 2024. It went viral on TikTok in April 2025 and on X in July 2025.",
+    "owner": "Dexter's rights holders: Showtime / Paramount (Showtime Networks, Paramount Global). Not confirmed from a primary source in this research.",
+    "license_path": "None practical. Studio stills are not sold for commercial game use. Clip and still licensing through Paramount would be custom and expensive, and the actor's consent would also be needed.",
+    "enforcement": "No meme-specific action found. Paramount, like all major studios, files routine DMCA takedowns for its content.",
+    "real_person": "Yes, actor Erik King, a living person. Right-of-publicity and SAG-AFTRA likeness concerns apply to commercial use.",
+    "risk": "high",
+    "risk_reason": "Film/TV studio still from a major studio, showing a living actor, with no licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/but-you-cant-prove-it-james-doakes-reaction-images"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/but-you-cant-prove-it-james-doakes-reaction-images",
+    "origin_type": "film or TV still",
+    "peak_years": "2025-2026",
+    "meaning": "Dexter's Sgt. Doakes staring with deep suspicion: I know what you did (KYM top 20 of 2025, #5, explicitly called reaction images).",
+    "chess_moments": [
+      "engine_vibes",
+      "poisoned_bait",
+      "en_passant",
+      "underpromotion"
+    ]
+  },
+  {
+    "name": "Crying Michael Jordan",
+    "origin": "AP photo by Stephan Savoia of Michael Jordan crying during his Basketball Hall of Fame induction speech in Springfield, MA, on 11 Sep 2009. It was first used as a meme around 2012, the photoshopped head appeared in 2014, and the meme peaked in 2015 and 2016. It is still in use in the 2020s (for example, CryingJordan.com redirected to Chris Paul's page in 2021).",
+    "owner": "Associated Press. AP spokesman Paul Colford told ESPN, 'We own the rights in our photo,' and said AP could enforce them depending on use.",
+    "license_path": "AP Images (apimages.com) licenses AP photos, normally for editorial use. Commercial use in a game would still need Michael Jordan's publicity release, which he is very unlikely to grant. No commercial path in practice.",
+    "enforcement": "AP said it could enforce its rights. Jordan's spokesperson Estee Portnoy said his team is 'monitoring' commercial uses. Jordan has a strong history of suing over commercial use of his identity: he won about $8.9M from Dominick's in 2015 and also sued Jewel, plus trademark fights in China.",
+    "real_person": "Yes, Michael Jordan, a living celebrity who actively polices commercial use of his name and image. Very high publicity-right concern.",
+    "risk": "high",
+    "risk_reason": "Press photo owned by AP, which says it may enforce, plus a celebrity with a documented record of suing over commercial use of his likeness.",
+    "sources": [
+      "https://knowyourmeme.com/memes/crying-michael-jordan",
+      "https://en.wikipedia.org/wiki/Crying_Jordan",
+      "https://africa.espn.com/nba/story/_/id/14788779/can-wildly-popular-often-hilarious-crying-michael-jordan-meme-get-sued",
+      "https://www.si.com/nba/2016/02/04/crying-michael-jordan-meme-original-photographer-viral-social-media"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/crying-michael-jordan",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2015-2023 (evergreen)",
+    "meaning": "Jordan crying at his 2009 Hall of Fame speech, pasted onto any loser; KYM notes one of the longest meme cycles.",
+    "chess_moments": [
+      "throw",
+      "resign",
+      "stalemate",
+      "mega_blunder",
+      "timeout"
+    ]
+  },
+  {
+    "name": "Side-Eyeing Chloe",
+    "origin": "Frame from the YouTube video 'Lily's Disneyland Surprise... AGAIN', uploaded by the Clem family (channel KAftC, mother Katie Clem) on 12 Sep 2013. The meme spread from 2013 and was still heavily used in the 2020s. In Sep 2021 the family sold an NFT of the image for 25 ETH (about $74,000) to 3F Music, a Dubai company.",
+    "owner": "The Clem family (Katie Clem, who filmed and uploaded the video) holds the copyright. Reports note that the NFT sale did not transfer copyright to 3F Music.",
+    "license_path": "No stock listing. The only route is a direct licence from the Clem family (contact via their KAftC YouTube channel or social accounts). The family has monetized the meme before, so a licence is plausible but unconfirmed.",
+    "enforcement": "No lawsuits or takedowns found.",
+    "real_person": "Yes, Chloe Clem, who was a toddler when filmed (now a minor or young teen). Commercial use of a child's likeness needs parental consent. Ethically sensitive.",
+    "risk": "medium",
+    "risk_reason": "The owner is known, has commercialized the meme, and is not aggressive, but there is no ready licence and real-person consent is required because the subject is a minor.",
+    "sources": [
+      "https://knowyourmeme.com/memes/side-eyeing-chloe",
+      "https://uk.news.yahoo.com/family-side-eyed-chloe-meme-084538214.html",
+      "https://newarab.com/news/side-eyeing-chloe-meme-sells-74000-dubai-business",
+      "https://news.yahoo.com/side-eyeing-chloe-family-sell-074733672.html"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/side-eyeing-chloe",
+    "origin_type": "personal photo",
+    "peak_years": "2013-2024 (evergreen)",
+    "meaning": "Little girl's skeptical, worried side-eye at something odd or alarming.",
+    "chess_moments": [
+      "engine_vibes",
+      "king_walk",
+      "underpromotion",
+      "en_passant",
+      "small_slip"
+    ]
+  },
+  {
+    "name": "Visible Confusion",
+    "origin": "Still of Obi-Wan Kenobi (played by Ewan McGregor) looking puzzled in Star Wars: Episode II, Attack of the Clones (US release 16 May 2002). The meme is dated 2017 and stayed an evergreen reaction image through the 2020s.",
+    "owner": "Lucasfilm Ltd. (owned by The Walt Disney Company). Not confirmed from a primary source in this research.",
+    "license_path": "None practical. Disney and Lucasfilm do not license film stills for third-party games except through formal, costly licensing deals. The actor's consent would also be needed.",
+    "enforcement": "No meme-specific action found. Disney and Lucasfilm are known for aggressive IP enforcement.",
+    "real_person": "Yes, Ewan McGregor, a living actor. Right-of-publicity concerns apply to commercial use.",
+    "risk": "high",
+    "risk_reason": "Film still from Disney/Lucasfilm, among the most aggressive IP enforcers, showing a living actor, with no licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/visible-confusion"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/visible-confusion",
+    "origin_type": "film or TV still",
+    "peak_years": "2017-2022",
+    "meaning": "Obi-Wan Kenobi bewildered, captioned [visible confusion].",
+    "chess_moments": [
+      "en_passant",
+      "underpromotion",
+      "exchange_sac",
+      "king_walk",
+      "small_slip"
+    ]
+  },
+  {
+    "name": "Leonardo DiCaprio Laughing (Calvin Candie)",
+    "origin": "Frame from Django Unchained (2012, dir. Quentin Tarantino, Columbia Pictures/Sony with The Weinstein Company). First known meme edit by Tumblr user schuetzengrabenmints on 2017-11-07; peaked in 2020, still in heavy use through 2021 to 2026.",
+    "owner": "Columbia Pictures / Sony Pictures Entertainment (with The Weinstein Company successor rights). Not confirmed from a primary rights listing.",
+    "license_path": "No stock listing found for this exact frame. A library guide points to Sony Pictures' clip and still licensing site for Columbia titles, but this title and the frame were not confirmed there. A paid studio clearance would be needed, plus actor consent for commercial use.",
+    "enforcement": "No meme-specific lawsuit or takedown found. The only Django Unchained suit found (Colvin v. Tarantino, 2015) was about the screenplay, not the meme.",
+    "real_person": "Yes, Leonardo DiCaprio. Using a celebrity's face in a commercial game raises right-of-publicity issues (US state law). Studio clearance normally also needs talent consent under SAG-AFTRA rules.",
+    "risk": "high",
+    "risk_reason": "Major studio film still featuring an A-list actor, with no ready licence. Commercial use would need both studio and talent clearance.",
+    "sources": [
+      "https://knowyourmeme.com/memes/leonardo-dicaprio-laughing",
+      "https://screencrush.com/quentin-tarantino-lawsuit-django-unchained-copyright/",
+      "https://slashfilm.com/django-unchained-lawsuit",
+      "https://pressbooks.uiowa.edu/scholarlyresources4dissertations/?p=68"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/leonardo-dicaprio-laughing",
+    "origin_type": "film or TV still",
+    "peak_years": "2017-2023",
+    "meaning": "Django Unchained's Calvin Candie laughing smugly, drink in hand, at someone else's misfortune.",
+    "chess_moments": [
+      "free_piece",
+      "free_pawn",
+      "hung_queen",
+      "resign"
+    ]
+  },
+  {
+    "name": "Pablo Escobar Waiting",
+    "origin": "Frames from Narcos season 2 (Netflix, released 2016-09-02), with Wagner Moura as Pablo Escobar. Template published on Meme Generator 2016-10-08, then spread on Reddit 2016 to 2018. It stayed an evergreen template afterward.",
+    "owner": "Netflix / Gaumont International Television (the producer of Narcos). Not confirmed from a primary source.",
+    "license_path": "No stock listing or public licence found. Clearance would have to come from Netflix or Gaumont, plus the actor's consent.",
+    "enforcement": "None found.",
+    "real_person": "Yes, actor Wagner Moura (and he portrays a real historical person, Pablo Escobar). The actor's publicity rights apply to commercial use.",
+    "risk": "high",
+    "risk_reason": "Streaming TV still with an identifiable actor and no licence path. Netflix-owned content.",
+    "sources": [
+      "https://knowyourmeme.com/memes/pablo-escobar-waiting"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/pablo-escobar-waiting",
+    "origin_type": "film or TV still",
+    "peak_years": "2016-2022 (evergreen)",
+    "meaning": "Narcos three-panel of Escobar staring blankly, bored and lonely while waiting.",
+    "chess_moments": [
+      "long_think",
+      "dead_draw",
+      "rook_endgame"
+    ]
+  },
+  {
+    "name": "No God, Please No (Michael Scott)",
+    "origin": "The Office (US), NBC, season 5 episode 9 ('Stress Relief'), aired 2008-11-20. A YouTube clip appeared in 2008, GIF and macro versions followed from 2010 to 2012, and it stayed in evergreen reaction use since.",
+    "owner": "NBCUniversal (Universal Television), Steve Carell as performer.",
+    "license_path": "Getty Images has an exclusive deal to license NBCUniversal production stills, and Getty lists The Office stills credited to NBCUniversal. But one Getty Office listing says commercial or promotional use of NBCU content needs NBCUniversal's prior written consent. The exact meme frame (a screen grab) was not confirmed on Getty. No self-serve commercial licence exists.",
+    "enforcement": "No meme-specific action found. NBCU actively licenses The Office merchandise, and a search result headline refers to a company sued for selling Dunder Mifflin merch (not verified).",
+    "real_person": "Yes, Steve Carell. Commercial use needs talent consent.",
+    "risk": "high",
+    "risk_reason": "Network TV still of a celebrity, with an actively licensed brand. Getty and NBCU require prior written consent for commercial use.",
+    "sources": [
+      "https://knowyourmeme.com/memes/no-god-please-no",
+      "https://rbr.com/?p=141170",
+      "https://www.gettyimages.com/detail/news-photo/season-3-pictured-jenna-fischer-as-pam-beesly-b-j-novak-as-news-photo/138410347",
+      "https://www.gettyimages.com/detail/news-photo/roys-wedding-episode-902-pictured-david-denman-as-roy-john-news-photo/153183949"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/no-god-please-no",
+    "origin_type": "film or TV still",
+    "peak_years": "2010-2023 (evergreen)",
+    "meaning": "The Office's Michael Scott screaming in anguished denial.",
+    "chess_moments": [
+      "hung_queen",
+      "mega_blunder",
+      "stalemate",
+      "timeout",
+      "throw"
+    ]
+  },
+  {
+    "name": "Jesse, What the Hell Are You Talking About (Breaking Bad)",
+    "origin": "Flashback diner scene in El Camino: A Breaking Bad Movie (Netflix, 2019-10-11), visually similar to Breaking Bad S4E1 'Box Cutter' (AMC, 2011). The meme format started on iFunny 2020-03-13 and spread through April 2020. It is an evergreen template.",
+    "owner": "Sony Pictures Television (Breaking Bad producer). Netflix distributed El Camino, and Sony released the home video. Exact ownership of the frame was not confirmed.",
+    "license_path": "No stock listing found. Sony Pictures runs a clip and still licensing site for film labels (per a university library guide), but coverage of El Camino or Sony Pictures Television was not confirmed. Third-party clearance brokers such as Visual Icon exist. Any licence would be custom and paid, plus talent consent.",
+    "enforcement": "None found.",
+    "real_person": "Yes, Bryan Cranston and Aaron Paul. Commercial use needs talent consent.",
+    "risk": "high",
+    "risk_reason": "Studio TV and film still of two well-known actors, with no ready licence.",
+    "sources": [
+      "https://knowyourmeme.com/memes/jesse-what-the-fuck-are-you-talking-about",
+      "https://pressbooks.uiowa.edu/scholarlyresources4dissertations/?p=68",
+      "https://visual-icon.com/about"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/jesse-what-the-fuck-are-you-talking-about",
+    "origin_type": "film or TV still",
+    "peak_years": "2020-2023",
+    "meaning": "Walter White's baffled frustration at nonsense; KYM title contains profanity, use a clean caption (age flag B).",
+    "chess_moments": [
+      "en_passant",
+      "underpromotion",
+      "king_walk",
+      "exchange_sac"
+    ]
+  },
+  {
+    "name": "Mr. Incredible Becoming Ascended / Canny",
+    "origin": "Built from Mr. Incredible in Pixar's The Incredibles (2004). 'Reverse toonified' base edit by @CitizenPlain on 2020-10-15. Ascended version by YouTube user MexicoEmpireFOREVER on 2021-11-27, popularized by Redditor insaneliving_ on 2021-12-31. Peak 2021 to 2023.",
+    "owner": "Disney / Pixar owns the character and the source frames. The fan edits are derivative works by various anonymous creators, with no clear rights.",
+    "license_path": "None known. Disney does not offer meme or still licensing to indie games. Fan edits carry no usable licence either.",
+    "enforcement": "No meme-specific action found. Disney is widely known for strict IP enforcement of its characters (general reputation, not verified for this meme).",
+    "real_person": "No for the character. Some 'uncanny' stages use photoreal faces of unknown origin, possibly real people, which adds an unverified likeness risk.",
+    "risk": "high",
+    "risk_reason": "Disney/Pixar character with no licence path. The derivative fan edits have unknown authorship and possibly real photo faces.",
+    "sources": [
+      "https://knowyourmeme.com/memes/mr-incredible-becoming-ascended"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/mr-incredible-becoming-ascended",
+    "origin_type": "film or TV still",
+    "peak_years": "2021-2023",
+    "meaning": "Opposite escalation: Mr. Incredible getting happier and more enlightened stage by stage.",
+    "chess_moments": [
+      "comeback",
+      "great_find",
+      "brilliant",
+      "promotion",
+      "steamroll"
+    ]
+  },
+  {
+    "name": "Look What They Need to Mimic a Fraction of Our Power",
+    "origin": "Invincible season 1 episode 8 (Amazon Prime Video original, premiered 2021-04-29). Omni-Man points at fighter jets. Earliest meme by u/Merlo_24 on 2021-05-01, viral May 2021, and still a common template.",
+    "owner": "Amazon MGM Studios with Skybound Entertainment (Invincible comics IP by Robert Kirkman, Cory Walker and Ryan Ottley). Not confirmed from a primary source.",
+    "license_path": "None known. No stock listing or public licence. Clearance would need Amazon and Skybound.",
+    "enforcement": "None found.",
+    "real_person": "No (animated character). Voice actor J.K. Simmons is not depicted visually.",
+    "risk": "high",
+    "risk_reason": "Studio animation still owned by Amazon and Skybound, with no licence path. The lack of a real-person issue does not offset the copyright problem.",
+    "sources": [
+      "https://knowyourmeme.com/memes/look-what-they-need-to-mimic-a-fraction-of-our-power"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/look-what-they-need-to-mimic-a-fraction-of-our-power",
+    "origin_type": "film or TV still",
+    "peak_years": "2021-2023",
+    "meaning": "Invincible's Omni-Man mocking a weaker imitation of real power.",
+    "chess_moments": [
+      "steamroll",
+      "promotion",
+      "big_sac",
+      "payback"
+    ]
+  },
+  {
+    "name": "The Rock's Eyebrow Raise (Sus Rock)",
+    "origin": "Dwayne Johnson's 'People's Eyebrow'. The meme frames come from his Instagram video to DaBaby (2019-10-09) and a TikTok (2021-02-19). The 'Sus Rock' name dates to about March 2021, with edits paired with the Vine thud sound, from creators unknown.",
+    "owner": "Dwayne Johnson (and his company Seven Bucks) as the author of his own social videos. Not confirmed from a primary source.",
+    "license_path": "None known. Getty and other agencies sell editorial press photos of Johnson, but those are editorial only and not this frame. Commercial use would need direct permission from Johnson.",
+    "enforcement": "No meme-specific action found.",
+    "real_person": "Yes, one of the most recognizable celebrities in the world, with an active commercial brand. Using his likeness as a game reaction is a strong right-of-publicity and false-endorsement concern, separate from copyright.",
+    "risk": "high",
+    "risk_reason": "Celebrity likeness from his own copyrighted social video, with no licence path and high publicity-right exposure in a monetized game.",
+    "sources": [
+      "https://knowyourmeme.com/memes/the-rocks-eyebrow-raise"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/the-rocks-eyebrow-raise",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2021-2023",
+    "meaning": "Dwayne Johnson raising one eyebrow: that is suspicious (peak Sept to Oct 2021).",
+    "chess_moments": [
+      "engine_vibes",
+      "en_passant",
+      "underpromotion",
+      "king_walk",
+      "poisoned_bait"
+    ]
+  },
+  {
+    "name": "Que Mira, Bobo? / Anda Palla Bobo (Messi)",
+    "origin": "Screen grab from a TyC Sports post-match interview by reporter Gaston Edul, after Argentina beat the Netherlands at the 2022 FIFA World Cup in Qatar (Dec 9, 2022 local time; KYM dates it Dec 10, 2022). Messi was speaking to Wout Weghorst.",
+    "owner": "Broadcast footage: TyC Sports. FIFA likely also holds rights in World Cup venue footage (not confirmed). Messi's likeness: Messi. Any press photos of the moment belong to their agencies.",
+    "license_path": "None known. There is no stock listing for the interview frame, and neither TyC nor FIFA offers a public licence for it. Separately, third parties filed Argentine INPI trademark applications for the phrase in Dec 2022, and one report says INPI treats them as parasitizing Messi's fame. The final outcome is unconfirmed.",
+    "enforcement": "No lawsuit over the meme image found. Messi actively enforces his name as a trademark (he won an EU General Court and CJEU case in 2018). FIFA is a well-known aggressive rights enforcer, though nothing was found for this clip specifically.",
+    "real_person": "Yes. Lionel Messi, one of the most commercially valuable athletes, with an active trademark portfolio. Using his face in a monetized game implies endorsement and raises right-of-publicity risk (US) and image-rights risk (EU and Argentina). Weghorst is also identifiable by reference.",
+    "risk": "high",
+    "risk_reason": "Broadcast screenshot of a celebrity athlete who enforces his commercial identity, with no licence path. Text-only use of the phrase is also unclear while trademark filings exist.",
+    "sources": [
+      "https://knowyourmeme.com/memes/que-mira-bobo-anda-palla-bobo",
+      "https://www.c5n.com/deportes/buscan-registrar-como-marca-las-frases-messi-que-miras-bobo-y-anda-pa-alla-n94001/amp",
+      "https://abogados.com.ar/parasitar-la-fama-los-argumentos-del-inpi-para-aplicar-el-articulo-3-e-de-la-ley-de-marcas-y-designaciones/32356",
+      "https://trome.com/deportes/lionel-messi-y-el-que-miras-bobo-el-motivo-que-hizo-estallar-al-argentino-durante-entrevista-tras-el-argentina-vs-paises-bajos-mundial-qatar-2022-rmmd-noticia/",
+      "https://www.worldipreview.com/trademark/lionel-messi-scores-at-eu-court-15842"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/que-mira-bobo-anda-palla-bobo",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2022-2023",
+    "meaning": "Messi's 2022 World Cup post-match taunt at Weghorst: what are you looking at, fool.",
+    "chess_moments": [
+      "payback",
+      "checkmate",
+      "comeback",
+      "resign"
+    ]
+  },
+  {
+    "name": "Will Smith Slaps Chris Rock",
+    "origin": "The 94th Academy Awards, March 27, 2022, broadcast live on ABC. The famous stills are agency press photos (Reuters by Brian Snyder, AFP by Robyn Beck, Getty Images Entertainment by Neilson Barnard), along with frames from the ABC/AMPAS broadcast.",
+    "owner": "Each photo belongs to its agency (Reuters, AFP via Getty, Getty Images). The broadcast belongs to AMPAS/ABC. The likenesses belong to Will Smith and Chris Rock.",
+    "license_path": "Getty sells these as news photos, but only for editorial use. Both listings show 'Not released', meaning no model release. The Getty listing says commercial or promotional use requires contacting the local office, and without releases that is effectively unavailable. Listings: https://www.gettyimages.com/detail/news-photo/actor-will-smith-slaps-us-actor-chris-rock-onstage-during-news-photo/1239559303 and https://www.gettyimages.com/detail/news-photo/will-smith-appears-to-slap-chris-rock-onstage-during-the-news-photo/1388085487",
+    "enforcement": "No lawsuit over memes of the slap found. Getty Images is widely known for sending licensing demand letters for unlicensed use of its photos (general reputation, not checked for this image).",
+    "real_person": "Yes. Two A-list celebrities, shown in a violent and embarrassing moment. Commercial use in a game raises right-of-publicity and false-endorsement claims in the US, plus image-rights and dignity concerns in the EU.",
+    "risk": "high",
+    "risk_reason": "Unreleased press photos licensed for editorial use only, with celebrity likeness and an owner (Getty) known for fee demands. The only licence path does not cover commercial game use.",
+    "sources": [
+      "https://www.gettyimages.com/detail/news-photo/actor-will-smith-slaps-us-actor-chris-rock-onstage-during-news-photo/1239559303",
+      "https://www.gettyimages.com/detail/news-photo/will-smith-appears-to-slap-chris-rock-onstage-during-the-news-photo/1388085487",
+      "https://www.gettyimages.in/detail/news-photo/will-smith-appears-to-slap-chris-rock-onstage-during-the-news-photo/1388085444",
+      "https://en.wikipedia.com/wiki/Chris_Rock_slapping_incident"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/will-smith-slaps-chris-rock",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2022",
+    "meaning": "2022 Oscars slap; sudden decisive retaliation (real assault, age flag B, real-person likeness).",
+    "chess_moments": [
+      "payback",
+      "fork",
+      "checkmate",
+      "capture_spree"
+    ]
+  },
+  {
+    "name": "Kombucha Girl",
+    "origin": "TikTok video by @brittanyt445 (Brittany Tomlinson, now Brittany Broski), posted Aug 6, 2019 as 'Me trying Kombucha for the first time'. Reaction stills from it have been used heavily ever since.",
+    "owner": "Brittany Tomlinson (Brittany Broski), creator of the video. Her own selfie video is not a studio work.",
+    "license_path": "No public licence or stock listing found. The only route is a direct licence from Broski or her management. She is now a professional creator with a commercial brand. Her talent contact was not checked.",
+    "enforcement": "No lawsuits or takedowns found.",
+    "real_person": "Yes. A private person who became a public creator. She told Paper Magazine she does not feel connected to the meme ('leave her in the grave'). Using her face commercially without consent raises right-of-publicity issues (US, where she lives) and consent concerns.",
+    "risk": "medium",
+    "risk_reason": "Single identifiable owner with no enforcement history, so a direct licence is plausible. But no ready licence exists, she has publicly distanced herself from the meme, and real-person publicity rights apply.",
+    "sources": [
+      "https://knowyourmeme.com/memes/kombucha-girl-trying-kombucha-for-the-first-time",
+      "https://en.wikipedia.org/wiki/Brittany_Broski",
+      "https://www.papermag.com/brittany-broski",
+      "https://time.com/5744175/kombucha-girl-tiktok-brittany-tomlinson-interview"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/kombucha-girl-trying-kombucha-for-the-first-time",
+    "origin_type": "personal photo",
+    "peak_years": "2019-2022",
+    "meaning": "TikToker's face flipping between disgust and reluctant approval; mixed feelings.",
+    "chess_moments": [
+      "exchange_sac",
+      "even_trade",
+      "queen_trade",
+      "poisoned_bait"
+    ]
+  },
+  {
+    "name": "Terrified IShowSpeed Covering His Mouth (Speed Scared)",
+    "origin": "Screenshot from IShowSpeed's YouTube livestream of Nov 11, 2023, at about 5:24:19, while he played Fears to Fathom: Ironbark Lookout.",
+    "owner": "Darren Watkins Jr. (IShowSpeed). Reports say his copyright is managed by Thumb Media.",
+    "license_path": "None known. No stock listing or public licence. The only route is direct contact with his management.",
+    "enforcement": "Yes. In 2022 and 2023 YouTubers reported copyright claims for featuring IShowSpeed clips. Thumb Media said it manages his copyright, and Speed later admitted he was behind the claims. Critics such as Act Man and VTuber Kirsche publicly accused him of copyright abuse. No takedown of a still meme image specifically was found.",
+    "real_person": "Yes. A major celebrity streamer with a large commercial brand. Right-of-publicity and false-endorsement risk if his face appears in a monetized game.",
+    "risk": "high",
+    "risk_reason": "Celebrity likeness, a known owner with a documented history of copyright claims against reuse of his content, and no licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/terrified-ishowspeed-covering-his-mouth-speed-scared",
+      "https://sportskeeda.com/esports/news-what-thumb-media-agency-fire-adin-ross-ishowspeed-get-accused-copyright-striking-youtubers",
+      "https://sportskeeda.com/esports/news-copyright-abusing-piece-sh-t-act-man-slams-ishowspeed-latest-youtube-video-abusing-copyright",
+      "https://www.sportskeeda.com/us/streamers/news-vtuber-kirsche-accuses-ishowspeed-copyright-claiming-smaller-youtubers"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/terrified-ishowspeed-covering-his-mouth-speed-scared",
+    "origin_type": "screenshot",
+    "peak_years": "2025-2026",
+    "meaning": "Black and white still of IShowSpeed covering his mouth with bulging eyes in horror.",
+    "chess_moments": [
+      "hung_queen",
+      "mega_blunder",
+      "fork",
+      "trapped_piece"
+    ]
+  },
+  {
+    "name": "IShowSpeed Smiling Trying Not to Laugh",
+    "origin": "Screenshot from IShowSpeed's 'EARLY STREAM!' YouTube livestream of Dec 29, 2021, at about 2:08:05, during a Fortnite build battle.",
+    "owner": "Darren Watkins Jr. (IShowSpeed). Reports say his copyright is managed by Thumb Media.",
+    "license_path": "None known. No stock listing or public licence. The only route is direct contact with his management.",
+    "enforcement": "Same owner as Speed Scared: documented copyright claims against YouTubers reusing his clips (Thumb Media, 2022 and 2023), and public accusations of copyright abuse. Nothing found for this still specifically.",
+    "real_person": "Yes. A major celebrity streamer. Right-of-publicity and endorsement concerns. The source moment also involves a young player's voice (not visible), which is a minor concern only.",
+    "risk": "high",
+    "risk_reason": "Celebrity likeness, an owner with a history of copyright enforcement, and no licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/ishowspeed-smiling-trying-not-to-laugh",
+      "https://sportskeeda.com/esports/news-what-thumb-media-agency-fire-adin-ross-ishowspeed-get-accused-copyright-striking-youtubers"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/ishowspeed-smiling-trying-not-to-laugh",
+    "origin_type": "screenshot",
+    "peak_years": "2022-2025",
+    "meaning": "Streamer suppressing laughter at someone else's embarrassing moment.",
+    "chess_moments": [
+      "free_piece",
+      "hung_queen",
+      "king_walk",
+      "fast_mate"
+    ]
+  },
+  {
+    "name": "Roll Safe (Guy Tapping Head)",
+    "origin": "Still of Kayode Ewumi as the character Reece Simpson ('Roll Safe') from the mockumentary web series Hood Documentary, created by Ewumi and Tyrell Williams. A BBC Three mini-documentary was uploaded to YouTube on June 1, 2016, and BBC Three commissioned a series that year. Spread as a meme in 2017 and still widely used.",
+    "owner": "Unclear. Either the creators (Ewumi and Williams) or the BBC holds rights in the footage, depending on their commission terms, which are not public. The likeness belongs to Kayode Ewumi.",
+    "license_path": "No stock listing or public licence found. Possible routes are BBC Studios content licensing or Ewumi's agent (Independent Talent appears to represent him; not confirmed). Neither was verified.",
+    "enforcement": "No lawsuits or takedowns found. Complex reported that Ewumi was offered large sums to revive the character, which signals the character has commercial value to him (article content not read).",
+    "real_person": "Yes. A professional actor. Using his face commercially raises right-of-publicity concerns in the US. In the UK and EU the main issues are passing off and data or image rights.",
+    "risk": "high",
+    "risk_reason": "TV or web-series still with a broadcaster (BBC) involved, an actor's likeness, and unclear ownership with no confirmed licence route.",
+    "sources": [
+      "https://knowyourmeme.com/memes/roll-safe",
+      "https://en.wikipedia.org/wiki/Roll_Safe",
+      "https://www.okayafrica.com/british-nigerian-kayode-ewumis-comedic-hit-hood-documentary-gets-bbc-three-debut",
+      "https://www.independenttalent.com/?p=36223"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/roll-safe",
+    "origin_type": "film or TV still",
+    "peak_years": "2017-2023 (evergreen)",
+    "meaning": "Smug head-tap for a clever (often flawed) loophole logic.",
+    "chess_moments": [
+      "poisoned_bait",
+      "great_find",
+      "castling",
+      "dead_draw",
+      "stalemate"
+    ]
+  },
+  {
+    "name": "Perfectly Balanced, As All Things Should Be (Thanos)",
+    "origin": "Avengers: Infinity War (2018), Marvel Studios and Disney. Thanos says the line to a young Gamora while balancing a knife. Correct KYM page: https://knowyourmeme.com/memes/perfectly-balanced (the URL given in the task returns 404).",
+    "owner": "Marvel Studios / The Walt Disney Company (the film and the Thanos character). Josh Brolin's performance is also involved.",
+    "license_path": "No public licence for film stills in commercial products. Disney or Marvel licensing is reserved for corporate partners and is not realistic for an indie game. No stock listing found.",
+    "enforcement": "No case found about Thanos memes specifically. Disney has a strong enforcement record: DMCA notices over fan photos of a Star Wars toy (2015), takedowns of Captain Marvel clip channels, a mass Baby Yoda crackdown on Etsy, and copyright and trademark claims against a baker.",
+    "real_person": "Partly. The character is CGI based on Josh Brolin's performance capture. The main concern is the studio IP and trademark, not publicity rights.",
+    "risk": "high",
+    "risk_reason": "A major-studio film still and character owned by Disney, which is known for aggressive enforcement, with no licence path. Using the quote alone with a non-Marvel image is a separate and lower-risk question.",
+    "sources": [
+      "https://knowyourmeme.com/memes/perfectly-balanced/",
+      "https://www.techdirt.com/2012/02/13/protecting-artists-disneys-marvel-uses-copyright-to-crush-already-broke-ghost-rider-creator/",
+      "https://amp.cbc.ca/news/trending/disney-sends-star-wars-fans-dmca-copyright-notices-over-walmart-toy-1.3366717",
+      "https://www.weintraub.com/?p=9583",
+      "https://www.worldipreview.com/copyright/disney-and-marvel-hit-baker-with-trademark-and-copyright-claims-8812"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/perfectly-balanced-as-all-things-should-be",
+    "origin_type": "film or TV still",
+    "peak_years": "2018-2022",
+    "meaning": "Thanos approving of perfect symmetry or fairness.",
+    "chess_moments": [
+      "even_trade",
+      "queen_trade",
+      "dead_draw",
+      "payback"
+    ]
+  },
+  {
+    "name": "Confused Nick Young",
+    "origin": "Frame from episode 4 of the YouTube web series Thru The Lens by Cassy Athena, uploaded July 22, 2014; used as a meme from June 2015 (Tumblr); still in heavy use 2021 to 2026",
+    "owner": "Likely Cassy Athena / Thru The Lens (footage copyright); not confirmed from a primary source",
+    "license_path": "None known. No stock listing (Getty/Shutterstock press photos of Nick Young exist, but they are not this frame). Licensing would require contacting Cassy Athena directly, plus Nick Young's consent for commercial use",
+    "enforcement": "None found. Nick Young has publicly joked that he wishes he got royalties (Entertainment Tonight, reported by Complex), so he is aware of commercial value",
+    "real_person": "Yes. Nick Young is an identifiable former NBA player. Using his face in a commercial game raises right-of-publicity concerns (US state law) and personality rights in the EU, separate from copyright",
+    "risk": "high",
+    "risk_reason": "Celebrity face plus an unlicensed web-series frame, with no licence path, in a public game that may earn money. Being famous does not make it free. Safer option: an original 'confused face with question marks' gag that does not depict him",
+    "sources": [
+      "https://knowyourmeme.com/memes/confused-nick-young",
+      "https://www.complex.com/sports/a/markelibert/nick-young-confused-meme-all-the-time",
+      "https://dailydot.com/news/confused-meme-nick-young/"
+    ],
+    "verified": false,
+    "url": "https://dailydot.com/confused-meme-nick-young",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2015-2022 (evergreen)",
+    "meaning": "NBA player's puzzled face surrounded by question marks; what just happened.",
+    "chess_moments": [
+      "en_passant",
+      "underpromotion",
+      "exchange_sac",
+      "stalemate"
+    ]
+  },
+  {
+    "name": "Google En Passant / Holy Hell",
+    "origin": "Community catchphrase and copypasta from r/AnarchyChess and related forums; earliest cited 'Google en passant' comment Jan 22, 2016 (The Chive); popularised by a Chess.com article (2018) and a Chess.com tweet (Jan 22, 2023)",
+    "owner": "No single owner of the phrase. Individual screenshots belong to their posters or platforms. A Google results screenshot shows Google's UI and logo (Google trademarks). One KYM gallery panel is a Calvin and Hobbes parody credited to Watterson / Andrews McMeel",
+    "license_path": "No licence needed for the concept. Short phrases like 'Google en passant' and 'Holy hell' are not protected by copyright. Make an original in-game card with CHASS art (no Google logo, no copied screenshots, no Calvin and Hobbes art)",
+    "enforcement": "None found for the catchphrase",
+    "real_person": "No",
+    "risk": "low",
+    "risk_reason": "Low only if recreated as original text and art. Copying a real Google SERP screenshot would bring in Google trademark and UI concerns (medium), and reusing the Calvin and Hobbes panel would be high",
+    "sources": [
+      "https://knowyourmeme.com/memes/en-passant-google-en-passant"
+    ],
+    "verified": true,
+    "skeptic": "I could not refute the low rating, but it only holds for the implementation the earlier researcher proposed. The meme is a text chain, not one owned image. It started as a Reddit copypasta (r/chessbeginners or r/AnarchyChess; sources disagree) and was spread by r/AnarchyChess and even Chess.com's official account. Short phrases like \"Google en passant\" and \"Holy hell\" are not protected by copyright in the US, and the EU treats them much the same. Searches found no DMCA notices, payment demands, lawsuits or ownership claims for the phrase.\n\nCaveats that would raise the risk:\n- Copying any actual screenshot. A Reddit post belongs to whoever posted it.\n- Reproducing Google's logo, colours or results-page layout. That is Google trade dress.\n- Using the Calvin and Hobbes parody panel. Watterson and Andrews McMeel own that art and are known to defend it.\n\nSaying the word \"Google\" in the joke is a plain reference to Google, not a brand use, and that is low risk.\n\nI did not run a USPTO search for a registered \"HOLY HELL\" mark in game classes. Do a quick one before you sell merch, though it does not matter for an in-game text card.\n\nProduct caveat: this is a text meme, not one of the famous image memes the user asked for. The fact that it is safe does not carry over to image templates.",
+    "skeptic_sources": [
+      "https://knowyourmeme.com/memes/en-passant-google-en-passant",
+      "https://www.tvtropes.org/pmwiki/pmwiki.php/Memes/Chess",
+      "https://www.chess.com/blog/KDlearns/is-en-passant-forced-hilarious-chess-blunders",
+      "https://www.abajournal.com/magazine/article/do_memes_violate_copyright_law",
+      "https://torrentfreak.com/elon-musk-sends-hundreds-of-takedown-requests-to-protect-precious-memes-230127/"
+    ],
+    "url": "https://knowyourmeme.com/memes/en-passant-google-en-passant",
+    "origin_type": "screenshot",
+    "peak_years": "2021-2024 (still a running gag in 2026)",
+    "meaning": "Obscure rule catches someone out and they get told to 'google en passant', with the r/AnarchyChess reply chain ('Holy hell', 'New response just dropped')",
+    "chess_moments": [
+      "en_passant",
+      "small_slip",
+      "engine_vibes"
+    ]
+  },
+  {
+    "name": "Il Vaticano",
+    "origin": "Fake 'special move' joke from r/AnarchyChess; earliest credited post by u/MidnightFireworks, Dec 20, 2022",
+    "owner": "The concept is not owned. Specific Reddit images belong to their posters",
+    "license_path": "No licence needed for the idea (an imaginary rule where two bishops flank and swap pieces). Recreate it as an original CHASS board animation or card. Do not copy Reddit images",
+    "enforcement": "None found",
+    "real_person": "No",
+    "risk": "low",
+    "risk_reason": "An idea or game mechanic is not copyrightable. An original recreation on CHASS's own board avoids any image copyright",
+    "sources": [
+      "https://knowyourmeme.com/memes/il-vaticano",
+      "https://www.houseofstaunton.com/blogs/chess-tutorials/the-ii-vaticano-chess-move-its-not-real-what-is-it"
+    ],
+    "verified": true,
+    "skeptic": "The LOW rating holds, but only under the condition the earlier researcher already set. Il Vaticano is not a photo meme. Know Your Meme describes it as a fictional chess move, a hoax that started on r/AnarchyChess (earliest credited post by u/MidnightFireworks on 2022-12-20). In the move, two bishops flank two pieces and capture them. In the US, a game rule or mechanic is an idea, and ideas are not copyrightable (17 USC 102(b), Baker v. Selden). There is also no stock photo, model release, studio still or real person involved, so no licence is needed and none of the licence-scope checks apply. Searches turned up no lawsuit, DMCA notice, trademark claim or owner demanding payment for the meme. The only thing that carries rights is the specific Reddit graphics and posts, which belong to their posters. Copying those would be MEDIUM risk (unknown owners, no licence), so the LOW rating applies only to an original CHASS recreation. Minor caveats: the Holy See does enforce its 'Vatican' name and emblems in some places (for example a Spanish trademark dispute). That is a remote risk for a joke move name, but avoid papal symbols, the Holy See coat of arms or official Vatican logos in the art, and do not trademark 'Il Vaticano' yourself. Note that this is not a famous image meme, so it does not meet the user's request for image memes. It works as a board gag, not as one of the square-flash pictures.",
+    "skeptic_sources": [
+      "https://knowyourmeme.com/memes/il-vaticano",
+      "https://knowyourmeme.com/editorials/what-is-the-rare-chess-move-il-vaticano-the-reddit-certified-special-move-explained",
+      "https://www.houseofstaunton.com/blogs/chess-tutorials/the-ii-vaticano-chess-move-its-not-real-what-is-it",
+      "https://www.americamagazine.org/faith/2018/03/20/does-pope-own-vatican-brand-spain-so-far-says-yes",
+      "https://www.law.cornell.edu/uscode/text/17/102"
+    ],
+    "url": "https://knowyourmeme.com/memes/il-vaticano",
+    "origin_type": "screenshot",
+    "peak_years": "2022-2024",
+    "meaning": "Fake 'special move' hoax from r/AnarchyChess, used to mock absurd or unreal-looking moves",
+    "chess_moments": [
+      "underpromotion",
+      "big_sac",
+      "capture_spree",
+      "brilliant"
+    ]
+  },
+  {
+    "name": "Bongcloud Attack",
+    "origin": "Joke opening 1.e4 2.Ke2; popularised by Hikaru Nakamura (vs So 2019, vs Xiong 2020) and the Carlsen vs Nakamura bongcloud game of March 15, 2021 (Airthings Masters, chess24 broadcast)",
+    "owner": "The opening itself is not owned. The well-known screenshot comes from the chess24 Champions Chess Tour broadcast (chess24 has been owned by Chess.com since 2022); not confirmed from a primary source",
+    "license_path": "Opening and moves: free to use (chess moves and positions are not copyrightable). Broadcast screenshot: no public licence; it would need permission from Chess.com/chess24. Best path: show the bongcloud on CHASS's own board with original art",
+    "enforcement": "None found for the opening or the memes",
+    "real_person": "Only if the broadcast screenshot is used (shows Carlsen and Nakamura names and footage), which raises publicity concerns for famous players",
+    "risk": "high",
+    "risk_reason": "Low for an original recreation of the opening and the name. Using the actual chess24 broadcast frame would be high (broadcaster footage plus real famous players)",
+    "sources": [
+      "https://knowyourmeme.com/memes/bongcloud-attack"
+    ],
+    "verified": true,
+    "skeptic": "The LOW rating covers something other than what the user asked for. The user wants the famous meme images, not made-up art. The LOW verdict only applies to replaying the bongcloud moves on CHASS's own board with original art, which is not the famous meme at all. The famous version is the Carlsen vs Nakamura double bongcloud game of 15 March 2021 (Magnus Carlsen Invitational, Meltwater Champions Chess Tour), and it spread as chess24 broadcast footage and screenshots. KYM says that game was uploaded to the chess24 YouTube channel and became worldwide news. The earlier researcher already said there is no public licence for that footage and permission would be needed from chess24, which Chess.com now owns. That makes it a broadcast/studio still showing two famous real people, which the risk rules class as HIGH. Being widespread or fair use does not lower that. The other popular versions are caption images uploaded to imgflip and r/AnarchyChess by unknown creators. KYM lists uploaders, not creators, and gives no licence, so there is no clear licence path for those either. I found no enforcement action (no lawsuit, DMCA notice or fee demand) about bongcloud memes. That gap only means I found no evidence of a problem. It does not prove the images are safe to use. I did not confirm the exact event name or broadcast frame from a chess24 primary page (the PC Gamer piece only says Meltwater Champions Chess Tour). Corrected rating: HIGH for the famous broadcast image, unknown/medium for the anonymous caption images, LOW only for an original on-board recreation, which is a gag inspired by the meme rather than the famous meme. In-game text naming Carlsen or Nakamura could add publicity concerns.",
+    "skeptic_sources": [
+      "https://knowyourmeme.com/memes/bongcloud-attack",
+      "https://pcgamer.com/uk/greatest-chess-player-of-all-time-goes-for-the-double-bongcloud-opening",
+      "https://www.chess.com/news/view/2021-magnus-carlsen-invitational-semifinals-2"
+    ],
+    "url": "https://knowyourmeme.com/memes/bongcloud-attack",
+    "origin_type": "screenshot",
+    "peak_years": "2021-2023",
+    "meaning": "Deliberately terrible early king walk (1.e4 e5 2.Ke2), made famous when Carlsen and Nakamura both played it in 2021",
+    "chess_moments": [
+      "king_walk",
+      "fast_mate",
+      "castling"
+    ]
+  },
+  {
+    "name": "What Do I Do in This Position?",
+    "origin": "r/AnarchyChess post by u/MrPaddy666 on May 31, 2022 (a Plague Inc. screenshot); the format went viral in late 2022. Variants show absurd boards with pieces from other games",
+    "owner": "The format is not owned. Each variant uses third-party game art (Plague Inc. by Ndemic Creations, Terraria by Re-Logic, and others) owned by those studios",
+    "license_path": "No licence needed for the format (a strange board plus the caption). Make original absurd boards in CHASS art. Do not reuse other games' sprites or screenshots",
+    "enforcement": "None found",
+    "real_person": "No",
+    "risk": "high",
+    "risk_reason": "The format is free. The risk comes only from copying the third-party game art in specific variants (that would be high, since it is studio art)",
+    "sources": [
+      "https://knowyourmeme.com/memes/what-do-i-do-in-this-position"
+    ],
+    "verified": true,
+    "skeptic": "The LOW rating holds only for something that is not the famous meme. Only the caption idea is free: a strange chess position plus \"What do I do in this position?\", redrawn from scratch in CHASS art. The images people know are a different matter.\n- The original post (Reddit user MrPaddy666, r/AnarchyChess, 31 May 2022) is a screenshot of Plague Inc. (Ndemic Creations) showing a cure for \"En Passant\". Plague Inc. is studio game art.\n- The best-known follow-ups are fan edits built from other studios' assets. Know Your Meme describes Terraria's Wall of Flesh (Re-Logic) on a chess board, which is also the page's cover image, a Bloons TD sniper monkey (Ninja Kiwi), a chess.com screenshot, and a Political Compass mashup.\n- Each of those edits also has its own author, mostly anonymous Reddit users.\n- None of these images has a licence path. There is no stock listing, no CC licence and no public licence from the owners.\n- Know Your Meme says nothing about who owns the images.\n- I found no official Re-Logic fan content policy that allows commercial use. Secondhand sources say commercial use of Terraria IP needs explicit permission.\n- I found no lawsuits or DMCA notices over this meme, but no enforcement history is not a licence.\n- Under the task rules, studio game art counts as HIGH. Using the actual meme images in a public game that may earn money, with only fair use to rely on, cannot be rated low.\n- \"No licence needed\" is true only for an original redraw of the idea, and that is in-house art, which the user explicitly rejected. Passing off the low rating as covering the famous meme is misleading.\n- Corrected rating: HIGH for any real variant of the meme. LOW only for a CHASS-drawn board under the same caption, and that does not count as using the famous meme.",
+    "skeptic_sources": [
+      "https://knowyourmeme.com/memes/what-do-i-do-in-this-position",
+      "https://terraria.wiki.gg/wiki/Terraria_Wiki:Copyrights",
+      "https://cyberpost.co/are-terraria-mods-illegal/"
+    ],
+    "url": "https://knowyourmeme.com/memes/what-do-i-do-in-this-position",
+    "origin_type": "screenshot",
+    "peak_years": "2022-2025",
+    "meaning": "Absurd or hopeless board posted with a fake earnest plea for advice",
+    "chess_moments": [
+      "long_think",
+      "trapped_piece",
+      "mega_blunder"
+    ]
+  },
+  {
+    "name": "Brick rule (refuse en passant, drop a brick)",
+    "origin": "Community joke rule on r/AnarchyChess: if you decline en passant you must drop a brick. TV Tropes reportedly traces it to chess 'workout' rules; no dated origin found",
+    "owner": "Not owned (a community joke and rule)",
+    "license_path": "No licence needed. Implement it as an original CHASS gag (for example a cartoon brick falls when a player declines en passant)",
+    "enforcement": "None found",
+    "real_person": "No",
+    "risk": "low",
+    "risk_reason": "A joke rule is an idea, not a copyrightable image. Original art makes it clean. Origin could not be confirmed (TV Tropes returned 403)",
+    "sources": [
+      "https://www.tvtropes.org/pmwiki/pmwiki.php/Memes/Chess"
+    ],
+    "verified": false,
+    "skeptic": "I could not refute the LOW rating.\n- **No image is involved.** The \"brick\" is a text rule from r/AnarchyChess: decline en passant and you take a \"brick to the pipi\" as penance. It grew out of the Google en passant joke. No photo, film still, stock image or named artwork defines it, so there is no licence to check, no editorial-only limit and no model release.\n- **The rule is an idea.** Copyright protects how something is expressed, not ideas or game rules (US 17 USC 102(b); EU law takes the same line). Drawing our own cartoon brick when a player declines en passant only reuses the concept.\n- **No enforcement found.** I found no DMCA notice, lawsuit, owner claim or demand for payment tied to the brick joke. No real person and no trademark is involved.\n- **One source claim is unverified.** A search summary said the penalty started in a \"chess workout ruleset\". I could not trace that source. A rule is not protectable anyway, but any wording copied word for word from it would be.\n\nCaveats for implementation (these do not change the rating):\n- Draw our own brick and write our own text. Do not copy a specific Reddit post image, a user's art, or the KYM page images.\n- The original punchline is crude (it targets the groin). Consider a family-friendly version, such as a brick dropping on the board, for app store ratings and ad networks.\n- The rating applies only to the gag concept, not to any famous image.\n- The TV Tropes source the earlier researcher cited is a weak, user-edited source. The conclusion still holds because it rests on the idea-versus-expression rule, not on that source.",
+    "skeptic_sources": [
+      "https://www.tvtropes.org/pmwiki/pmwiki.php/Memes/Chess",
+      "https://knowyourmeme.com/memes/en-passant-google-en-passant",
+      "https://axebps-redlib.hf.space/r/AnarchyBeginners",
+      "https://www.law.cornell.edu/uscode/text/17/102"
+    ],
+    "url": "https://www.tvtropes.org/pmwiki/pmwiki.php/Memes/Chess",
+    "origin_type": "other",
+    "peak_years": "2022-2024",
+    "meaning": "r/AnarchyChess lore that declining en passant is punished with a brick drop",
+    "chess_moments": [
+      "en_passant",
+      "small_slip"
+    ]
+  },
+  {
+    "name": "2.13 Seconds Chess / Realization That Magnus Is Losing",
+    "origin": "Footage from the FIDE World Cup 2023 in Baku, round 4 game 1 (Aug 2023): Nakamura gets up and looks at Carlsen's board as Carlsen loses to Vincent Keymer. It became a TikTok meme in October 2026 (first edit Oct 8, 2026 by @flashccfx; Chess.com TikTok edit Oct 13, 2026 with 1.1M+ views)",
+    "owner": "The footage is likely owned by FIDE / the event broadcaster or the filming outlet (KYM cites a ChessBase India YouTube video); not confirmed",
+    "license_path": "None known. It would need permission from FIDE or ChessBase India. No stock listing found",
+    "enforcement": "None found",
+    "real_person": "Yes. Hikaru Nakamura, Magnus Carlsen and Vincent Keymer are identifiable. Nakamura is a major commercial streamer, so using his reaction raises publicity-right concerns",
+    "risk": "high",
+    "risk_reason": "Event broadcast footage with famous real players and no licence path. It is also video-native, not a still image. Very current (Oct 2026) and on-theme, but only usable as an original parody such as a generic 'player stands up and stares at the board' gag",
+    "sources": [
+      "https://knowyourmeme.com/memes/213-seconds-chess-realization-that-magnus-is-losing",
+      "https://en.chessbase.com/post/world-cup-2023-r4-d1",
+      "https://www.fide.com/fide-world-cup-round-4-game-1-magnus-carlsen-loses-to-18-year-old-prodigy-vincent-keymer/"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/213-seconds-chess-realization-that-magnus-is-losing",
+    "origin_type": "screenshot",
+    "peak_years": "2023-2026",
+    "meaning": "Hikaru Nakamura's shocked double take at Carlsen losing (FIDE World Cup 2023 broadcast); real-person likeness and broadcast footage rights",
+    "chess_moments": [
+      "throw",
+      "mega_blunder",
+      "hung_queen",
+      "comeback"
+    ]
+  },
+  {
+    "name": "Gukesh beating Magnus Carlsen at Norway Chess 2025 (Carlsen table slam)",
+    "origin": "Round 6, Norway Chess 2025, Stavanger, June 1, 2025. The viral clip was posted to X by @NorwayChess the same day. Stills used in memes are frames from that tournament broadcast or tournament photography.",
+    "owner": "Probably Norway Chess (the organizer's broadcast and official photographers, e.g. Michal Walusza/Norway Chess) for the footage and official photos. Some outlets credit ChessBase India on X for the image they ran. The exact rights holder of the viral frame is not confirmed.",
+    "license_path": "None known. No stock listing found (no Getty or Shutterstock listing turned up in search). The only route is to ask Norway Chess's press/media office for a licence. Their press photos are given to media for editorial use, not for commercial game use.",
+    "enforcement": "None found against meme or reaction use.",
+    "real_person": "Yes, Magnus Carlsen and Gukesh Dommaraju, both identifiable. Using their likeness in a commercial game raises right-of-publicity issues in the US (and personality or image rights in the EU and Norway) no matter who owns the copyright. The image shows Carlsen in an unflattering moment, which adds defamation and false-endorsement exposure if it is captioned mockingly.",
+    "risk": "high",
+    "risk_reason": "Celebrity sports footage owned by a tournament organizer, no licence path found, and two identifiable real people in a monetized product.",
+    "sources": [
+      "https://knowyourmeme.com/memes/events/gukesh-dommaraju-beating-magnus-carlsen-at-norway-chess-2025",
+      "https://www.chess.com/news/view/norway-chess-2025-carlsen-gukesh-conclusions",
+      "https://www.thestar.com.my/sport/others/2025/06/02/chess-carlsen-slams-table-in-defeat-to-gukesh-at-norway-chess",
+      "https://www.tabla.com.sg/lifestyle/sports-fitness/gukesh-sends-carlsen-meltdown"
+    ],
+    "verified": false
+  },
+  {
+    "name": "Hikaru Nakamura throws Gukesh's king into the crowd",
+    "origin": "Checkmate: USA vs India exhibition at Esports Stadium Arlington, Texas, October 4, 2025. Images that circulate are video grabs from the event livestream (credited by outlets to @chesscom on X or ChessBase India/YouTube).",
+    "owner": "Unknown. Most likely the event organizer or broadcaster (Chess.com or the Checkmate event producers), and outlets credit ChessBase India for some screengrabs. Not confirmed.",
+    "license_path": "None known. No stock listing or public licence found.",
+    "enforcement": "None found on image use. The gesture itself drew public criticism (Kramnik called it vulgar).",
+    "real_person": "Yes, Hikaru Nakamura and Gukesh Dommaraju. Publicity-rights concern for commercial use, and the moment was controversial, so using it as a mocking gag adds reputational and defamation sensitivity.",
+    "risk": "high",
+    "risk_reason": "Livestream frame of identifiable celebrities, the rights holder is unclear, and there is no licence path.",
+    "sources": [
+      "https://www.onmanorama.com/sports/other-sports/2025/10/05/hikaru-nakamura-beats-d-gukesh-throws-king-into-crowd.html",
+      "https://www.chess.com/news/view/nakamura-gukesh-king-checkmate-usa-vs-india-2025",
+      "https://worldchess.com/news/nakamura-pawn-throw-checkmate-usa-india",
+      "https://www.latestly.com/socially/sports/hikaru-nakamura-throws-gukeshs-king-chess-piece-into-crowd-after-winning-bullet-game-as-team-usa-beat-india-5-0-in-exhibition-checkmate-usa-vs-india-match-watch-video-7144671.html/amp"
+    ],
+    "verified": false
+  },
+  {
+    "name": "2022 Hans Niemann cheating controversy (anal beads theory)",
+    "origin": "Started after Niemann beat Carlsen at the 2022 Sinquefield Cup (September 2022). The 'anal beads' theory spread from Reddit and Twitter. Meme images are tournament photos of Niemann edited with thought bubbles, plus screenshots of tweets and Reddit posts.",
+    "owner": "Unknown for the specific edited photos (Know Your Meme gives no photographer credit). The underlying tournament photos most likely belong to the Saint Louis Chess Club or its photographers, but this is not confirmed. Screenshots of tweets and posts belong to their authors.",
+    "license_path": "None known.",
+    "enforcement": "No image takedowns found. There was heavy litigation around the controversy itself: Niemann's $100M suit against Carlsen, Chess.com, Nakamura and others was dismissed in June 2023 (antitrust claims with prejudice, defamation claims without prejudice), and the parties later settled.",
+    "real_person": "Yes, Hans Niemann, an identifiable private-turned-public figure. A sexual cheating accusation attached to his image in a commercial game is a serious defamation and false-light risk on top of publicity rights. Niemann has already sued over this exact controversy.",
+    "risk": "high",
+    "risk_reason": "Sexual accusation tied to a real, litigious person, no image owner or licence identified, and a monetized product.",
+    "sources": [
+      "https://knowyourmeme.com/memes/events/2022-hans-niemann-chess-cheating-controversy",
+      "https://en.wikipedia.org/wiki/Carlsen%E2%80%93Niemann_controversy",
+      "https://www.chess.com/news/view/hans-niemann-lawsuit-dismissed",
+      "https://www.irishtimes.com/world/us/2023/06/28/court-dismisses-us-chess-prodigys-100-million-legal-case"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/events/2022-hans-niemann-chess-cheating-controversy",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2022-2023",
+    "meaning": "Joke conspiracy about hidden engine help after Niemann beat Carlsen; adult theme and accusation of a real person, high risk, family mode off",
+    "chess_moments": [
+      "engine_vibes",
+      "brilliant"
+    ]
+  },
+  {
+    "name": "If I Speak I Am In Big Trouble (Mourinho, posted by Carlsen)",
+    "origin": "Jose Mourinho's Sky Sports/Sky News post-match interview after Aston Villa 1-0 Chelsea, March 15, 2014 (uploaded to Sky Sports Retro YouTube in 2020). Carlsen attached the clip to his Sinquefield Cup withdrawal tweet in September 2022, which made it a chess meme.",
+    "owner": "Sky (Sky Sports/Sky UK) owns the broadcast footage and any still taken from it.",
+    "license_path": "None known for a game. Sky licenses archive footage through its commercial or archive sales, by negotiation and usually for broadcast. No stock listing for this frame was found.",
+    "enforcement": "None found specific to this meme. Broadcasters and the Premier League enforce footage rights actively in general.",
+    "real_person": "Yes, Jose Mourinho, a celebrity. Publicity-rights concern, and the chess meaning implies a cheating accusation against Niemann, which adds defamation sensitivity.",
+    "risk": "high",
+    "risk_reason": "TV broadcast still from a major broadcaster, celebrity likeness, and no affordable licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/if-i-speak-i-am-in-big-trouble",
+      "https://en.wikipedia.org/wiki/Carlsen%E2%80%93Niemann_controversy",
+      "https://esports.gg/news/gaming/magnus-carlsen-drops-a-cryptic-message-after-losing-undefeated-streak-to-hans-niemann/"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/if-i-speak-i-am-in-big-trouble",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2022 (chess use); evergreen 2014-2024",
+    "meaning": "Holding back a complaint; Carlsen tweeted it after withdrawing from the 2022 Sinquefield Cup",
+    "chess_moments": [
+      "resign",
+      "engine_vibes",
+      "stalemate",
+      "timeout"
+    ]
+  },
+  {
+    "name": "Ding Chilling",
+    "origin": "Clip of Ding Liren relaxing in the rest room during Game 1 of the 2023 FIDE World Championship (Astana), posted April 9, 2023 to r/chess and Chess.com's Instagram ('Ding was chilling during game one').",
+    "owner": "Unknown for the specific clip. Most likely FIDE or the official broadcast (FIDE's official photographer was Stev Bonhage, and ChessBase India credits FIDE/Stev Bonhage for a Game 1 photo of Ding's 'calm demeanour'). Not confirmed that this frame is his.",
+    "license_path": "None known. You could ask FIDE's press office. No stock listing found.",
+    "enforcement": "None found.",
+    "real_person": "Yes, Ding Liren, the former World Champion. The meme is affectionate, but commercial use of his likeness without consent still raises publicity-rights issues.",
+    "risk": "high",
+    "risk_reason": "Press or broadcast footage of an identifiable celebrity, the owner is unconfirmed, and there is no licence path.",
+    "sources": [
+      "https://knowyourmeme.com/memes/ding-chilling",
+      "https://aagaard.chessbase.in/news/FIDE-World-Championship-2023-Game-1-report"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/ding-chilling",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2023-2024",
+    "meaning": "Bing Chilling wordplay on Ding Liren, used for calm or unbothered play",
+    "chess_moments": [
+      "dead_draw",
+      "long_think",
+      "queen_trade",
+      "rook_endgame"
+    ]
+  },
+  {
+    "name": "Messi and Ronaldo Playing Chess (Louis Vuitton)",
+    "origin": "Louis Vuitton 'Victory Is a State of Mind' campaign photo by Annie Leibovitz, released November 19, 2022, on the eve of the Qatar World Cup. Posted by Messi, Ronaldo and Louis Vuitton. It became one of the most-liked Instagram images ever.",
+    "owner": "Louis Vuitton (LVMH) and/or Annie Leibovitz under the campaign contract. The players' image rights are licensed only to LV for that campaign.",
+    "license_path": "None. It is a luxury brand advertising image with no stock listing and no public licence. LV does not license campaign imagery to third parties.",
+    "enforcement": "No meme-specific takedowns found. LVMH and Louis Vuitton are known as very aggressive IP enforcers (trademark and copyright suits are frequent), and Leibovitz's work is tightly controlled.",
+    "real_person": "Yes, Lionel Messi and Cristiano Ronaldo, two of the most commercially valuable likenesses in the world. Any commercial use implies endorsement, which is a strong right-of-publicity and false-endorsement risk (US Lanham Act; EU image-rights laws such as those in Spain and Portugal).",
+    "risk": "high",
+    "risk_reason": "Celebrity advertising photo by a famous photographer, owned by an aggressive brand, featuring two top-tier athletes' image rights.",
+    "sources": [
+      "https://knowyourmeme.com/memes/messi-and-ronaldo-playing-chess",
+      "https://petapixel.com/2022/11/21/annie-lebowitzs-photo-of-ronaldo-and-messi-has-already-broken-records",
+      "https://www.fourfourtwo.com/news/world-cup-2022-cristiano-ronaldo-and-lionel-messi-pictured-together-for-louis-vuitton-ad"
+    ],
+    "verified": true,
+    "url": "https://knowyourmeme.com/memes/messi-and-ronaldo-playing-chess",
+    "origin_type": "celebrity or press photo",
+    "peak_years": "2022-2023",
+    "meaning": "Annie Leibovitz ad photo of two rivals at a board (real Carlsen vs Nakamura 2017 position), used for epic rivalry or tense standoff; luxury brand ad, strong copyright",
+    "chess_moments": [
+      "long_think",
+      "dead_draw",
+      "queen_trade"
+    ]
+  },
+  {
+    "name": "The Queen's Gambit (Beth Harmon ceiling chess and stills)",
+    "origin": "Netflix limited series, premiered October 23, 2020 (created by Scott Frank and Allan Scott). Stills of Beth Harmon (Anya Taylor-Joy), including the ceiling-chessboard visualisation and the 'Beth Harmon plays Jenga/Monopoly/Connect Four' edits, were widely memed from 2020 into the following years.",
+    "owner": "Netflix (series copyright). Anya Taylor-Joy holds publicity rights in her likeness.",
+    "license_path": "None affordable. No public licence for stills was found. Bridgeman Images offers cleared production imagery for film/TV production use. Netflix licenses the IP only through formal deals (it commissioned an official Queen's Gambit chess game). Licensing stills for a third-party game would mean negotiating with Netflix.",
+    "enforcement": "None found against memes. Netflix enforces its IP and was itself sued (and settled) by GM Nona Gaprindashvili over a line in the show. Studios routinely send takedowns for commercial use of stills.",
+    "real_person": "Yes, actress Anya Taylor-Joy is identifiable in every still. Using it commercially raises publicity-rights and false-endorsement concerns.",
+    "risk": "high",
+    "risk_reason": "Studio TV still owned by Netflix, an identifiable actress, and no affordable licence path. Fair use is not a safe basis for a monetized game.",
+    "sources": [
+      "https://knowyourmeme.com/memes/subcultures/the-queens-gambit",
+      "https://80.lv/articles/the-queen-s-gambit-fan-art-turned-into-netflix-s-official-game",
+      "https://www.looper.com/995991/netflix-settles-eye-popping-queens-gambit-lawsuit",
+      "https://ww2.bridgemanimages.com/for-film-tv-production-set-prop-costume-design"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/subcultures/the-queens-gambit",
+    "origin_type": "film or TV still",
+    "peak_years": "2020-2021",
+    "meaning": "Netflix series stills, especially Beth visualising pieces on the ceiling, used for genius calculation or smug confidence; Netflix copyright",
+    "chess_moments": [
+      "long_think",
+      "brilliant",
+      "great_find",
+      "checkmate"
+    ]
+  },
+  {
+    "name": "GothamChess 'The Rook' sacrifice (screenshot)",
+    "origin": "Running bit by Levy Rozman (GothamChess) of sacrificing a rook with an elongated 'the ROOOOK' call. It has been in his YouTube shorts and streams since about 2021, and Chess.com covered it in GothamChess vs. the World on Nov 7, 2025. Any screenshot would come from his YouTube/Twitch videos or Chess.com broadcast imagery.",
+    "owner": "Levy Rozman / GothamChess (YouTube and Twitch video frames) or Chess.com, LLC for its article and broadcast imagery. Rozman owns a GOTHAMCHESS trademark application (filed June 10, 2021, clothing classes).",
+    "license_path": "None public. The only path is to ask Levy Rozman's management or Chess.com for written permission. No stock listing, CC licence, or press kit allowing this use was found. A safe substitute is the game's own board (or a self-drawn board) replaying a rook sac, with no face, likeness, or GothamChess branding.",
+    "enforcement": "None found for this meme. He owns the GOTHAMCHESS mark (Justia record), so using his name or brand in a commercial chess product carries trademark and false-endorsement exposure.",
+    "real_person": "Yes. Levy Rozman is a living, identifiable public figure, and putting his face or voice in a monetized chess game raises right-of-publicity (US state law) and implied-endorsement concerns. GDPR image rights also apply in the EU.",
+    "risk": "high",
+    "risk_reason": "It is a frame of a real celebrity's own video in a directly competing chess-entertainment niche, with a trademarked brand and no licence path. A text-only nod to the move (the board itself showing a hanging rook) is low risk, but the screenshot is not.",
+    "sources": [
+      "https://www.chess.com/news/view/gothamchess-sacrifices-the-rooook-vs-world",
+      "https://trademark.justia.com/owners/levy-rozman-4853605",
+      "https://trademarks.justia.com/browse-by-date/2021/june/10/42.html"
+    ],
+    "verified": false
+  },
+  {
+    "name": "Skill Issue",
+    "origin": "Gamer catchphrase, presumed to come from Twitch. It spread on Twitter and Reddit from September 2020, and the earliest meme use KYM found is a Nov 2, 2020 YouTube video by swieg. It was heavily used from 2021 to 2026.",
+    "owner": "No owner for the phrase. It is a short common phrase, and short phrases are not protected by US copyright. Each image circulating with the caption has its own unknown owner (screenshots, GIFs from games like Friday Night Funkin' and Binding of Isaac, and so on).",
+    "license_path": "No licence is needed for the phrase itself. Render 'Skill issue.' as original text or with in-house art. Do not reuse any of the KYM gallery images, which have mixed and unknown owners. No stock listing or CC image was found.",
+    "enforcement": "None found for the phrase. No trademark check was run on USPTO, so do a quick TESS search before using it as a product or feature name.",
+    "real_person": "None for the phrase. Some gallery images show identifiable people (for example, the swieg dancing video), so avoid those.",
+    "risk": "low",
+    "risk_reason": "It is a text catchphrase, not a specific image. Using the words with original or in-game art needs no licence. Low only if no third-party image is used. Any specific KYM image would be medium to high (unknown owner).",
+    "sources": [
+      "https://knowyourmeme.com/memes/skill-issue-simply-a-difference-in-skill"
+    ],
+    "verified": false,
+    "skeptic": "I could not refute the LOW rating, but it only holds for one narrow use. The rating covers the words \"Skill issue\" set as original text or over in-house art. It does not cover any famous image that goes with the meme, and the meme has no single canonical image.\n\n- **Copyright:** US copyright does not protect words and short phrases (37 CFR 202.1(a)), so the phrase itself needs no licence. Every image in the KYM gallery has its own owner, often unknown, and those images range from game stills (Friday Night Funkin', Binding of Isaac) to videos of identifiable people. Any of them would be HIGH or unknown risk. \"Do not reuse gallery images\" is therefore a required condition of the LOW rating.\n- **Enforcement:** I found no lawsuits, DMCA notices, or payment demands over the phrase.\n- **Trademark (this corrects the earlier note that no check was run):** a third-party trademark aggregator lists a live US registration for SKILL ISSUE.\n  - Owner Combat Waffle Studios, Inc., serial 98490656, registration 7839905, registered 2025-06-24.\n  - Class 25, clothing only.\n  - I could not confirm it on USPTO TSDR (the page could not be fetched).\n  - I found no SKILL ISSUE registration in class 9, 28 or 41 (games and software), but that was a web search, not a USPTO search.\n  - A UK IPO journal entry from August 2026 came up in search results but returned 403, so its mark text and classes are unknown.\n- **Trademark risk in practice:** showing the phrase as an in-game caption is ordinary descriptive use, not use as a brand, so it stays low risk. Do not use \"Skill Issue\" as a product, mode or feature name, and do not put it on merchandise (especially clothing), without a TSDR search for classes 9, 25, 28 and 41 first.\n- **EU:** same position. Short phrases are generally not original enough for copyright, and trademark rights only bite on use as a brand.\n- **Fit with the user's request:** this item is text, not a famous image meme, so it falls short of what the user asked for even though its legal risk is low.",
+    "skeptic_sources": [
+      "https://knowyourmeme.com/memes/skill-issue-simply-a-difference-in-skill",
+      "https://trademarkdir.com/trademark/skill-issue-98490656",
+      "https://www.ecfr.gov/current/title-37/chapter-II/subchapter-A/part-202/section-202.1",
+      "https://www.ipo.gov.uk/t-tmj/tm-journals/2026-035/UK00004431017.html"
+    ],
+    "url": "https://knowyourmeme.com/memes/skill-issue-simply-a-difference-in-skill",
+    "origin_type": "other",
+    "peak_years": "2021-2025",
+    "meaning": "Gaming taunt that a loss is purely the loser's fault; mostly a caption, so the image can be anything",
+    "chess_moments": [
+      "blunder",
+      "hung_queen",
+      "hanging_piece",
+      "timeout"
+    ]
+  },
+  {
+    "name": "Mission Failed, We'll Get 'Em Next Time",
+    "origin": "Line spoken by Ghost (voiced by Craig Fairbass) on mission failure in Call of Duty: Modern Warfare 2 (2009, Infinity Ward). It became a meme as a FAIL-video sound effect from a Vine by Sock Jesus on Mar 29, 2016, and is usually paired with a game still or Ghost image.",
+    "owner": "Activision Publishing (Infinity Ward studio), now part of Microsoft. Images of Ghost are Activision copyright. The voice performance is Activision's, with likeness and voice ties to actor Craig Fairbass.",
+    "license_path": "None known. Microsoft's Xbox Game Content Usage Rules cover only Microsoft Studios-owned games, say commercial ventures need a commercial licence, and state that none has been granted. No Activision fan-content licence permitting commercial reuse was found. The only path is to ask Activision directly. Safe alternative: the text line alone (short phrase) over original art, with no Ghost image, CoD logo, or audio clip.",
+    "enforcement": "Activision actively enforces its IP: it filed DMCA takedowns against Call of Duty-inspired Fortnite Creative maps (2023) and is part of Microsoft, whose rules bar commercial use of game content.",
+    "real_person": "Ghost is fictional, but the line's audio is Craig Fairbass's voice performance. Do not use the audio.",
+    "risk": "high",
+    "risk_reason": "It is a still from a major studio game with an owner known to issue takedowns and no licence available. Using only the short text phrase with original art would be low to medium (possible trademark-adjacent confusion if CoD styling is copied).",
+    "sources": [
+      "https://knowyourmeme.com/memes/mission-failed-well-get-em-next-time",
+      "https://www.xbox.com/en-US/developers/Rules",
+      "https://news.instant-gaming.com/en/articles/960-activision-is-requesting-the-removal-of-certain-content-created-in-fortnite-s-creative-mode-2-0"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/mission-failed-well-get-em-next-time",
+    "origin_type": "game still",
+    "peak_years": "2017-2022 (evergreen)",
+    "meaning": "Call of Duty game-over screen used ironically for any failed attempt",
+    "chess_moments": [
+      "resign",
+      "checkmate",
+      "poisoned_bait",
+      "timeout"
+    ]
+  },
+  {
+    "name": "Press F to Pay Respects",
+    "origin": "Funeral scene prompt in the second mission of Call of Duty: Advanced Warfare (released Nov 4, 2014, Sledgehammer Games for Activision), where Pvt. Jack Mitchell attends a funeral. It is still in heavy use as the 'F' reply in chats from 2021 to 2026.",
+    "owner": "Activision Publishing (developer Sledgehammer Games), now part of Microsoft. The in-game funeral screenshot is Activision copyright. The phrase 'Press F to pay respects' itself is a short phrase.",
+    "license_path": "None known for the screenshot. Same as Mission Failed: Xbox rules give no commercial licence, and no Activision licence was found. Safe alternative: an original 'Press F to pay respects' text prompt or key-cap graphic in CHASS's own art style (for example, shown when a queen is lost), with no CoD scene, characters, or logo.",
+    "enforcement": "Activision has a history of DMCA takedowns over Call of Duty content (Fortnite Creative 2023). Nothing found specifically targeting the F meme.",
+    "real_person": "The funeral scene contains Kevin Spacey's digitally captured likeness as Jonathan Irons in the game, plus performance-captured actors. Avoid the screenshot for publicity and reputation reasons too.",
+    "risk": "high",
+    "risk_reason": "The screenshot is a studio game still with an enforcing owner and no licence path. The bare text phrase in original art is low risk and carries most of the joke, so recommend that instead.",
+    "sources": [
+      "https://knowyourmeme.com/memes/press-f-to-pay-respects",
+      "https://www.xbox.com/en-US/developers/Rules",
+      "https://news.instant-gaming.com/en/articles/960-activision-is-requesting-the-removal-of-certain-content-created-in-fortnite-s-creative-mode-2-0"
+    ],
+    "verified": false,
+    "url": "https://knowyourmeme.com/memes/press-f-to-pay-respects",
+    "origin_type": "game still",
+    "peak_years": "2014-2023 (evergreen)",
+    "meaning": "Call of Duty: Advanced Warfare funeral prompt, used to mourn a loss",
+    "chess_moments": [
+      "hung_queen",
+      "resign",
+      "checkmate",
+      "trapped_piece"
+    ]
+  }
+]

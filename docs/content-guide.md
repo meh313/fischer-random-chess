@@ -50,6 +50,21 @@ Shipped sprites for gags: hand-gun.png (supplied art), and duck, crown, sparkle,
 
 Drop the file in `public/memes/`. `on` is any event type (`checkmate`, `check`, `capture`, `promotion`, `castling`, `duckPlaced`, `draw`, `stalemate`, `blunder`, `gameOver`) or a list. Images, GIFs and mp4/webm are supported. 2 to 4 s on screen, with a queue, cooldown and chance set in Settings. `"placeholder": true` shows a PLACEHOLDER tag.
 
+## Online GIFs: `public/memes/gifs.json`
+
+Memes react to what a move did, not just to its type. The engine tags each move with moments: `hung_queen`, `hung_piece`, `queen_lost`, `queen_trade`, `free_piece`, `free_pawn`, `capture_spree`, `check_spam`, `king_walk`, `comeback`, `steamroll`, `underpromotion` (see `src/engine/moments.ts`). One move can fire several events; only the highest-priority key shows a meme.
+
+```json
+"hung_queen": { "priority": 85, "chance": 1, "queries": ["facepalm", "oh no"], "captions": ["free queen. no refunds."] }
+```
+
+- Keys are moments or event types (`checkmate`, `stalemate`, `draw`, `promotion`, `castling`, `check`, `capture`, `duckPlaced`).
+- `queries` are GIPHY search phrases, one picked at random per meme. `captions` show under the GIF.
+- `chance` is multiplied by the meme frequency setting. Small moments are skipped while another meme is showing or cooling down; priority 90 and up can wait in the queue.
+- `rating` (g, pg, pg-13) filters GIPHY content. `blocked` lists GIPHY ids that must never show.
+- Needs `VITE_GIPHY_KEY` in `.env` (see `.env.example`) and the "Online GIFs" setting. Without it, or when GIPHY fails or rate-limits, local `memes.json` entries with the same key are used. A local entry's `on` can also name a moment.
+- GIPHY rules: searched live from the browser, nothing cached or stored, URLs used as returned, "Powered by GIPHY" plus the creator shown on every GIF. A free beta key allows 100 calls per hour; a public launch needs a production key.
+
 ## A new piece set: `public/piecesets/<id>/`
 
 1. Add `<id>` to `public/piecesets/index.json`.

@@ -1,5 +1,5 @@
-import type { Cinematic, MemeEntry, MemeFile, PieceSetFile, ResolvedPieceSet } from './types'
-import { validateCinematicsReport } from './select'
+import type { Cinematic, GifFile, MemeEntry, MemeFile, PieceSetFile, ResolvedPieceSet } from './types'
+import { validateCinematicsReport, validateGifFile } from './select'
 
 export const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
 
@@ -17,6 +17,10 @@ export async function loadMemes(): Promise<MemeEntry[]> {
   const file = await getJson<MemeFile>('memes/memes.json')
   if (file.version !== 1 || !Array.isArray(file.memes)) throw new Error('memes.json: expected {version:1, memes:[...]}')
   return file.memes
+}
+
+export async function loadGifs(): Promise<{ file: GifFile; problems: string[] }> {
+  return validateGifFile(await getJson('memes/gifs.json'))
 }
 
 export async function loadPieceSetIndex(): Promise<{ id: string; name: string; placeholder?: boolean }[]> {

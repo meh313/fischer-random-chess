@@ -1,0 +1,542 @@
+# Famous image memes: copyright check for CHASS
+
+Date: 2026-10-30. Scope: famous still-image memes used heavily between 2021 and October 2026, checked for use as square-flash reactions in CHASS, a public chess web game that may earn money. No meme images are reproduced here; each meme is named and linked (Know Your Meme where possible). Raw data: `research_notes/Famous image memes copyright check/memes.json`.
+
+This is general information, not legal advice. Before shipping any third-party image in a monetized game, get a short review from an IP lawyer in your country.
+
+## Managerial summary
+
+- Checked 95 entries, which collapse to 82 distinct memes once duplicates (the same meme researched twice under two names) are merged.
+- Risk after the skeptic pass, by distinct meme: 4 low, 17 medium, 61 high. By raw entry: 4 low, 23 medium, 68 high.
+- No famous image meme came out low risk. The 4 low items are text or concept gags (Google En Passant, Il Vaticano, the Brick rule, Skill Issue) redrawn in CHASS art, not the famous pictures.
+- The best licensable famous images are Distracted Boyfriend (iStock Extended licence), Hide the Pain Harold (Dreamstime, listing unconfirmed), Just a Chill Guy (direct licence from Phillip Banks) and Swole Doge (Own The Doge), followed by single-artist comics (Baton Roue, Two Buttons) that need an email.
+- Main rule learned: famous does not mean free. Anything from a film, TV show, cartoon studio, news agency or celebrity is effectively unlicensable for an indie game; only stock photos and memes owned by one reachable person can realistically be cleared.
+
+## How to read the ratings
+
+- Low: usable now with no licence, under the stated condition (usually: recreate as original text or art).
+- Medium: an owner is known or a licence path exists, but you need a paid licence or written permission first. Do not ship before that.
+- High: no realistic licence for a small game (studio stills, studio characters, press agency photos, celebrities, controversial real people). Avoid.
+- Not finding a lawsuit is not permission. Wide sharing and "fair use" are not a basis for a monetized product.
+- Where the same meme was researched twice with different ratings (UNO Draw 25: medium and high), the stricter rating is used.
+
+## Safe to license now
+
+No famous image meme qualifies. These four are low risk only as original CHASS recreations, and they are text or board gags, not the famous pictures the brief asked for. They are still worth having because they are chess-native and need no permission.
+
+- Google En Passant / Holy Hell ([KYM](https://knowyourmeme.com/memes/en-passant-google-en-passant))
+  - Owner: nobody owns the phrase. Individual screenshots belong to their posters; Google's logo and results layout are Google trade dress; one gallery panel is Calvin and Hobbes art (Watterson / Andrews McMeel).
+  - Licence path: none needed. Short phrases are not protected by copyright. Write it as an original CHASS card. Price: zero.
+  - Real person: none.
+  - Conditions: no Google logo or results-page look, no copied Reddit screenshots, no Calvin and Hobbes art. Run a quick USPTO check for a "HOLY HELL" mark before any merch.
+  - Best chess moments: en_passant, small_slip, engine_vibes.
+  - Skeptic pass: upheld.
+- Il Vaticano ([KYM](https://knowyourmeme.com/memes/il-vaticano))
+  - Owner: nobody owns the idea (a fake r/AnarchyChess move, first credited post 2022-12-20). Specific Reddit graphics belong to their posters.
+  - Licence path: none needed. A game rule or idea is not copyrightable ([17 USC 102(b)](https://www.law.cornell.edu/uscode/text/17/102)). Animate it on CHASS's own board. Price: zero.
+  - Real person: none.
+  - Conditions: no papal symbols, Holy See coat of arms or Vatican logos; do not trademark the name.
+  - Best chess moments: underpromotion, big_sac, capture_spree, brilliant.
+  - Skeptic pass: upheld.
+- Brick rule (decline en passant, drop a brick) ([TV Tropes, weak source](https://www.tvtropes.org/pmwiki/pmwiki.php/Memes/Chess))
+  - Owner: nobody (community joke rule).
+  - Licence path: none needed. Draw your own brick and write your own text. Price: zero.
+  - Real person: none.
+  - Conditions: the original punchline is crude; use a family-friendly brick-on-the-board version.
+  - Best chess moments: en_passant (declined), small_slip.
+  - Skeptic pass: upheld. Origin date still unverified.
+- Skill Issue ([KYM](https://knowyourmeme.com/memes/skill-issue-simply-a-difference-in-skill))
+  - Owner: nobody owns the phrase. Each image that carries the caption has its own, often unknown, owner.
+  - Licence path: none needed for the words as an in-game caption over CHASS art. Price: zero.
+  - Real person: none for the phrase; some gallery images show identifiable people, so do not use them.
+  - Conditions: a third-party aggregator lists a live US mark SKILL ISSUE (Combat Waffle Studios, reg. 7839905, class 25 clothing, not confirmed on USPTO TSDR). Do not use "Skill Issue" as a product, mode or feature name, or on merch, without a TSDR search in classes 9, 25, 28 and 41.
+  - Best chess moments: blunder, hung_queen, hanging_piece, timeout.
+  - Skeptic pass: upheld, with the trademark correction above.
+
+## Possible with permission
+
+These are the famous images CHASS can realistically get. Each needs a paid licence or written permission before launch. Ordered roughly from easiest to hardest.
+
+- Distracted Boyfriend ([KYM](https://knowyourmeme.com/memes/distracted-boyfriend))
+  - Owner: Antonio Guillem (photographer), sold through iStock/Getty and Shutterstock.
+  - How to get it: buy on iStock, image ID 493656728 ([listing](https://www.istockphoto.com/photo/disloyal-man-with-his-girlfriend-looking-at-another-girl-gm493656728-77018851)). The standard licence (about USD 7.49 to 12) is likely not enough: the [iStock agreement](https://www.istockphoto.com/en/legal/license-agreement) bars standard-licence use in products where the image is the main value and names mobile apps. Buy the Extended licence (per-file, credits, much more than USD 12; check the live price). Show the "Stock photo. Posed by model." disclaimer, since the framing is unflattering. Shutterstock's Enhanced licence is the alternative; terms not checked.
+  - Real people: two professional models with stock releases; scope for this framing unconfirmed.
+  - Moments: poisoned_bait, free_pawn, hanging_piece, throw.
+  - Skeptic pass: downgraded from low to medium.
+- Hide the Pain Harold ([KYM](https://knowyourmeme.com/memes/hide-the-pain-harold))
+  - Owner: the Dreamstime contributor who shot the series (name not found). András Arató is the model.
+  - How to get it: search Dreamstime for the Arató series and check its extended or product-use licence. Listing not confirmed (Dreamstime blocked automated checks). Arató also does paid commercial work, so a direct deal with him for likeness consent is possible.
+  - Real person: yes; he accepts the meme and excludes only politics, religion and sex.
+  - Moments: hung_queen, blunder, rook_endgame, dead_draw, small_slip.
+- Just a Chill Guy ([KYM](https://knowyourmeme.com/memes/just-a-chill-guy-my-new-character))
+  - Owner: artist Phillip Banks, who registered the copyright and issued takedowns against for-profit use from November 2024.
+  - How to get it: contact Banks through his X profile for a written licence. He has licensed it before (Youtooz plush, Hong Kong pop-up). Do not use it without that.
+  - Real person: no (cartoon).
+  - Moments: time_scramble, dead_draw, hanging_piece, small_slip.
+- Swole Doge vs. Cheems ([KYM](https://knowyourmeme.com/memes/swole-doge-vs-cheems))
+  - Owners: Doge image licensed exclusively through Own The Doge (ownthedoge.com, open to partnerships). Cheems photo: Balltze's owner (Instagram @balltze). The swole edit itself has an unknown author.
+  - How to get it: ask Own The Doge for Doge; DM @balltze for Cheems; commission a fresh composite rather than copying the anonymous edit.
+  - Real person: no (dogs).
+  - Moments: steamroll, comeback, throw, promotion.
+- Baton Roue / Bike Fall ([KYM](https://knowyourmeme.com/memes/baton-roue))
+  - Owner: French illustrator Corentin Penloup (French moral rights apply).
+  - How to get it: email Penloup through his blog for a paid licence and keep his credit. He has called reuse "hyper cool", which is friendly but not a licence.
+  - Moments: hung_queen, mega_blunder, throw, timeout.
+- Two Buttons / Daily Struggle ([KYM](https://knowyourmeme.com/memes/daily-struggle))
+  - Owner: animator Jake Clark (later Cuphead and Innersloth).
+  - How to get it: email him through his social accounts or Innersloth for written permission.
+  - Moments: long_think, poisoned_bait, time_scramble, exchange_sac.
+- Trade Offer ([KYM](https://knowyourmeme.com/memes/trade-offer))
+  - Owner: probably TikTok creator bradeazy. He sold a 1/1 NFT of the template in 2021, so check rights were not transferred.
+  - How to get it: contact him through his merch site for a licence plus likeness release.
+  - Moments: exchange_sac, queen_trade, even_trade.
+- Side-Eyeing Chloe ([KYM](https://knowyourmeme.com/memes/side-eyeing-chloe))
+  - Owner: the Clem family (Katie Clem); the 2021 NFT sale did not transfer copyright.
+  - How to get it: contact them through the KAftC YouTube channel. Parental consent needed (Chloe is a minor). Ethically sensitive, so only for gentle moments.
+  - Moments: engine_vibes, king_walk, underpromotion.
+- Kombucha Girl ([KYM](https://knowyourmeme.com/memes/kombucha-girl-trying-kombucha-for-the-first-time))
+  - Owner: Brittany Broski (her own TikTok).
+  - How to get it: through her management. She has distanced herself from the meme, so expect a no.
+  - Moments: exchange_sac, even_trade, poisoned_bait.
+- Clown Applying Makeup ([KYM](https://knowyourmeme.com/memes/putting-on-clown-makeup))
+  - Owner: most likely Smiffys (UK costume company) as publisher of the 2015 tutorial video. Model unnamed.
+  - How to get it: email Smiffys for a still licence plus model consent (the meme mocks the subject).
+  - Moments: throw, mega_blunder, poisoned_bait.
+- Stonks ([KYM](https://knowyourmeme.com/memes/stonks)) and Panik Kalm Panik ([KYM](https://knowyourmeme.com/memes/panik-kalm-panik))
+  - Owner: Meme Man head of unknown origin, popularised by the Facebook page Special meme fresh; the Stonks background is an unidentified stock photo.
+  - How to get it: no reliable licensor. Message Special meme fresh; otherwise rebuild the panel layout with original art (which is then not the famous image).
+  - Moments: free_pawn, promotion, comeback (Stonks); comeback, throw, time_scramble (Panik Kalm).
+- Always Has Been astronauts ([KYM](https://knowyourmeme.com/memes/wait-its-all-ohio-always-has-been)), Galaxy Brain ([KYM](https://knowyourmeme.com/memes/galaxy-brain)), Left Exit 12 Off Ramp ([KYM](https://knowyourmeme.com/memes/left-exit-12-off-ramp)), Waiting Skeleton ([KYM](https://knowyourmeme.com/memes/waiting-for-op))
+  - Owner: unknown or anonymous artists and editors; no licensor found.
+  - How to get it: no route to the circulating image. Commission a redraw in the same spirit, or build from licensed stock (stock brain renders, a stock skeleton-on-bench photo). The astronaut version has a gun, which may clash with age ratings.
+- Yes Chad / Nordic Gamer ([KYM](https://knowyourmeme.com/memes/yes-chad))
+  - Owner: unknown 4chan artist. The source exploitable has racist roots, so the reputational risk outweighs the legal one. CHASS's own Chad horse already covers this joke.
+
+## Avoid for a public game
+
+- For the Better, Right? / Anakin and Padme: Lucasfilm/Disney film still with celebrity actors.
+- Think, Mark: Amazon/Skybound animation still, no licence path.
+- Look What They Need to Mimic a Fraction of Our Power: same Invincible studio still.
+- Mr. Incredible Becoming Uncanny / Ascended / Canny: Disney/Pixar character plus anonymous fan edits.
+- GigaChad: photographer actively commercializes it through an exclusive partnership; real model.
+- Average Fan vs. Average Enjoyer: two real people, one mocked, owners unconfirmed.
+- Bernie Sanders Mittens: AFP/Getty editorial-only press photo of a senator.
+- Bernie I Am Once Again Asking: campaign video frame of a politician, endorsement risk.
+- Absolute Cinema (Scorsese): NYT press photo of a celebrity, editorial only.
+- Pointing Rick Dalton: Sony film still with DiCaprio and Pitt.
+- Leonardo DiCaprio Cheers: Warner Bros. film still of DiCaprio.
+- Leonardo DiCaprio Laughing (Django): Sony film still of DiCaprio.
+- Sweating Jordan Peele: Comedy Central/Paramount still of a celebrity.
+- Woman Yelling at a Cat: Bravo/NBCU still of real people in a sensitive moment (only the Smudge half might be licensable from his owner).
+- Drakeposting: label-owned music video of a celebrity who pursues commercial misuse.
+- Unsettled Tom: unauthorised fan derivative of a Warner Bros. character.
+- This Is Fine: KC Green actively protects commercial use (2026 Artisan dispute); only with his written licence.
+- Disaster Girl: Roth family keeps copyright; real person, consent needed.
+- Surprised Pikachu: The Pokemon Company, among the most aggressive enforcers anywhere.
+- Awkward Look Monkey Puppet: NHK broadcaster footage.
+- Is This a Pigeon?: Sunrise/Bandai Namco anime still.
+- Sad Pablo Escobar / Pablo Escobar Waiting: Netflix/Gaumont still of an identifiable actor.
+- Crying Jordan: AP press photo, and Jordan's camp monitors and sues over commercial use.
+- Spider-Man Pointing at Spider-Man: Disney/Marvel character, pose sold as official merch.
+- Ight Imma Head Out: Nickelodeon/Paramount SpongeBob still.
+- Mocking SpongeBob: same owner, which sells the meme itself.
+- Gru's Plan: Universal/Illumination film still.
+- Math Lady: TV Globo still of an identifiable actress.
+- Bugs Bunny's No: Warner Bros. character, trademark use, active enforcer.
+- Elmo Rise: Sesame Workshop character, unclear chain of title.
+- UNO Draw 25: unknown photo owner plus Mattel UNO trade dress (an unbranded "or draw 25" card drawing is the safe workaround).
+- Tuxedo Winnie the Pooh: Disney's 1974 design, not the public-domain 1926 book.
+- Pawn Stars Best I Can Do: A+E still of Rick Harrison, who sells his own catchphrase merch.
+- Roll Safe: BBC or creators' footage of a working actor, unclear owner.
+- Evil Kermit: Disney film still and trademarked character with enforcement history.
+- Batman Slapping Robin: DC/WB comic art that DC actively licenses as merch.
+- James Doakes reaction images: Showtime/Paramount still of a living actor.
+- Visible Confusion: Lucasfilm/Disney still of Ewan McGregor.
+- No God, Please No: NBCU still of Steve Carell; Getty requires NBCU written consent.
+- Jesse, What the Hell Are You Talking About: Sony/Netflix still of two actors, profanity in the original.
+- The Rock's Eyebrow Raise: celebrity likeness from his own video, false-endorsement risk.
+- Que Mira Bobo (Messi): TyC broadcast frame of an athlete who enforces his name.
+- Will Smith Slaps Chris Rock: editorial-only, unreleased Getty/Reuters/AFP photos of a real assault.
+- IShowSpeed Scared and IShowSpeed Trying Not to Laugh: celebrity streamer with a record of copyright claims.
+- Perfectly Balanced (Thanos): Disney/Marvel film still and character.
+- Confused Nick Young: web-series frame of a former NBA player, no licence path.
+- Bongcloud Attack (broadcast image): chess24/Chess.com broadcast frame of Carlsen and Nakamura. Playing the moves on CHASS's board is fine.
+- What Do I Do in This Position? (real variants): built from Plague Inc., Terraria and other studio game art. A CHASS-drawn absurd board with the caption is fine.
+- 2.13 Seconds Chess (Nakamura double take): FIDE event footage of famous players, video-native.
+- Gukesh beats Carlsen table slam: Norway Chess footage, two real players, unflattering.
+- Nakamura throws Gukesh's king: livestream frame of real players in a controversial moment.
+- Hans Niemann anal beads theory: sexual accusation against a real person who has already sued over it.
+- If I Speak I Am In Big Trouble (Mourinho): Sky broadcast still, celebrity, implies a cheating accusation.
+- Ding Chilling: FIDE or broadcast footage of Ding Liren, owner unconfirmed.
+- Messi and Ronaldo Playing Chess: Louis Vuitton ad by Annie Leibovitz, two of the most valuable likenesses in the world.
+- The Queen's Gambit stills: Netflix still of Anya Taylor-Joy.
+- GothamChess "the ROOOOK": a competitor's own video frame and trademarked brand.
+- Mission Failed, We'll Get 'Em Next Time: Activision game still, active enforcer (the text line alone over original art is fine).
+- Press F to Pay Respects: Activision game still with Kevin Spacey's captured likeness (an original "Press F" key-cap graphic is fine).
+
+## What this means for CHASS
+
+My view: "famous memes" and "a public game that may earn money" pull against each other. About three quarters of the famous images are studio, agency or celebrity material that nobody will license to an indie game at a sane price. The realistic path is a small set of famous images you actually clear (stock photos and single-owner comics), topped up with chess-native gags that are free, and every image behind a kill switch.
+
+Recommended starter set (16), mapped to chess moments:
+
+- Distracted Boyfriend (iStock Extended): poisoned_bait, free_pawn.
+- Hide the Pain Harold (Dreamstime): hung_queen, blunder, dead_draw.
+- Just a Chill Guy (Banks licence): time_scramble, hanging_piece ignored.
+- Swole Doge vs. Cheems (Own The Doge plus @balltze): steamroll, comeback, promotion.
+- Baton Roue (Penloup permission): self-inflicted mega_blunder, throw.
+- Two Buttons (Clark permission): long_think, time_scramble.
+- Trade Offer (bradeazy permission): queen_trade, exchange_sac.
+- Side-Eyeing Chloe (Clem family, gentle use): engine_vibes, suspicious underpromotion.
+- Clown Makeup (Smiffys permission): throw after a winning position.
+- Stonks (only if Special meme fresh agrees, otherwise drop): free_pawn, capture_spree.
+- Google En Passant / Holy Hell (original card): en_passant.
+- Brick rule (original animation): declined en passant.
+- Il Vaticano (original board animation): bishop double capture, absurd brilliant.
+- Bongcloud (moves on CHASS's own board, no broadcast image): early king_walk.
+- Skill Issue (original caption): blunder, timeout.
+- Press F (original key-cap graphic, no CoD art): hung_queen, resign.
+
+Practical steps:
+
+- Buy stock licences first: Distracted Boyfriend on iStock (Extended licence, ID 493656728) and Hide the Pain Harold on Dreamstime (confirm the exact listing and its product-use terms). Keep each licence PDF and receipt with the asset records.
+- Email owners in one batch: Phillip Banks, Own The Doge, @balltze, Corentin Penloup (in French), Jake Clark, bradeazy, the Clem family, Smiffys, Special meme fresh. Ask for a written, non-exclusive, worldwide licence for in-game display in a web game, with credit, and state the fee you can pay. Ship only the ones that say yes in writing.
+- Add a licence manifest: one entry per image with owner, licence type, proof file, expiry and credit line. Show credits on an in-game credits page.
+- Keep a takedown switch: serve every meme image from a remote list so any single image can be disabled without a redeploy, publish a rights contact address, and commit to removal within 24 hours.
+- House rules: no celebrities, no politicians, no minors without written parental consent, no studio stills, no press agency photos, no real chess players in unflattering frames. Show the stock disclaimer where the licence requires it.
+- Build the chess-native gags now; they need no permission and are the safest content in the pack.
+- Re-check before launch: prices, licence terms and ownership change, so verify each on the live page at purchase time.
+
+## Unverified
+
+Items with verified=false, or where the skeptic pass rejected the first rating. Treat every fact on these lines as provisional until checked on a primary source.
+
+- Trade Offer (bradeazy still) (medium): verified=false.
+- For the Better, Right? (Anakin and Padme 4-Panel) (high): verified=false.
+- Wait, It's All Ohio? Always Has Been (Astronauts) (medium): verified=false.
+- Think, Mark (high): verified=false.
+- Mr. Incredible Becoming Uncanny (high): verified=false.
+- GigaChad (high): verified=false.
+- Average Fan vs. Average Enjoyer (high): verified=false.
+- Bernie Sanders Wearing Mittens Sitting in a Chair (high): verified=false.
+- Absolute Cinema (high): verified=false.
+- Just a Chill Guy (medium): verified=false.
+- Baton Roue (Bike Fall) (medium): verified=false.
+- Pointing Rick Dalton (Leonardo DiCaprio Pointing) (high): verified=false.
+- Leonardo DiCaprio Cheers (high): verified=false.
+- Sweating Jordan Peele (high): verified=false.
+- Distracted Boyfriend (medium): skeptic downgraded low to medium.
+- Hide the Pain Harold (medium): verified=false.
+- Woman Yelling at a Cat (high): verified=false.
+- Drakeposting (high): verified=false.
+- Unsettled Tom (high): verified=false.
+- Panik Kalm (medium): verified=false.
+- Draw 25 (UNO) (medium): verified=false.
+- Daily Struggle (Two Buttons) (medium): verified=false.
+- Galaxy Brain (Expanding Brain) (medium): verified=false.
+- Awkward Look Monkey Puppet (high): verified=false.
+- Stonks (medium): verified=false.
+- Sad Pablo Escobar (Pablo Escobar Waiting) (high): verified=false.
+- Spider-Man Pointing at Spider-Man (high): verified=false.
+- Ight Imma Head Out (high): verified=false.
+- Gru's Plan (high): verified=false.
+- Math Lady / Confused Lady (Nazare Confusa) (high): verified=false.
+- Bugs Bunny's 'No' (high): verified=false.
+- Elmo Rise (high): verified=false.
+- Drake Hotline Bling (Drakeposting) (high): verified=false.
+- Two Buttons (Daily Struggle) (medium): verified=false.
+- Bernie I Am Once Again Asking (high): verified=false.
+- UNO Draw 25 Cards (high): verified=false.
+- Always Has Been (Wait, It's All Ohio) (medium): verified=false.
+- Left Exit 12 Off Ramp (medium): verified=false.
+- Anakin Padme 4 Panel (For the Better, Right?) (high): verified=false.
+- Waiting Skeleton (medium): verified=false.
+- Woman Yelling at Cat (high): verified=false.
+- Mocking SpongeBob (high): verified=false.
+- Swole Doge vs. Cheems (Buff Doge vs. Cheems) (medium): verified=false.
+- Tuxedo Winnie the Pooh (high): verified=false.
+- Pawn Stars Best I Can Do (high): verified=false.
+- Roll Safe Think About It (high): verified=false.
+- Clown Applying Makeup (Putting on Clown Makeup) (medium): verified=false.
+- Expanding Brain (Galaxy Brain) (medium): verified=false.
+- Bike Fall (Baton Roue) (medium): verified=false.
+- Panik Kalm Panik (medium): verified=false.
+- Yes Chad (Nordic Gamer) (medium): verified=false.
+- Absolute Cinema (Kino Is Served) (high): verified=false.
+- James Doakes Reaction Images (But You Can't Prove It) (high): verified=false.
+- Crying Michael Jordan (high): verified=false.
+- Side-Eyeing Chloe (medium): verified=false.
+- Visible Confusion (high): verified=false.
+- Leonardo DiCaprio Laughing (Calvin Candie) (high): verified=false.
+- Pablo Escobar Waiting (high): verified=false.
+- No God, Please No (Michael Scott) (high): verified=false.
+- Jesse, What the Hell Are You Talking About (Breaking Bad) (high): verified=false.
+- Mr. Incredible Becoming Ascended / Canny (high): verified=false.
+- Look What They Need to Mimic a Fraction of Our Power (high): verified=false.
+- The Rock's Eyebrow Raise (Sus Rock) (high): verified=false.
+- Que Mira, Bobo? / Anda Palla Bobo (Messi) (high): verified=false.
+- Kombucha Girl (medium): verified=false.
+- Terrified IShowSpeed Covering His Mouth (Speed Scared) (high): verified=false.
+- IShowSpeed Smiling Trying Not to Laugh (high): verified=false.
+- Roll Safe (Guy Tapping Head) (high): verified=false.
+- Perfectly Balanced, As All Things Should Be (Thanos) (high): verified=false.
+- Confused Nick Young (high): verified=false.
+- Bongcloud Attack (high): skeptic rejected low, now high for the famous image.
+- What Do I Do in This Position? (high): skeptic rejected low, now high for real variants.
+- Brick rule (refuse en passant, drop a brick) (low): verified=false.
+- 2.13 Seconds Chess / Realization That Magnus Is Losing (high): verified=false.
+- Gukesh beating Magnus Carlsen at Norway Chess 2025 (Carlsen table slam) (high): verified=false.
+- Hikaru Nakamura throws Gukesh's king into the crowd (high): verified=false.
+- 2022 Hans Niemann cheating controversy (anal beads theory) (high): verified=false.
+- Ding Chilling (high): verified=false.
+- The Queen's Gambit (Beth Harmon ceiling chess and stills) (high): verified=false.
+- GothamChess 'The Rook' sacrifice (screenshot) (high): verified=false.
+- Skill Issue (low): verified=false.
+- Mission Failed, We'll Get 'Em Next Time (high): verified=false.
+- Press F to Pay Respects (high): verified=false.
+
+## Sources
+
+- https://knowyourmeme.com/memes/trade-offer
+- https://knowyourmeme.com/editorials/bradeazy-the-ceo-of-trade-offers-sits-down-to-discuss-how-he-became-one-of-2021s-most-viral-memes-and-whats-next-for-his-content
+- https://knowyourmeme.com/memes/for-the-better-right
+- https://knowyourmeme.com/memes/wait-its-all-ohio-always-has-been
+- https://knowyourmeme.com/memes/think-mark
+- https://knowyourmeme.com/memes/mr-incredible-becoming-uncanny
+- https://knowyourmeme.com/memes/gigachad
+- https://knowyourmeme.com/editorials/gigachad-creator-and-fitness-photographer-krista-sudmalis-on-making-one-of-the-most-viral-memes-of-all-time
+- https://knowyourmeme.com/memes/average-fan-vs-average-enjoyer
+- https://knowyourmeme.com/memes/bernie-sanders-wearing-mittens-sitting-in-a-chair
+- https://rangefinderonline.com/news-features/industry-news/bernie-sanders-mittens-meme-photographer-perspective/
+- https://www.cnbc.com/amp/2021/01/23/bernie-sanders-inauguration-meme-heres-the-story-behind-the-photo.html
+- https://uk.news.yahoo.com/photographer-took-bernie-sanders-mittens-165448621.html
+- https://knowyourmeme.com/memes/absolute-cinema
+- https://www.irishtimes.com/culture/film/martin-scorsese-crime-is-glamorous-at-first-if-you-re-young-and-stupid-1.4133896
+- https://artdaily.com/news/119740/Martin-Scorsese-is-letting-go
+- https://en.wikipedia.org/wiki/Chill_Guy
+- https://amp.knowyourmeme.com/news/the-chill-guy-meme-has-been-copyrighted-by-creator-phillip-banks-who-says-hes-dmca-striking-brands-using-it-for-profit
+- https://www.theblock.co/post/327554/just-a-chill-guy-legal
+- https://insider-gaming.com/chill-guy-meme-copyrighted-creator/
+- https://asiaiplaw.com/sector/copyright/no-longer-a-chill-guy-artist-wants-copyright
+- https://knowyourmeme.com/memes/baton-roue
+- https://knowyourmeme.com/memes/pointing-rick-dalton
+- https://knowyourmeme.com/memes/great-gatsby-reaction-leonardo-dicaprio-toast
+- https://filmcompanion.in/features/indepth-stories/a-toast-to-the-great-gatsby-meme-leonardo-dicaprio-baz-luhrmann
+- https://knowyourmeme.com/memes/sweating-jordan-peele
+- https://en.wikipedia.org/wiki/Distracted_boyfriend
+- https://petapixel.com/2017/09/18/story-behind-viral-distracted-boyfriend-meme-photo/
+- https://www.istockphoto.com/hk/%E7%85%A7%E7%89%87/disloyal-man-with-his-girlfriend-looking-at-another-girl-gm493656728-77018851
+- https://dailydot.com/distracted-boyfriend-meme-history-mario-and-laura
+- https://www.istockphoto.com/photo/disloyal-man-with-his-girlfriend-looking-at-another-girl-gm493656728-77018851
+- https://www.istockphoto.com/en/legal/license-agreement
+- https://www.istockphoto.com/help/licenses
+- https://money.com/the-photographer-behind-the-distracted-boyfriend-meme-isnt-making-any-money-off-its-popularity/
+- https://knowyourmeme.com/memes/distracted-boyfriend
+- https://en.wikipedia.org/wiki/Hide_the_Pain_Harold
+- https://dailydot.com/hide-pain-harold-interview
+- https://444.hu/2016/03/10/hogyan-lett-egy-budapesti-nyugdijasbol-hide-the-pain-harold-a-netes-vilagsztar
+- https://www.pokernews.com/news/2019/12/hide-the-pain-harold-ept-prague-36227.htm
+- https://en.wikipedia.org/wiki/Woman_yelling_at_a_cat
+- https://knowyourmeme.com/editorials/smudge-the-cat-and-his-owner-give-us-the-full-scoop-on-how-he-became-an-internet-star-and-the-woman-yelling-at-cat-meme
+- https://knowyourmeme.com/memes/drakeposting
+- https://en.wikipedia.org/wiki/Hotline_Bling
+- https://knowyourmeme.com/memes/unsettled-tom
+- https://knowyourmeme.com/memes/panik-kalm
+- https://knowyourmeme.com/memes/meme-man
+- https://knowyourmeme.com/memes/draw-25
+- https://dailydot.com/?p=692666
+- https://techcrunch.com/2026/05/03/this-is-fine-creator-says-ai-startup-stole-his-art
+- https://meteoraweb.com/en/news/kc-green-reaches-agreement-with-ai-startup-artisan-over-this-is-fine-meme-usage
+- https://amp.cbc.ca/radio/asithappens/this-is-fine-meme-anniversary-1.6713594
+- https://specialsales.hbgusa.com/titles/kc-green/this-is-fine-talking-figurine/9780762484843
+- https://knowyourmeme.com/memes/disaster-girl
+- https://petapixel.com/2021/05/01/disaster-girl-meme-photo-sells-for-500000-as-an-nft/
+- https://www.bostonglobe.com/2021/04/29/arts/world-knows-her-disaster-girl-she-sold-an-nft-her-meme-500000
+- https://www.tweaktown.com/news/47843/spurned-pokemon-fan-raises-4000-pay-copyright-fine/index.html
+- https://www.axios.com/2022/01/24/fan-made-game-escapes-nintendo
+- https://www.aol.com/articles/pok-mon-company-issues-another-094511427.html
+- https://knowyourmeme.com/memes/daily-struggle-two-buttons
+- https://meme.com/memes/two-buttons
+- https://knowyourmeme.com/memes/galaxy-brain
+- https://knowyourmeme.com/memes/monkey-puppet
+- https://knowyourmeme.com/editorials/the-creator-of-the-awkward-look-monkey-puppet-meme-reveals-the-true-origins-of-his-creation
+- https://www.lostmediawiki.com/Ōkiku_naru_Ko_(lost_original_Japanese_version_of_puppet_TV_series;_1959-1988)
+- https://en.wikipedia.org/wiki/Is_this_a_pigeon%3F
+- https://knowyourmeme.com/memes/is-this-a-pigeon
+- https://meme.com/memes/is-this-a-pigeon
+- https://knowyourmeme.com/memes/stonks
+- https://en.wikipedia.org/wiki/Meme_Man
+- https://dailydot.com/pablo-escobar-meme
+- https://amp.knowyourmeme.com/memes/pablo-escobar-waiting
+- https://africa.espn.com/nba/story/_/id/14788779/can-wildly-popular-often-hilarious-crying-michael-jordan-meme-get-sued
+- https://en.wikipedia.org/wiki/Crying_Jordan
+- https://en.wikipedia.org/wiki/Stephan_Savoia
+- https://chicagodefender.com/basketball-hall-to-welcome-four-greats-and-maybe-the-greatest/
+- https://meme.com/memes/spider-man-pointing-at-spider-man
+- https://www.looper.com/1307292/history-spidermans-pointing-meme-explained/
+- https://time.com/6284524/spider-man-meme-pointing-origins
+- https://knowyourmeme.com/memes/ight-imma-head-out
+- https://amp.knowyourmeme.com/memes/grus-plan
+- https://meme.com/memes/grus-plan/md
+- https://dailydot.com/gru-plan-meme
+- https://knowyourmeme.com/memes/math-lady-confused-lady
+- https://en.wikipedia.org/wiki/Math_Lady
+- https://en.wikipedia.org/wiki/Renata_Sorrah
+- https://knowyourmeme.com/memes/bugs-bunnys-no
+- https://reclaimthenet.org/meatcanyon-bugs-bunny-wabbit-season-copyright-claim
+- https://news.bloomberglaw.com/ip-law/bugs-bunny-jewelry-ripped-off-famous-rabbit-warner-bros-alleges
+- https://knowyourmeme.com/memes/elmo-rise
+- https://knowyourmeme.com/editorials/where-did-the-elmo-rise-meme-come-from-the-classic-image-of-elmo-surrounded-by-fire-explained
+- https://www.slate.com/blogs/browbeat/2015/10/22/drake_s_hotline_bling_video_resembles_james_turrell_s_light_installations.html
+- https://www.easternmirrornagaland.com/drake-to-sue-company-for-unauthorised-use-of-his-images
+- https://www.law360.ca/ca/articles/1751775
+- https://knowyourmeme.com/memes/i-am-once-again-asking-for-your-financial-support
+- https://forward.com/news/439363/twitters-meme-du-jour-takes-inpsiration-from-a-bernie-sanders-campaign
+- https://time.com/5779804/bernie-sanders-memes/
+- https://revolt.tv/news/2021/1/27/22253065/bernie-sanders-meme-merchandise-charity
+- https://meme.com/memes/draw-25-cards
+- https://knowyourmeme.com/editorials/what-is-wait-its-all-ohio-the-always-has-been-meme-explained
+- https://dailydot.com/?p=850336
+- https://knowyourmeme.com/memes/left-exit-12-off-ramp
+- https://knowyourmeme.com/memes/waiting-for-op
+- https://knowyourmeme.com/memes/skeletons
+- https://knowyourmeme.com/memes/waiting-skeleton
+- https://dailydot.com/meme-history-mocking-spongebob
+- https://knowyourmeme.com/memes/mocking-spongebob
+- https://www.dailydot.com/entertainment/meme-history-mocking-spongebob/
+- https://au.complex.com/pop-culture/a/fnr-tigg/nickelodeon-releases-official-spongebob-meme-figures
+- https://knowyourmeme.com/memes/swole-doge-vs-cheems
+- https://coinmarketcap.com/academy/article/own-the-doge-dao-secures-legal-rights-to-iconic-shiba-inu-kabosu-meme-image
+- https://www.cnbc.com/2021/06/11/iconic-doge-meme-nft-breaks-record-selling-for-roughly-4-million.html
+- https://en.wikipedia.org/wiki/Cheems
+- https://knowyourmeme.com/editorials/chatting-with-cheems-balltzes-owner-gives-us-some-personal-insight-into-life-with-one-of-the-webs-favorite-shibas
+- https://knowyourmeme.com/memes/tuxedo-winnie-the-pooh
+- https://knowyourmeme.com/memes/best-i-can-do-is
+- https://dailydot.com/best-i-can-do-is-meme
+- https://gspawn.com/products/rick-sticker-best-i-can-do
+- https://knowyourmeme.com/memes/roll-safe
+- https://dailydot.com/meme-history-roll-safe
+- https://www.buzzfeed.com/ikrd/kayode-ewumi-wants-to-change-the-face-of-uk-comedy
+- https://knowyourmeme.com/memes/putting-on-clown-makeup
+- https://dailydot.com/memes/putting-on-clown-makeup-meme
+- https://smiffys.com.au/blogs/make-up-tutorials/male-clown-make-tutorial
+- https://knowyourmeme.com/memes/evil-kermit
+- https://knowyourmeme.com/memes/17823
+- https://amp.cbc.ca/news/trending/disney-sends-star-wars-fans-dmca-copyright-notices-over-walmart-toy-1.3366717
+- https://dailydot.com/galaxy-brain-meme-history
+- https://www.dictionary.com/e/?p=110673
+- https://knowyourmeme.com/memes/my-parents-are-dead-batman-slapping-robin
+- https://en.wikipedia.org/wiki/World%27s_Finest_Comics
+- https://shop.wizkids.com/products/dc-heroclix-iconix-batman-and-robin
+- https://13thdimension.com/worlds-finest-153-comic-with-infamous-batman-slapping-robin-meme-to-be-published-as-facsimile-edition/
+- https://meme.com/memes/baton-roue/md
+- https://knowyourmeme.com/memes/yes-chad
+- https://knowyourmeme.com/memes/nordic-gamer
+- https://dailydot.com/meme-history-chad-memes
+- https://melmagazine.com/en-us/story/yes-chad-meme-explained
+- https://knowyourmeme.com/memes/absolute-cinema-kino-is-served
+- https://fandomwire.com/martin-scorsese-absolute-cinema-meme-creator-speaks-out/
+- https://knowyourmeme.com/memes/but-you-cant-prove-it-james-doakes-reaction-images
+- https://knowyourmeme.com/memes/crying-michael-jordan
+- https://www.si.com/nba/2016/02/04/crying-michael-jordan-meme-original-photographer-viral-social-media
+- https://knowyourmeme.com/memes/side-eyeing-chloe
+- https://uk.news.yahoo.com/family-side-eyed-chloe-meme-084538214.html
+- https://newarab.com/news/side-eyeing-chloe-meme-sells-74000-dubai-business
+- https://news.yahoo.com/side-eyeing-chloe-family-sell-074733672.html
+- https://knowyourmeme.com/memes/visible-confusion
+- https://knowyourmeme.com/memes/leonardo-dicaprio-laughing
+- https://screencrush.com/quentin-tarantino-lawsuit-django-unchained-copyright/
+- https://slashfilm.com/django-unchained-lawsuit
+- https://pressbooks.uiowa.edu/scholarlyresources4dissertations/?p=68
+- https://knowyourmeme.com/memes/pablo-escobar-waiting
+- https://knowyourmeme.com/memes/no-god-please-no
+- https://rbr.com/?p=141170
+- https://www.gettyimages.com/detail/news-photo/season-3-pictured-jenna-fischer-as-pam-beesly-b-j-novak-as-news-photo/138410347
+- https://www.gettyimages.com/detail/news-photo/roys-wedding-episode-902-pictured-david-denman-as-roy-john-news-photo/153183949
+- https://knowyourmeme.com/memes/jesse-what-the-fuck-are-you-talking-about
+- https://visual-icon.com/about
+- https://knowyourmeme.com/memes/mr-incredible-becoming-ascended
+- https://knowyourmeme.com/memes/look-what-they-need-to-mimic-a-fraction-of-our-power
+- https://knowyourmeme.com/memes/the-rocks-eyebrow-raise
+- https://knowyourmeme.com/memes/que-mira-bobo-anda-palla-bobo
+- https://www.c5n.com/deportes/buscan-registrar-como-marca-las-frases-messi-que-miras-bobo-y-anda-pa-alla-n94001/amp
+- https://abogados.com.ar/parasitar-la-fama-los-argumentos-del-inpi-para-aplicar-el-articulo-3-e-de-la-ley-de-marcas-y-designaciones/32356
+- https://trome.com/deportes/lionel-messi-y-el-que-miras-bobo-el-motivo-que-hizo-estallar-al-argentino-durante-entrevista-tras-el-argentina-vs-paises-bajos-mundial-qatar-2022-rmmd-noticia/
+- https://www.worldipreview.com/trademark/lionel-messi-scores-at-eu-court-15842
+- https://www.gettyimages.com/detail/news-photo/actor-will-smith-slaps-us-actor-chris-rock-onstage-during-news-photo/1239559303
+- https://www.gettyimages.com/detail/news-photo/will-smith-appears-to-slap-chris-rock-onstage-during-the-news-photo/1388085487
+- https://www.gettyimages.in/detail/news-photo/will-smith-appears-to-slap-chris-rock-onstage-during-the-news-photo/1388085444
+- https://en.wikipedia.com/wiki/Chris_Rock_slapping_incident
+- https://knowyourmeme.com/memes/kombucha-girl-trying-kombucha-for-the-first-time
+- https://en.wikipedia.org/wiki/Brittany_Broski
+- https://www.papermag.com/brittany-broski
+- https://time.com/5744175/kombucha-girl-tiktok-brittany-tomlinson-interview
+- https://knowyourmeme.com/memes/terrified-ishowspeed-covering-his-mouth-speed-scared
+- https://sportskeeda.com/esports/news-what-thumb-media-agency-fire-adin-ross-ishowspeed-get-accused-copyright-striking-youtubers
+- https://sportskeeda.com/esports/news-copyright-abusing-piece-sh-t-act-man-slams-ishowspeed-latest-youtube-video-abusing-copyright
+- https://www.sportskeeda.com/us/streamers/news-vtuber-kirsche-accuses-ishowspeed-copyright-claiming-smaller-youtubers
+- https://knowyourmeme.com/memes/ishowspeed-smiling-trying-not-to-laugh
+- https://en.wikipedia.org/wiki/Roll_Safe
+- https://www.okayafrica.com/british-nigerian-kayode-ewumis-comedic-hit-hood-documentary-gets-bbc-three-debut
+- https://www.independenttalent.com/?p=36223
+- https://knowyourmeme.com/memes/perfectly-balanced/
+- https://www.techdirt.com/2012/02/13/protecting-artists-disneys-marvel-uses-copyright-to-crush-already-broke-ghost-rider-creator/
+- https://www.weintraub.com/?p=9583
+- https://www.worldipreview.com/copyright/disney-and-marvel-hit-baker-with-trademark-and-copyright-claims-8812
+- https://knowyourmeme.com/memes/confused-nick-young
+- https://www.complex.com/sports/a/markelibert/nick-young-confused-meme-all-the-time
+- https://dailydot.com/news/confused-meme-nick-young/
+- https://knowyourmeme.com/memes/en-passant-google-en-passant
+- https://www.tvtropes.org/pmwiki/pmwiki.php/Memes/Chess
+- https://www.chess.com/blog/KDlearns/is-en-passant-forced-hilarious-chess-blunders
+- https://www.abajournal.com/magazine/article/do_memes_violate_copyright_law
+- https://torrentfreak.com/elon-musk-sends-hundreds-of-takedown-requests-to-protect-precious-memes-230127/
+- https://knowyourmeme.com/memes/il-vaticano
+- https://www.houseofstaunton.com/blogs/chess-tutorials/the-ii-vaticano-chess-move-its-not-real-what-is-it
+- https://knowyourmeme.com/editorials/what-is-the-rare-chess-move-il-vaticano-the-reddit-certified-special-move-explained
+- https://www.americamagazine.org/faith/2018/03/20/does-pope-own-vatican-brand-spain-so-far-says-yes
+- https://www.law.cornell.edu/uscode/text/17/102
+- https://knowyourmeme.com/memes/bongcloud-attack
+- https://pcgamer.com/uk/greatest-chess-player-of-all-time-goes-for-the-double-bongcloud-opening
+- https://www.chess.com/news/view/2021-magnus-carlsen-invitational-semifinals-2
+- https://knowyourmeme.com/memes/what-do-i-do-in-this-position
+- https://terraria.wiki.gg/wiki/Terraria_Wiki:Copyrights
+- https://cyberpost.co/are-terraria-mods-illegal/
+- https://axebps-redlib.hf.space/r/AnarchyBeginners
+- https://knowyourmeme.com/memes/213-seconds-chess-realization-that-magnus-is-losing
+- https://en.chessbase.com/post/world-cup-2023-r4-d1
+- https://www.fide.com/fide-world-cup-round-4-game-1-magnus-carlsen-loses-to-18-year-old-prodigy-vincent-keymer/
+- https://knowyourmeme.com/memes/events/gukesh-dommaraju-beating-magnus-carlsen-at-norway-chess-2025
+- https://www.chess.com/news/view/norway-chess-2025-carlsen-gukesh-conclusions
+- https://www.thestar.com.my/sport/others/2025/06/02/chess-carlsen-slams-table-in-defeat-to-gukesh-at-norway-chess
+- https://www.tabla.com.sg/lifestyle/sports-fitness/gukesh-sends-carlsen-meltdown
+- https://www.onmanorama.com/sports/other-sports/2025/10/05/hikaru-nakamura-beats-d-gukesh-throws-king-into-crowd.html
+- https://www.chess.com/news/view/nakamura-gukesh-king-checkmate-usa-vs-india-2025
+- https://worldchess.com/news/nakamura-pawn-throw-checkmate-usa-india
+- https://www.latestly.com/socially/sports/hikaru-nakamura-throws-gukeshs-king-chess-piece-into-crowd-after-winning-bullet-game-as-team-usa-beat-india-5-0-in-exhibition-checkmate-usa-vs-india-match-watch-video-7144671.html/amp
+- https://knowyourmeme.com/memes/events/2022-hans-niemann-chess-cheating-controversy
+- https://en.wikipedia.org/wiki/Carlsen%E2%80%93Niemann_controversy
+- https://www.chess.com/news/view/hans-niemann-lawsuit-dismissed
+- https://www.irishtimes.com/world/us/2023/06/28/court-dismisses-us-chess-prodigys-100-million-legal-case
+- https://knowyourmeme.com/memes/if-i-speak-i-am-in-big-trouble
+- https://esports.gg/news/gaming/magnus-carlsen-drops-a-cryptic-message-after-losing-undefeated-streak-to-hans-niemann/
+- https://knowyourmeme.com/memes/ding-chilling
+- https://aagaard.chessbase.in/news/FIDE-World-Championship-2023-Game-1-report
+- https://knowyourmeme.com/memes/messi-and-ronaldo-playing-chess
+- https://petapixel.com/2022/11/21/annie-lebowitzs-photo-of-ronaldo-and-messi-has-already-broken-records
+- https://www.fourfourtwo.com/news/world-cup-2022-cristiano-ronaldo-and-lionel-messi-pictured-together-for-louis-vuitton-ad
+- https://knowyourmeme.com/memes/subcultures/the-queens-gambit
+- https://80.lv/articles/the-queen-s-gambit-fan-art-turned-into-netflix-s-official-game
+- https://www.looper.com/995991/netflix-settles-eye-popping-queens-gambit-lawsuit
+- https://ww2.bridgemanimages.com/for-film-tv-production-set-prop-costume-design
+- https://www.chess.com/news/view/gothamchess-sacrifices-the-rooook-vs-world
+- https://trademark.justia.com/owners/levy-rozman-4853605
+- https://trademarks.justia.com/browse-by-date/2021/june/10/42.html
+- https://knowyourmeme.com/memes/skill-issue-simply-a-difference-in-skill
+- https://trademarkdir.com/trademark/skill-issue-98490656
+- https://www.ecfr.gov/current/title-37/chapter-II/subchapter-A/part-202/section-202.1
+- https://www.ipo.gov.uk/t-tmj/tm-journals/2026-035/UK00004431017.html
+- https://knowyourmeme.com/memes/mission-failed-well-get-em-next-time
+- https://www.xbox.com/en-US/developers/Rules
+- https://news.instant-gaming.com/en/articles/960-activision-is-requesting-the-removal-of-certain-content-created-in-fortnite-s-creative-mode-2-0
+- https://knowyourmeme.com/memes/press-f-to-pay-respects

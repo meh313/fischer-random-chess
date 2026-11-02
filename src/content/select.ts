@@ -2,7 +2,8 @@ import type { Color, PieceKind } from '../engine'
 import type { GameEvent } from '../engine/events'
 import { MAX_CINEMATIC_MS } from './types'
 import { CINE_EVENTS } from './types'
-import type { Cinematic, CinematicMatch, CineEvent, KindMatch, MemeEntry } from './types'
+import type { Cinematic, CinematicMatch, CineEvent, GifFile, GifKey, KindMatch, MemeEntry, MemeKey } from './types'
+import { MOMENTS } from '../engine/moments'
 
 export interface CaptureContext {
   attacker: PieceKind
@@ -77,9 +78,57 @@ export function pickCinematic(list: readonly Cinematic[], ctx: CaptureContext, r
   return weightedPick(tier, rand)
 }
 
-export function pickMeme(list: readonly MemeEntry[], event: GameEvent, rand: () => number = Math.random): MemeEntry | undefined {
-  const hits = list.filter((m) => (Array.isArray(m.on) ? m.on.includes(event.type) : m.on === event.type))
+/** The meme key an event stands for: its moment id for moment events, otherwise its type. */
+export const memeKeyOf = (e: GameEvent): MemeKey => (e.type === 'moment' ? e.moment : e.type)
+
+export function pickMeme(list: readonly MemeEntry[], key: MemeKey, rand: () => number = Math.random): MemeEntry | undefined {
+  const hits = list.filter((m) => (Array.isArray(m.on) ? m.on.includes(key) : m.on === key))
   return weightedPick(hits, rand)
+}
+
+/**
+ * One move can fire several events (capture, check, a hung queen...). Memes react to the single
+ * most important one: the highest-priority key that has GIFs configured or a local meme.
+ */
+export function pickMemeKey(
+  events: readonly GameEvent[],
+  gifs: GifFile | null,
+  local: readonly MemeEntry[],
+  /** False when online GIFs are off or unavailable: then only keys with a local meme count. */
+  gifsUsable = true,
+): { key: MemeKey; cfg?: GifKey } | null {
+  let best: { key: MemeKey; cfg?: GifKey; prio: number } | null = null
+  for (const e of events) {
+    const key = memeKeyOf(e)
+    const cfg = gifs?.keys[key]
+    const hasLocal = local.some((m) => (Array.isArray(m.on) ? m.on.includes(key) : m.on === key))
+    if (!(cfg && gifsUsable) && !hasLocal) continue
+    const prio = cfg?.priority ?? 0
+    if (!best || prio > best.prio) best = { key, cfg, prio }
+  }
+  return best && { key: best.key, cfg: best.cfg }
+}
+
+const MEME_KEYS = new Set<string>([...MOMENTS, 'move', 'capture', 'castling', 'promotion', 'check', 'checkmate', 'stalemate', 'duckPlaced', 'draw', 'gameOver', 'blunder', 'moment'])
+
+/** Checks gifs.json; bad keys are dropped and reported instead of breaking the game. */
+export function validateGifFile(raw: unknown): { file: GifFile; problems: string[] } {
+  const problems: string[] = []
+  const r = raw as Partial<GifFile> | null
+  if (!r || r.version !== 1 || typeof r.keys !== 'object' || r.keys === null) {
+    return { file: { version: 1, keys: {} }, problems: ['gifs.json: expected {version:1, keys:{...}}'] }
+  }
+  const keys: GifFile['keys'] = {}
+  for (const [k, v] of Object.entries(r.keys)) {
+    if (!MEME_KEYS.has(k)) { problems.push(`gifs.json: unknown key "${k}"`); continue }
+    if (!v || !Array.isArray(v.queries) || !v.queries.length || v.queries.some((q) => typeof q !== 'string' || !q.trim())) { problems.push(`gifs.json: "${k}" needs at least one search phrase`); continue }
+    if (typeof v.priority !== 'number') { problems.push(`gifs.json: "${k}" needs a numeric priority`); continue }
+    if (v.chance !== undefined && !(v.chance >= 0 && v.chance <= 1)) { problems.push(`gifs.json: "${k}" chance outside 0..1`); continue }
+    keys[k as MemeKey] = v
+  }
+  const rating = r.rating && ['g', 'pg', 'pg-13'].includes(r.rating) ? r.rating : 'g'
+  if (r.rating && rating !== r.rating) problems.push(`gifs.json: unsupported rating "${r.rating}", using g`)
+  return { file: { version: 1, rating, keys, blocked: Array.isArray(r.blocked) ? r.blocked.filter((b) => typeof b === 'string') : [] }, problems }
 }
 
 export function pickText(text: string | string[], rand: () => number = Math.random): string {

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { VARIANTS, fromPgn, newChaosSeed, parseChaosSeed, rollVariants, squareName, toPgn } from './engine'
-import { loadCinematics, loadMemes, loadPieceSet, loadPieceSetIndex } from './content/loaders'
-import type { Cinematic, MemeEntry, ResolvedPieceSet } from './content/types'
+import { loadCinematics, loadGifs, loadMemes, loadPieceSet, loadPieceSetIndex } from './content/loaders'
+import type { Cinematic, GifFile, MemeEntry, ResolvedPieceSet } from './content/types'
 import { configureAudio, playSfx, unlockAudio } from './audio/sfx'
 import { MemeOverlay } from './memes/MemeOverlay'
 import { useMemes } from './memes/useMemes'
@@ -28,6 +28,7 @@ function Chass() {
   const { settings, update } = useSettings()
   const [cinematics, setCinematics] = useState<Cinematic[]>([])
   const [memeList, setMemeList] = useState<MemeEntry[]>([])
+  const [gifFile, setGifFile] = useState<GifFile | null>(null)
   const [setIndex, setSetIndex] = useState<{ id: string; name: string; placeholder?: boolean }[]>([])
   const [pieceSet, setPieceSet] = useState<ResolvedPieceSet | null>(null)
   const [problems, setProblems] = useState<string[]>([])
@@ -42,8 +43,10 @@ function Chass() {
   const boardRef = useRef<HTMLDivElement>(null)
 
   const chass = useChass(cinematics, settings)
-  const memes = useMemes(memeList, settings)
+  const memes = useMemes(memeList, gifFile, settings)
   const { game } = chass
+  // A new game drops memes still pending from the old one.
+  useEffect(() => memes.reset(), [game, memes.reset])
 
   // Content is data: load it once, report problems without crashing the game.
   useEffect(() => {
@@ -55,6 +58,12 @@ function Chass() {
       })
       .catch(note('cinematics'))
     loadMemes().then(setMemeList).catch(note('memes'))
+    loadGifs()
+      .then(({ file, problems: bad }) => {
+        setGifFile(file)
+        if (bad.length) setProblems((p) => [...p, ...bad])
+      })
+      .catch(note('gifs'))
     loadPieceSetIndex().then(setSetIndex).catch(note('piece sets'))
   }, [])
 

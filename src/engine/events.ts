@@ -1,3 +1,4 @@
+import type { MomentId } from './moments'
 import type { Color, GameResult, Move, Piece, PieceKind, Square } from './types'
 
 /** Typed game events with full context. UI, cinematics, memes and sound all listen to these. */
@@ -24,6 +25,8 @@ export type GameEvent =
   | { type: 'gameOver'; result: GameResult }
   /** Only emitted when an evaluator is attached. `loss` is centipawns lost by `color`. */
   | { type: 'blunder'; color: Color; move: Move; loss: number }
+  /** A story beat of the move (hung queen, free piece, comeback...). See moments.ts. */
+  | { type: 'moment'; color: Color; moment: MomentId }
 
 export type GameEventType = GameEvent['type']
 export type GameEventHandler = (event: GameEvent) => void

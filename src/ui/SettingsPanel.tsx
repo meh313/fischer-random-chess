@@ -1,5 +1,6 @@
 import { TIME_CONTROLS, useSettings } from '../state/settings'
 import { useModal } from './useModal'
+import { giphyKey } from '../memes/giphy'
 
 interface Props {
   open: boolean
@@ -52,6 +53,7 @@ export function SettingsPanel({ open, onClose, pieceSets }: Props) {
         <Toggle id="set-memes" label="Meme overlays" hint="Image, GIF or video pop-ups on big moments" checked={s.memes} onChange={(v) => update({ memes: v })} />
         <Slider label="Meme frequency" value={s.memeChance} min={0} max={1} step={0.05} fmt={pct} onChange={(v) => update({ memeChance: v })} />
         <Slider label="Meme cooldown" value={s.memeCooldownSec} min={0} max={60} step={5} fmt={(v) => `${v}s`} onChange={(v) => update({ memeCooldownSec: v })} />
+        <Toggle id="set-gifs" label="Online GIFs (Powered by GIPHY)" hint={giphyKey() ? 'Real reaction GIFs picked to match the moment. Needs internet.' : 'Add VITE_GIPHY_KEY to .env to enable.'} checked={s.gifs && !!giphyKey()} onChange={(v) => update({ gifs: v })} />
 
         <h3>Sound</h3>
         <Toggle id="set-sound" label="Sound" checked={s.sound} onChange={(v) => update({ sound: v })} />

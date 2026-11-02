@@ -1,4 +1,4 @@
-import type { Color, PieceKind } from '../engine'
+import type { Color, MomentId, PieceKind } from '../engine'
 import type { GameEventType } from '../engine/events'
 
 /** All content is data. These types are the schema for the JSON files in /public. */
@@ -88,9 +88,12 @@ export const MAX_CINEMATIC_MS = 3000
 
 // --------------------------------------------------------------------- memes
 
+/** What a meme or GIF reacts to: a rules event type or a move moment (see engine/moments.ts). */
+export type MemeKey = GameEventType | MomentId
+
 export interface MemeEntry {
   id: string
-  on: GameEventType | GameEventType[]
+  on: MemeKey | MemeKey[]
   /** File under /public/memes/ (png, jpg, gif, webp, svg, mp4, webm). */
   media: string
   /** Display time in ms, clamped to 2000..4000. */
@@ -106,6 +109,27 @@ export interface MemeEntry {
 export interface MemeFile {
   version: 1
   memes: MemeEntry[]
+}
+
+/** How one event or moment maps to online GIFs (public/memes/gifs.json). */
+export interface GifKey {
+  /** Higher wins when one move triggers several keys. */
+  priority: number
+  /** 0..1 odds a meme shows once this key is picked (multiplied by the meme frequency setting). */
+  chance?: number
+  /** GIPHY search phrases; one is picked at random. */
+  queries: string[]
+  /** Optional captions shown under the GIF; one is picked at random. */
+  captions?: string[]
+}
+
+export interface GifFile {
+  version: 1
+  /** GIPHY content rating filter. */
+  rating?: 'g' | 'pg' | 'pg-13'
+  keys: Partial<Record<MemeKey, GifKey>>
+  /** GIPHY ids that must never show. */
+  blocked?: string[]
 }
 
 // ---------------------------------------------------------------- piece sets

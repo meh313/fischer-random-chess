@@ -9,6 +9,8 @@ export interface Settings {
   memeChance: number
   /** Minimum seconds between memes. */
   memeCooldownSec: number
+  /** Use online GIFs from GIPHY for memes (needs VITE_GIPHY_KEY). */
+  gifs: boolean
   sound: boolean
   volume: number
   pieceSet: string
@@ -29,6 +31,7 @@ export const DEFAULT_SETTINGS: Settings = {
   memes: true,
   memeChance: 0.6,
   memeCooldownSec: 10,
+  gifs: true,
   sound: true,
   volume: 0.6,
   pieceSet: 'chad',
