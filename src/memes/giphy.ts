@@ -7,7 +7,7 @@
 export interface GifHit {
   id: string
   title: string
-  /** Animated media URL exactly as GIPHY returned it. */
+  /** MP4 rendition URL exactly as GIPHY returned it (video plays once, a GIF file would loop forever). */
   src: string
   width: number
   height: number
@@ -19,7 +19,8 @@ export interface GifHit {
 
 interface Rendition {
   url?: string
-  webp?: string
+  mp4?: string
+  frames?: string
   width?: string
   height?: string
 }
@@ -33,6 +34,9 @@ interface RawGif {
   images?: Record<string, Rendition | undefined>
 }
 
+/** About one second of animation at typical GIF frame rates. */
+export const MIN_FRAMES = 12
+
 export const giphyKey = (): string => (import.meta.env.VITE_GIPHY_KEY as string | undefined)?.trim() ?? ''
 
 /** Turns a search response into usable hits, skipping blocked ids and entries without media. */
@@ -42,8 +46,11 @@ export function parseSearch(json: unknown, blocked: readonly string[] = []): Gif
   const out: GifHit[] = []
   for (const g of data) {
     if (!g?.id || blocked.includes(g.id)) continue
-    const r = g.images?.fixed_height ?? g.images?.fixed_width
-    const src = r?.webp ?? r?.url
+    // Tiny loops (a few frames) are over before anyone sees them when played once.
+    const frames = Number(g.images?.original?.frames)
+    if (frames && frames < MIN_FRAMES) continue
+    const r = g.images?.fixed_height?.mp4 ? g.images.fixed_height : g.images?.fixed_width
+    const src = r?.mp4
     if (!src) continue
     const user = g.user?.display_name || g.user?.username || g.username || undefined
     out.push({ id: g.id, title: g.title ?? '', src, width: Number(r?.width) || 200, height: Number(r?.height) || 200, page: g.url ?? 'https://giphy.com', user })
@@ -70,22 +77,24 @@ export async function searchGif(query: string, o: SearchOptions): Promise<GifHit
   return hits[Math.floor((o.rand ?? Math.random)() * hits.length)] ?? null
 }
 
-/** Resolves once the image has loaded, or rejects after `ms` so a slow GIF never delays the game. */
+/** Resolves once the clip can play through, or rejects after `ms` so a slow GIF never delays the game. */
 export function preload(src: string, ms: number): Promise<void> {
   return new Promise((resolve, reject) => {
-    const img = new Image()
-    const t = window.setTimeout(() => {
-      img.src = ''
-      reject(new Error('GIF load timed out'))
-    }, ms)
-    img.onload = () => {
+    const v = document.createElement('video')
+    const done = (ok: boolean) => {
       clearTimeout(t)
-      resolve()
+      v.oncanplaythrough = v.onerror = null
+      if (!ok) v.removeAttribute('src')
+      if (ok) resolve()
+      else reject(new Error('GIF failed to load in time'))
     }
-    img.onerror = () => {
-      clearTimeout(t)
-      reject(new Error('GIF failed to load'))
-    }
-    img.src = src
+    const t = window.setTimeout(() => done(false), ms)
+    v.muted = true
+    v.playsInline = true
+    v.preload = 'auto'
+    v.oncanplaythrough = () => done(true)
+    v.onerror = () => done(false)
+    v.src = src
+    v.load()
   })
 }

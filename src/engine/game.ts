@@ -242,7 +242,7 @@ export class Game {
       if (inCheck(after, this.vs)) events.push({ type: 'check', color: after.turn, kingSq: after.kings[after.turn] })
       this.maybeBlunder(before, after, color, m, events)
     }
-    for (const mo of detectMoments(before, after, m, this.records.slice(0, -1), this.vs)) events.push({ type: 'moment', color: mo.color, moment: mo.id })
+    for (const mo of detectMoments(before, after, m, this.records.slice(0, -1), this.vs)) events.push({ type: 'moment', color: mo.color, moment: mo.id, square: mo.square, attacker: mo.attacker, victim: mo.victim })
     this.resultEvents(events)
     this.emit(events)
     return events

@@ -572,87 +572,42 @@ header p {
 
 /* ------------------------------------------------------------------ memes */
 
-.meme-overlay {
+.meme-flash {
   position: absolute;
-  inset: 0;
-  z-index: 40;
-  display: grid;
-  place-items: center;
-  background: rgba(0, 0, 0, 0.55);
-  cursor: pointer;
-  animation: memeFade linear forwards;
-}
-@keyframes memeFade {
-  0% {
-    opacity: 0;
-  }
-  8% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-.meme-card {
-  position: relative;
-  max-width: 72%;
-  max-height: 72%;
-  border-radius: 12px;
+  width: 12.5%;
+  height: 12.5%;
+  z-index: 25;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  border-radius: 6px;
+  box-shadow: 0 0 0 2px var(--accent), 0 4px 12px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
   background: #000;
+  animation: flashIn 120ms ease-out;
 }
-.meme-card img,
-.meme-card video {
+.meme-flash video,
+.meme-flash img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  max-width: 100%;
-  max-height: 100%;
 }
-.meme-card.gif img {
-  height: clamp(140px, 45vmin, 320px);
-  max-height: 60vh;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
+@keyframes flashIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 .giphy-credit {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 6px 8px;
-  min-height: 28px;
-  display: inline-flex;
-  align-items: center;
-  border-radius: 4px;
-  text-decoration: none;
-}
-.meme-tag {
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  background: var(--accent);
-  color: #111;
+  display: block;
+  text-align: right;
   font-size: 0.7rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-.meme-caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 8px;
-  text-align: center;
-  background: rgba(0, 0, 0, 0.6);
-  font-weight: 700;
+  color: #aaa;
+  text-decoration: none;
+  margin-top: 4px;
 }
 
 /* ---------------------------------------------------------------- settings */
@@ -926,8 +881,8 @@ input:focus-visible,
     animation: none;
     opacity: 0.9;
   }
-  .meme-overlay {
-    animation-name: none;
+  .meme-flash {
+    animation: none;
   }
   * {
     scroll-behavior: auto !important;

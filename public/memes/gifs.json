@@ -2,26 +2,58 @@
   "version": 1,
   "rating": "g",
   "keys": {
-    "checkmate":      { "priority": 100, "chance": 1,    "queries": ["mic drop", "victory dance", "game over", "drop the mic", "you got served"], "captions": ["checkmate", "gg go next", "and that's the game"] },
-    "stalemate":      { "priority": 95,  "chance": 1,    "queries": ["confused", "what just happened", "awkward silence", "disappointed"], "captions": ["stalemate. nobody wins.", "all that for a draw"] },
-    "draw":           { "priority": 90,  "chance": 0.9,  "queries": ["shrug", "handshake", "meh", "ok fine"], "captions": ["draw", "we'll call it even"] },
-    "hung_queen":     { "priority": 85,  "chance": 1,    "queries": ["facepalm", "oh no", "this is fine", "panic", "big mistake"], "captions": ["the queen is just... standing there", "free queen. no refunds."] },
-    "queen_trade":    { "priority": 80,  "chance": 0.8,  "queries": ["deal", "trade offer", "shake hands", "fair trade"], "captions": ["queen for a queen", "a fair deal"] },
-    "queen_lost":     { "priority": 78,  "chance": 1,    "queries": ["shocked", "jaw drop", "noooo", "crying", "betrayal"], "captions": ["not the queen", "rest in peace, your majesty"] },
-    "comeback":       { "priority": 75,  "chance": 1,    "queries": ["comeback", "im back", "never give up", "plot twist"], "captions": ["the comeback is real", "back in the game"] },
-    "hung_piece":     { "priority": 70,  "chance": 0.8,  "queries": ["oops", "facepalm", "awkward", "nervous laugh"], "captions": ["that piece is loose", "anyone want this?"] },
-    "steamroll":      { "priority": 65,  "chance": 0.8,  "queries": ["unstoppable", "flex", "too easy", "domination"], "captions": ["this is a massacre", "too easy"] },
-    "underpromotion": { "priority": 62,  "chance": 1,    "queries": ["big brain", "galaxy brain", "genius", "trust me"], "captions": ["why not a queen", "big brain promotion"] },
-    "free_piece":     { "priority": 60,  "chance": 0.8,  "queries": ["thank you", "free money", "yoink", "dont mind if i do"], "captions": ["free real estate", "thanks for the gift"] },
-    "capture_spree":  { "priority": 55,  "chance": 0.7,  "queries": ["hungry", "eating", "nom nom", "rampage"], "captions": ["the buffet is open", "eating good tonight"] },
-    "promotion":      { "priority": 50,  "chance": 0.6,  "queries": ["glow up", "level up", "crown", "promotion"], "captions": ["glow up", "pawn to royalty"] },
-    "check_spam":     { "priority": 45,  "chance": 0.8,  "queries": ["annoying", "stop it", "again", "spam"], "captions": ["check. check. check.", "please stop"] },
-    "king_walk":      { "priority": 40,  "chance": 0.7,  "queries": ["just walking", "casual walk", "strolling", "confident walk"], "captions": ["the king goes for a walk", "castling is for cowards"] },
-    "free_pawn":      { "priority": 30,  "chance": 0.4,  "queries": ["yoink", "sneaky", "mine now", "steal"], "captions": ["free pawn", "mine now"] },
-    "castling":       { "priority": 20,  "chance": 0.25, "queries": ["safe", "hiding", "home sweet home", "fort"], "captions": ["king is safe. for now."] },
-    "duckPlaced":     { "priority": 10,  "chance": 0.15, "queries": ["duck", "quack", "rubber duck"], "captions": ["quack"] },
-    "check":          { "priority": 8,   "chance": 0.15, "queries": ["watch out", "danger", "uh oh", "alert"], "captions": ["check!", "watch out"] },
-    "capture":        { "priority": 5,   "chance": 0.12, "queries": ["bye", "see ya", "gone", "deleted"], "captions": ["bye", "see you never"] }
+    "checkmate":      { "priority": 100, "chance": 1,    "queries": ["mic drop", "victory dance", "game over", "you got served"],
+                        "refine": [
+                          { "attacker": "p", "queries": ["unbelievable", "underdog wins", "shocked"] },
+                          { "attacker": "n", "queries": ["flex", "too easy", "smug"] },
+                          { "attacker": "q", "queries": ["queen", "slay", "boss"] }
+                        ] },
+    "stalemate":      { "priority": 95,  "chance": 1,    "queries": ["confused", "what just happened", "awkward silence", "disappointed"] },
+    "draw":           { "priority": 90,  "chance": 0.9,  "queries": ["shrug", "handshake", "meh", "ok fine"] },
+    "hung_queen":     { "priority": 85,  "chance": 1,    "queries": ["facepalm", "oh no", "big mistake", "panic"],
+                        "refine": [
+                          { "attacker": "p", "queries": ["david and goliath", "sneaky", "evil laugh"] },
+                          { "attacker": "k", "queries": ["come here", "evil grin", "rubbing hands"] }
+                        ] },
+    "queen_trade":    { "priority": 80,  "chance": 0.8,  "queries": ["deal", "handshake deal", "fair trade", "even"] },
+    "queen_lost":     { "priority": 78,  "chance": 1,    "queries": ["shocked", "jaw drop", "noooo", "betrayal"],
+                        "refine": [
+                          { "attacker": "p", "queries": ["david and goliath", "underdog", "mind blown"] },
+                          { "attacker": "n", "queries": ["flex", "smug", "too easy"] },
+                          { "attacker": ["b", "d"], "queries": ["sniper", "headshot", "sneaky"] },
+                          { "attacker": "r", "queries": ["bulldozer", "steamroller", "crushed"] },
+                          { "attacker": "k", "queries": ["do it yourself", "boss", "power move"] }
+                        ] },
+    "comeback":       { "priority": 75,  "chance": 1,    "queries": ["comeback", "im back", "never give up", "plot twist"] },
+    "hung_piece":     { "priority": 70,  "chance": 0.8,  "queries": ["oops", "facepalm", "awkward", "nervous"],
+                        "refine": [
+                          { "victim": "r", "queries": ["oh no", "uh oh", "big oops"] },
+                          { "victim": "n", "queries": ["horse", "oops", "awkward"] }
+                        ] },
+    "steamroll":      { "priority": 65,  "chance": 0.8,  "queries": ["unstoppable", "domination", "too easy", "rampage"] },
+    "underpromotion": { "priority": 62,  "chance": 1,    "queries": ["big brain", "genius", "trust me", "galaxy brain"],
+                        "refine": [ { "attacker": "n", "queries": ["horse", "giddy up", "neigh"] } ] },
+    "free_piece":     { "priority": 60,  "chance": 0.8,  "queries": ["thank you", "yoink", "dont mind if i do", "free"],
+                        "refine": [
+                          { "victim": "n", "queries": ["horse", "yoink", "gotcha"] },
+                          { "victim": "r", "queries": ["jackpot", "free money", "rich"] },
+                          { "attacker": "p", "victim": ["n", "b", "d", "r"], "queries": ["david and goliath", "underdog", "sneaky"] }
+                        ] },
+    "capture_spree":  { "priority": 55,  "chance": 0.7,  "queries": ["hungry", "eating", "nom nom", "rampage"] },
+    "promotion":      { "priority": 50,  "chance": 0.6,  "queries": ["glow up", "level up", "transformation", "crowned"] },
+    "check_spam":     { "priority": 45,  "chance": 0.8,  "queries": ["annoying", "stop it", "again", "go away"] },
+    "king_walk":      { "priority": 40,  "chance": 0.7,  "queries": ["casual walk", "strolling", "confident walk", "walking away"] },
+    "free_pawn":      { "priority": 30,  "chance": 0.4,  "queries": ["yoink", "sneaky", "mine", "steal"] },
+    "castling":       { "priority": 20,  "chance": 0.25, "queries": ["safe", "hiding", "home sweet home", "nope"] },
+    "duckPlaced":     { "priority": 10,  "chance": 0.15, "queries": ["duck", "quack", "rubber duck"] },
+    "check":          { "priority": 8,   "chance": 0.15, "queries": ["watch out", "danger", "uh oh", "scared"],
+                        "refine": [ { "attacker": "p", "queries": ["poke", "annoying", "sneaky"] } ] },
+    "capture":        { "priority": 5,   "chance": 0.12, "queries": ["bye", "see ya", "gone", "deleted"],
+                        "refine": [
+                          { "attacker": "p", "victim": "p", "queries": ["fight", "slap", "brawl"] },
+                          { "attacker": "n", "queries": ["horse", "jump", "flex"] },
+                          { "attacker": "k", "queries": ["do it yourself", "boss", "power move"] }
+                        ] }
   },
   "blocked": []
 }

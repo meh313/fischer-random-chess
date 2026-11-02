@@ -26,7 +26,7 @@ export type GameEvent =
   /** Only emitted when an evaluator is attached. `loss` is centipawns lost by `color`. */
   | { type: 'blunder'; color: Color; move: Move; loss: number }
   /** A story beat of the move (hung queen, free piece, comeback...). See moments.ts. */
-  | { type: 'moment'; color: Color; moment: MomentId }
+  | { type: 'moment'; color: Color; moment: MomentId; square: Square; attacker: PieceKind; victim?: PieceKind }
 
 export type GameEventType = GameEvent['type']
 export type GameEventHandler = (event: GameEvent) => void

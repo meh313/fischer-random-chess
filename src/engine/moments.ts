@@ -1,6 +1,6 @@
 import { opposite } from './board'
 import { attackersOf, inCheck } from './rules'
-import type { Color, Move, PieceKind, State } from './types'
+import type { Color, Move, PieceKind, Square, State } from './types'
 import type { Variant } from './variant'
 
 /**
@@ -27,6 +27,12 @@ export interface Moment {
   id: MomentId
   /** The side that made the move (for hung_* that is the side that blundered). */
   color: Color
+  /** The square the moment is about: where the capture landed, the loose piece, the checked king. */
+  square: Square
+  /** The piece doing it (the mover, or for hung_* the enemy piece that can take). */
+  attacker: PieceKind
+  /** The piece it happens to, when there is one. */
+  victim?: PieceKind
 }
 
 /** Earlier moves, oldest first, as the Game records them. */
@@ -73,7 +79,8 @@ function attackedByCheaper(state: State, sq: number, vs: readonly Variant[]): bo
 export function detectMoments(before: State, after: State, move: Move, log: readonly MoveLog[], vs: readonly Variant[]): Moment[] {
   const color = move.piece.color
   const out: Moment[] = []
-  const add = (id: MomentId) => out.push({ id, color })
+  const add = (id: MomentId, square: Square = move.to, attacker: PieceKind = move.piece.kind, victimKind: PieceKind | undefined = move.capture?.kind) =>
+    out.push({ id, color, square, attacker, victim: victimKind })
   const duck = vs.some((v) => v.twoPhase)
   const victim = move.capture
 
@@ -106,7 +113,10 @@ export function detectMoments(before: State, after: State, move: Move, log: read
     if (!fairTrade && !move.promotion && risked >= 5 && attackedByCheaper(after, move.to, vs) && !fresh.includes(move.to)) fresh.push(move.to)
     // Only counts if the opponent can actually take it next move (we did not just give check that forces something else).
     if (fresh.length && !inCheck(after, vs)) {
-      add(fresh.some((s) => after.board[s]?.kind === 'q') ? 'hung_queen' : 'hung_piece')
+      const loose = fresh.find((s) => after.board[s]?.kind === 'q') ?? fresh[0]!
+      const takers = attackersOf(after, loose, opposite(color), vs)
+      const taker = takers.reduce((a, c) => (VALUE[after.board[c]!.kind] < VALUE[after.board[a]!.kind] ? c : a), takers[0]!)
+      add(after.board[loose]?.kind === 'q' ? 'hung_queen' : 'hung_piece', loose, after.board[taker]?.kind ?? 'p', after.board[loose]?.kind)
     }
   }
 
@@ -115,7 +125,7 @@ export function detectMoments(before: State, after: State, move: Move, log: read
   const last2 = mine.slice(-2)
   if (victim && last2.length === 2 && last2.every((r) => r.move.capture)) add('capture_spree')
   const gaveCheck = !duck && inCheck(after, vs)
-  if (gaveCheck && last2.length === 2 && last2.every((r) => /[+#]$/.test(r.san))) add('check_spam')
+  if (gaveCheck && last2.length === 2 && last2.every((r) => /[+#]$/.test(r.san))) add('check_spam', after.kings[opposite(color)], move.piece.kind, 'k')
 
   // Early king stroll: the opening of this game (not of a custom FEN), castling still possible, not running from check.
   const canCastle = before.castle[color].k !== null || before.castle[color].q !== null

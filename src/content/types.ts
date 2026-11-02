@@ -96,12 +96,11 @@ export interface MemeEntry {
   on: MemeKey | MemeKey[]
   /** File under /public/memes/ (png, jpg, gif, webp, svg, mp4, webm). */
   media: string
-  /** Display time in ms, clamped to 2000..4000. */
+  /** Longest display time in ms for a square flash, clamped to 600..2200 (a video that ends sooner closes itself). */
   ms?: number
   /** Optional sfx id or file under /public/sounds/. */
   sound?: string
   weight?: number
-  caption?: string
   /** Marks shipped stand-ins so they are visibly labeled. */
   placeholder?: boolean
 }
@@ -119,8 +118,14 @@ export interface GifKey {
   chance?: number
   /** GIPHY search phrases; one is picked at random. */
   queries: string[]
-  /** Optional captions shown under the GIF; one is picked at random. */
-  captions?: string[]
+  /** More specific searches for who did what, e.g. a pawn taking a queen. The most specific match wins. */
+  refine?: GifRefine[]
+}
+
+export interface GifRefine {
+  attacker?: KindMatch
+  victim?: KindMatch
+  queries: string[]
 }
 
 export interface GifFile {

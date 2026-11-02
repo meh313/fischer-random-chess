@@ -1,8 +1,8 @@
-import type { Color, PieceKind } from '../engine'
+import type { Color, PieceKind, Square } from '../engine'
 import type { GameEvent } from '../engine/events'
 import { MAX_CINEMATIC_MS } from './types'
 import { CINE_EVENTS } from './types'
-import type { Cinematic, CinematicMatch, CineEvent, GifFile, GifKey, KindMatch, MemeEntry, MemeKey } from './types'
+import type { Cinematic, CinematicMatch, CineEvent, GifFile, GifKey, GifRefine, KindMatch, MemeEntry, MemeKey } from './types'
 import { MOMENTS } from '../engine/moments'
 
 export interface CaptureContext {
@@ -86,6 +86,58 @@ export function pickMeme(list: readonly MemeEntry[], key: MemeKey, rand: () => n
   return weightedPick(hits, rand)
 }
 
+/** Who did what, and where: the square a meme flash sits on and the pieces it is about. */
+export interface MemeContext {
+  square?: Square
+  attacker?: PieceKind
+  victim?: PieceKind
+}
+
+export function memeContextOf(e: GameEvent): MemeContext {
+  switch (e.type) {
+    case 'capture':
+      return { square: e.to, attacker: e.attacker.kind, victim: e.victim.kind }
+    case 'moment':
+      return { square: e.square, attacker: e.attacker, victim: e.victim }
+    case 'check':
+      return { square: e.kingSq, victim: 'k' }
+    case 'checkmate':
+      return { square: e.kingSq, victim: 'k' }
+    case 'promotion':
+      return { square: e.to, attacker: e.piece, victim: 'p' }
+    case 'castling':
+      return { square: e.kingTo, attacker: 'k', victim: 'r' }
+    case 'duckPlaced':
+      return { square: e.square }
+    case 'move':
+      return { square: e.move.to, attacker: e.move.piece.kind, victim: e.move.capture?.kind }
+    default:
+      return {}
+  }
+}
+
+/** The search phrases for this key and context: the most specific matching refine, else the key's own. */
+export function queriesFor(cfg: GifKey, ctx: MemeContext): string[] {
+  let best: GifRefine | null = null
+  let bestScore = 0
+  for (const r of cfg.refine ?? []) {
+    let score = 0
+    if (!isWild(r.attacker)) {
+      if (!ctx.attacker || !kindHits(r.attacker!, ctx.attacker)) continue
+      score += 2
+    }
+    if (!isWild(r.victim)) {
+      if (!ctx.victim || !kindHits(r.victim!, ctx.victim)) continue
+      score += 1
+    }
+    if (score > bestScore) {
+      best = r
+      bestScore = score
+    }
+  }
+  return best?.queries.length ? best.queries : cfg.queries
+}
+
 /**
  * One move can fire several events (capture, check, a hung queen...). Memes react to the single
  * most important one: the highest-priority key that has GIFs configured or a local meme.
@@ -96,17 +148,23 @@ export function pickMemeKey(
   local: readonly MemeEntry[],
   /** False when online GIFs are off or unavailable: then only keys with a local meme count. */
   gifsUsable = true,
-): { key: MemeKey; cfg?: GifKey } | null {
-  let best: { key: MemeKey; cfg?: GifKey; prio: number } | null = null
+): { key: MemeKey; cfg?: GifKey; ctx: MemeContext } | null {
+  let best: { key: MemeKey; cfg?: GifKey; prio: number; ctx: MemeContext } | null = null
+  // Events without a square of their own (draws, stalemate) sit on the square the move landed on.
+  const landed = events.find((e) => e.type === 'move')
+  const fallbackSq = landed?.type === 'move' ? landed.move.to : undefined
   for (const e of events) {
     const key = memeKeyOf(e)
     const cfg = gifs?.keys[key]
     const hasLocal = local.some((m) => (Array.isArray(m.on) ? m.on.includes(key) : m.on === key))
     if (!(cfg && gifsUsable) && !hasLocal) continue
     const prio = cfg?.priority ?? 0
-    if (!best || prio > best.prio) best = { key, cfg, prio }
+    if (!best || prio > best.prio) {
+      const ctx = memeContextOf(e)
+      best = { key, cfg, prio, ctx: { ...ctx, square: ctx.square ?? fallbackSq, attacker: ctx.attacker ?? (landed?.type === 'move' ? landed.move.piece.kind : undefined) } }
+    }
   }
-  return best && { key: best.key, cfg: best.cfg }
+  return best && { key: best.key, cfg: best.cfg, ctx: best.ctx }
 }
 
 const MEME_KEYS = new Set<string>([...MOMENTS, 'move', 'capture', 'castling', 'promotion', 'check', 'checkmate', 'stalemate', 'duckPlaced', 'draw', 'gameOver', 'blunder', 'moment'])
@@ -124,6 +182,7 @@ export function validateGifFile(raw: unknown): { file: GifFile; problems: string
     if (!v || !Array.isArray(v.queries) || !v.queries.length || v.queries.some((q) => typeof q !== 'string' || !q.trim())) { problems.push(`gifs.json: "${k}" needs at least one search phrase`); continue }
     if (typeof v.priority !== 'number') { problems.push(`gifs.json: "${k}" needs a numeric priority`); continue }
     if (v.chance !== undefined && !(v.chance >= 0 && v.chance <= 1)) { problems.push(`gifs.json: "${k}" chance outside 0..1`); continue }
+    if (v.refine !== undefined && (!Array.isArray(v.refine) || v.refine.some((r) => !r || !Array.isArray(r.queries) || !r.queries.length))) { problems.push(`gifs.json: "${k}" refine entries need search phrases`); continue }
     keys[k as MemeKey] = v
   }
   const rating = r.rating && ['g', 'pg', 'pg-13'].includes(r.rating) ? r.rating : 'g'
@@ -208,6 +267,7 @@ export function validateCinematics(raw: unknown): Cinematic[] {
   return items
 }
 
-export function clampMemeMs(ms: number | undefined): number {
-  return Math.min(Math.max(ms ?? 3000, 2000), 4000)
+/** A square flash is quick: 0.6 to 2.2 s, 1.2 s when unset. */
+export function clampFlashMs(ms: number | undefined): number {
+  return Math.min(Math.max(ms ?? 1200, 600), 2200)
 }

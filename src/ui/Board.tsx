@@ -6,6 +6,8 @@ import type { ResolvedPieceSet } from '../content/types'
 import type { ChassController } from '../state/useChass'
 import { CinematicLayer } from '../cinematics/CinematicLayer'
 import { AimLayer } from '../cinematics/AimLayer'
+import { MemeFlash } from '../memes/MemeFlash'
+import type { ActiveMeme } from '../memes/useMemes'
 import { KIND_NAME, pieceName } from './names'
 import { PieceImg } from './PieceImg'
 import { useModal } from './useModal'
@@ -13,6 +15,9 @@ import { useModal } from './useModal'
 interface Props {
   chass: ChassController
   set: ResolvedPieceSet | null
+  /** Reaction clip to play on one square. */
+  flash?: ActiveMeme | null
+  onFlashEnd?: () => void
 }
 
 const PCT = 12.5
@@ -22,7 +27,7 @@ const posFor = (sq: Square, flipped: boolean) => {
   return { left: `${(flipped ? 7 - f : f) * PCT}%`, top: `${(flipped ? r : 7 - r) * PCT}%` }
 }
 
-export const Board = forwardRef<HTMLDivElement, Props>(function Board({ chass, set }, ref) {
+export const Board = forwardRef<HTMLDivElement, Props>(function Board({ chass, set, flash, onFlashEnd }, ref) {
   const { game, display, selected, targets, lastMove, checkSq, flipped, duckTargets, promotion, cine } = chass
   const board = game.state.board
   const duckPhase = game.state.phase === 'duck'
@@ -132,6 +137,7 @@ export const Board = forwardRef<HTMLDivElement, Props>(function Board({ chass, s
         )}
       </div>
       {chass.aims.length > 0 && <AimLayer aims={chass.aims} flipped={flipped} />}
+      {flash && <MemeFlash key={flash.key} meme={flash} pos={posFor(flash.square, flipped)} onDone={() => onFlashEnd?.()} />}
       {cine && <CinematicLayer key={cine.key} request={cine} flipped={flipped} setPose={chass.setPose} onDone={chass.endCine} onSound={chass.noteCineSound} />}
       {duckPhase && !game.result && (
         <div className="board-hint" role="status">

@@ -3,7 +3,7 @@ import { VARIANTS, fromPgn, newChaosSeed, parseChaosSeed, rollVariants, squareNa
 import { loadCinematics, loadGifs, loadMemes, loadPieceSet, loadPieceSetIndex } from './content/loaders'
 import type { Cinematic, GifFile, MemeEntry, ResolvedPieceSet } from './content/types'
 import { configureAudio, playSfx, unlockAudio } from './audio/sfx'
-import { MemeOverlay } from './memes/MemeOverlay'
+import { giphyKey } from './memes/giphy'
 import { useMemes } from './memes/useMemes'
 import { SettingsProvider, useSettings } from './state/settings'
 import { useChass } from './state/useChass'
@@ -384,10 +384,12 @@ function Chass() {
             />
           )}
           <div className="board-wrap">
-            {ready ? <Board ref={boardRef} chass={chass} set={pieceSet} /> : <div className="board loading">Loading pieces...</div>}
+            {ready ? <Board ref={boardRef} chass={chass} set={pieceSet} flash={memes.active} onFlashEnd={memes.dismiss} /> : <div className="board loading">Loading pieces...</div>}
             {rolling && <DiceOverlay key={rolling.seed} ids={rolling.ids} seed={rolling.seed} onDone={finishRoll} />}
-            <MemeOverlay meme={memes.active} muted={!settings.sound} volume={settings.volume} onDismiss={memes.dismiss} />
           </div>
+          {settings.memes && settings.gifs && giphyKey() && (
+            <a className="giphy-credit" href="https://giphy.com" target="_blank" rel="noreferrer">Powered by GIPHY</a>
+          )}
           <div className={`banner ${resultText ? 'show' : ''}`} role="status">{resultText ?? ' '}</div>
         </main>
 
