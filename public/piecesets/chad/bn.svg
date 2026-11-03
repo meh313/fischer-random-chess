@@ -1,15 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 100"><g stroke="#111" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
-      <ellipse cx="55" cy="93" rx="38" ry="6.5" fill="#262626" stroke="#000000"/>
-      <path d="M24 92C24 76 22 58 32 38L58 50C60 60 62 70 74 78C70 84 68 88 70 92z" fill="#4a4a4f"/>
-      <path d="M36 6l9 20-13 4z" fill="#4a4a4f"/><path d="M47 8l8 18-11 1z" fill="#2f2f33"/>
-      <path d="M31 32C22 46 20 66 22 90" fill="none" stroke="#0e0e10" stroke-width="9" stroke-linecap="round"/>
-      <path d="M30 31C37 17 56 17 67 25C77 30 85 40 93 45C98 48 98 56 93 58L70 58C62 58 52 56 44 52C35 48 28 40 30 31z" fill="#4a4a4f"/>
-      <path d="M31 31C34 19 46 14 58 19C50 20 44 25 42 32C38 24 34 26 31 31z" fill="#0e0e10"/>
-      <path d="M40 50C33 60 33 78 40 87C49 95 65 95 73 87C82 76 80 62 73 56C62 61 50 59 40 50z" fill="#232326"/>
-      <path d="M36.0 56l-1.6 6.5M40.4 57l-1.6 6.5M44.8 58l-1.6 6.5M49.2 56l-1.6 6.5M53.6 57l-1.6 6.5M58.0 58l-1.6 6.5M62.4 56l-1.6 6.5M66.8 57l-1.6 6.5M71.2 58l-1.6 6.5M38.0 65l-1.6 6.5M42.4 66l-1.6 6.5M46.8 67l-1.6 6.5M51.2 65l-1.6 6.5M55.6 66l-1.6 6.5M60.0 67l-1.6 6.5M64.4 65l-1.6 6.5M68.8 66l-1.6 6.5M73.2 67l-1.6 6.5M36.0 74l-1.6 6.5M40.4 75l-1.6 6.5M44.8 76l-1.6 6.5M49.2 74l-1.6 6.5M53.6 75l-1.6 6.5M58.0 76l-1.6 6.5M62.4 74l-1.6 6.5M66.8 75l-1.6 6.5" fill="none" stroke="#0b0b0c" stroke-width="1.5"/>
-      <path d="M74 44C84 46 92 50 95 55" fill="none" stroke="#2f2f33" stroke-width="5" opacity="0.55"/>
-      <ellipse cx="91" cy="48" rx="3.6" ry="2.6" fill="#111" stroke="none" transform="rotate(25 91 48)"/>
-      <path d="M55 35q6-4 12 0q-6 4-12 0z" fill="#fff" stroke="#111" stroke-width="1.8"/><circle cx="62" cy="35" r="2.1" fill="#111"/><path d="M53 32q7-4 15 0l0 2q-8-3-15 1z" fill="#0e0e10" stroke="#111" stroke-width="1.2"/>
-      <path d="M51 29L70 31.5" stroke="#0e0e10" stroke-width="5" stroke-linecap="round"/>
-      <path d="M72 59q10 4 22 -1" fill="none" stroke="#111" stroke-width="2.4" stroke-linecap="round"/><rect x="77" y="57" width="15" height="6" rx="2" fill="#fff" stroke="#111" stroke-width="1.4"/><path d="M82 57v6M87 57v6" stroke="#111" stroke-width="1"/>
-    </g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g fill="#262626" stroke="#000000" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"><path d="M70 79H31C30 62 38 54 44 46 36 47 30 52 25 58L19 53C20 44 28 34 36 26L35 14l10 8c6-2 12-2 17 1 11 8 16 34 8 56z"/><circle cx="43" cy="33" r="2.6" fill="#000000" stroke="none"/><rect x="24" y="79" width="52" height="11" rx="4"/></g><path d="M52 26c6 4 10 12 11 24" fill="none" stroke="#f2f2f2" stroke-width="2.6" stroke-linecap="round" opacity="0.85"/><path d="M24 55l6 2" fill="none" stroke="#f2f2f2" stroke-width="2.6" stroke-linecap="round" opacity="0.85"/></svg>

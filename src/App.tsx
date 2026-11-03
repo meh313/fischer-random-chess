@@ -87,7 +87,7 @@ function Chass() {
             if (!e.move.capture) void playSfx(e.move.castle ? 'castle' : 'move')
             break
           case 'capture':
-            if (!meta.cinematic) void playSfx('capture')
+            if (!meta.cinematic) void playSfx('shot')
             break
           case 'check':
             setTimeout(() => void playSfx('check'), 120)

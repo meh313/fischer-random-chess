@@ -82,8 +82,23 @@ const SYNTH: Record<string, (c: AudioContext, out: AudioNode, t: number) => void
     tone(c, o, t, 160, 0.14, 'square', 0.25, 70)
   },
   bang: (c, o, t) => {
-    noise(c, o, t, 0.35, 1, 5000)
-    tone(c, o, t, 120, 0.2, 'sawtooth', 0.5, 40)
+    // Crack, then the boom and a short tail.
+    noise(c, o, t, 0.03, 1.2, 9000)
+    noise(c, o, t + 0.01, 0.4, 1, 3500)
+    tone(c, o, t, 150, 0.25, 'sawtooth', 0.6, 35)
+  },
+  // Quick shot for captures without a gag: a crack and a short thump.
+  shot: (c, o, t) => {
+    noise(c, o, t, 0.025, 1, 8000)
+    noise(c, o, t + 0.01, 0.18, 0.7, 2500)
+    tone(c, o, t, 140, 0.14, 'sawtooth', 0.4, 45)
+  },
+  // Slide racked back and forward: two short metallic clicks.
+  reload: (c, o, t) => {
+    noise(c, o, t, 0.035, 0.7, 6000)
+    tone(c, o, t, 2600, 0.03, 'square', 0.12, 1800)
+    noise(c, o, t + 0.09, 0.045, 0.8, 5000)
+    tone(c, o, t + 0.09, 2100, 0.04, 'square', 0.14, 1400)
   },
   check: (c, o, t) => {
     tone(c, o, t, 880, 0.12, 'square', 0.25)
@@ -114,6 +129,12 @@ const SYNTH: Record<string, (c: AudioContext, out: AudioNode, t: number) => void
 
 export function unlockAudio() {
   getCtx()
+}
+
+/** Starts the file lookup for these ids now so their first play is not delayed by a fetch. */
+export function warmSfx(names: readonly string[]) {
+  if (!getCtx()) return
+  for (const n of names) void loadFile(n)
 }
 
 export async function playSfx(name: string) {

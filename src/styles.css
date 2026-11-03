@@ -433,6 +433,10 @@ header p {
 }
 .piece img,
 .piece .glyph {
+  /* Absolute so the percentages resolve against the square: a grid item's percent height is auto for tall art. */
+  position: absolute;
+  left: 4%;
+  top: 4%;
   width: 92%;
   height: 92%;
   object-fit: contain;
@@ -441,8 +445,14 @@ header p {
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
 }
 .piece.duck img {
+  left: 10%;
+  top: 10%;
   width: 80%;
   height: 80%;
+}
+.piece .glyph {
+  display: grid;
+  place-items: center;
 }
 
 .board-hint {

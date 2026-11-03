@@ -75,14 +75,14 @@ Memes react to what a move did, not just to its type. The engine tags each move 
 {
   "id": "mine", "name": "My Pack", "extends": "classic",
   "pieces": {
-    "wn": { "img": "wn.svg", "poses": { "smug": "wn-smug.svg", "shocked": "wn-shocked.svg" } },
-    "bn": { "img": "bn.svg", "poses": { "smug": "bn-smug.svg", "shocked": "bn-shocked.svg" } }
+    "wn": { "img": "wn.svg", "poses": { "chad": "wn-chad.png" } },
+    "bn": { "img": "bn.svg", "poses": { "chad": "bn-chad.png" } }
   }
 }
 ```
 
-Keys are color + kind: `wp wn wb wr wq wk wd` and `bp bn bb br bq bk bd` (`d` = Dragon Bishop). `extends` fills in every piece you do not define. Poses are optional. `smug` shows on the capturing piece, `shocked` on a king in check and on a victim during a cinematic.
+Keys are color + kind: `wp wn wb wr wq wk wd` and `bp bn bb br bq bk bd` (`d` = Dragon Bishop). `extends` fills in every piece you do not define. Poses are optional. `smug` shows on the capturing piece, `shocked` on a king in check and on a victim during a cinematic, `chad` on a knight that has captured twice (the Chad Horse rampage; it keeps the pose for the rest of the game).
 
 ## Placeholder art
 
-`node tools/gen-art.mjs` regenerates the shipped placeholders (Classic set, Chad knight, hand-and-gun sprite, duck, meme cards). All of it is original to this project. Replace any file with final art.
+`node tools/gen-art.mjs` regenerates the shipped placeholders (Classic set, duck, meme cards). `piecesets/chad` is hand-maintained: Classic knights plus the Chad Horse rampage pose. The hand-and-gun sprite is supplied art. Replace any file with final art.

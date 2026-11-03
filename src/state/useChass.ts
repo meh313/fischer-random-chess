@@ -6,6 +6,7 @@ import { pickCinematic } from '../content/select'
 import type { Cinematic, CineEvent } from '../content/types'
 import { AiClient } from '../ai/client'
 import { AIM_FLASH_MS, AIM_MAX, preloadAimSprite } from '../cinematics/AimLayer'
+import { playSfx, warmSfx } from '../audio/sfx'
 import { chooseAction, LEVELS, type AiAction } from '../ai/search'
 import { parseTimeControl, type Settings } from './settings'
 
@@ -44,6 +45,7 @@ type Clock = { w: number; b: number }
 interface StackEntry {
   pieces: TrackedPiece[]
   clock: Clock | null
+  kills: Record<number, number>
 }
 
 /** Moves ids with the pieces so the board can animate them. */
@@ -77,6 +79,8 @@ const displayKey = (ms: number) => (ms < 10_000 ? Math.floor(ms / 100) : 100_000
 const FLAG_GRACE_MS = 10_000
 /** Piece slide duration (`.piece` transition in styles.css). */
 const PIECE_MOVE_MS = 240
+/** Captures by one knight before it turns into the Chad Horse for the rest of the game. */
+const CHAD_KILLS = 2
 
 export interface ReplayState {
   actions: GameAction[]
@@ -116,11 +120,31 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const [aimFlash, setAimFlash] = useState<{ key: number; aims: AimTarget[] } | null>(null)
   const aimTimer = useRef(0)
   const aimKey = useRef(0)
+  /** Threat pairs already shown for each side to move, so a hand only flashes when a threat is new. */
+  const seenAims = useRef<Record<Color, Set<string>>>({ w: new Set(), b: new Set() })
+  /** Captures per tracked piece id (rampage poses). */
+  const kills = useRef<Record<number, number>>({})
   const clearAimFlash = useCallback(() => {
     clearTimeout(aimTimer.current)
     aimTimer.current = 0
     setAimFlash(null)
   }, [])
+
+  const aimKeys = (g: Game) => (g.result || g.state.phase !== 'move' ? [] : g.aimTargets()).map((a) => `${a.attacker}-${a.victim}`)
+
+  /**
+   * Treats the current position's threats as already seen (undo, replay jumps) so they do not flash again.
+   * The other side keeps its list; `fresh` (new game) forgets both.
+   */
+  const resetAims = useCallback(
+    (fresh = false) => {
+      clearAimFlash()
+      const g = gameRef.current
+      if (fresh) seenAims.current = { w: new Set(), b: new Set() }
+      if (g && g.state.phase === 'move') seenAims.current[g.turn] = new Set(aimKeys(g))
+    },
+    [clearAimFlash],
+  )
 
   // Exact clock lives in a ref; the state copy only changes when the displayed text would.
   const [clock, setClock] = useState<Clock | null>(null)
@@ -189,12 +213,13 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setPromotion(null)
       setCine(null)
       setPoses({})
-      clearAimFlash()
+      kills.current = {}
+      resetAims(true)
       duckHint.current = null
       setFlippedState(settingsRef.current.opponent !== 'human' && settingsRef.current.playAs === 'b')
       bump()
     },
-    [emit, resetClock, clearAimFlash],
+    [emit, resetClock, resetAims],
   )
 
   if (!gameRef.current) {
@@ -224,7 +249,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     if (!cineRef.current) setFlippedState(v) // sprites are laid out for one orientation
   }, [])
 
-  const recomputePoses = useCallback((attackerId?: number, events: GameEvent[] = []) => {
+  const isChad = (p: TrackedPiece) => p.kind === 'n' && (kills.current[p.id] ?? 0) >= CHAD_KILLS
+
+  /** `holdChadFor`: a capture gag is about to replay the move, so that knight transforms when the gag ends, not before. */
+  const recomputePoses = useCallback((attackerId?: number, events: GameEvent[] = [], holdChadFor?: number) => {
     const g = gameRef.current!
     const next: Record<number, string> = {}
     if (attackerId !== undefined && events.some((e) => e.type === 'capture')) next[attackerId] = 'smug'
@@ -232,6 +260,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       const king = trackedRef.current.find((p) => p.kind === 'k' && p.color === g.turn)
       if (king) next[king.id] = 'shocked'
     }
+    for (const p of trackedRef.current) if (isChad(p) && p.id !== holdChadFor) next[p.id] = 'chad'
     setPoses(next)
   }, [])
 
@@ -246,12 +275,19 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     (delay: number) => {
       clearAimFlash()
       const g = gameRef.current!
-      if (!settingsRef.current.aimMode || g.result) return
-      const aims = g.aimTargets().slice(0, AIM_MAX)
-      if (!aims.length) return
+      // During the duck phase the mover is still to move and nothing hangs yet; wait for the duck.
+      if (!settingsRef.current.aimMode || g.result || g.state.phase !== 'move') return
+      const turn = g.turn
+      const seen = seenAims.current[turn]
+      const aims = g.aimTargets().filter((a) => !seen.has(`${a.attacker}-${a.victim}`)).slice(0, AIM_MAX)
+      const keys = aimKeys(g)
       const key = ++aimKey.current
       aimTimer.current = window.setTimeout(() => {
+        // Marked seen only once shown: a flash cancelled by a quick next move gets another chance.
+        seenAims.current[turn] = new Set(keys)
+        if (!aims.length) return
         setAimFlash({ key, aims })
+        void playSfx('reload')
         aimTimer.current = window.setTimeout(() => {
           aimTimer.current = 0
           setAimFlash(null)
@@ -292,11 +328,13 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         startCine(next, null)
         return
       }
+      const wasCapture = cineRef.current.req.event === 'capture'
       cineRef.current = null
       setCine(null)
+      if (wasCapture) recomputePoses() // the Chad Horse appears on the landing square once the gag is over
       flush(cineSounded.current)
     },
-    [flush, startCine],
+    [flush, startCine, recomputePoses],
   )
 
   /** Picks a gag for what the move did besides capturing: mate, stalemate, promotion, castling or check. */
@@ -382,7 +420,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       deferring.current = true // sounds and memes for this move wait until we know whether a gag plays
       metaRef.current = { cinematic: !!captureReq }
       const mover = g.turn
-      stackRef.current.push({ pieces: prev, clock: clockRef.current ? { ...clockRef.current } : null })
+      stackRef.current.push({ pieces: prev, clock: clockRef.current ? { ...clockRef.current } : null, kills: { ...kills.current } })
       let events: GameEvent[]
       try {
         events = g.play(m)
@@ -392,8 +430,11 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         throw err
       }
       trackedRef.current = next
+      // A promoted pawn starts over: only captures made as a knight count towards the Chad Horse.
+      if (m.promotion) kills.current = { ...kills.current, [attackerId]: 0 }
+      if (captured) kills.current = { ...kills.current, [attackerId]: (kills.current[attackerId] ?? 0) + 1 }
       if (!g.variantIds.includes('duck')) addIncrement(mover)
-      recomputePoses(attackerId, events)
+      recomputePoses(attackerId, events, captureReq ? attackerId : undefined)
       setSelected(null)
       setPromotion(null)
 
@@ -415,7 +456,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       const g = gameRef.current!
       metaRef.current = { cinematic: false }
       const mover = g.turn
-      stackRef.current.push({ pieces: trackedRef.current, clock: clockRef.current ? { ...clockRef.current } : null })
+      stackRef.current.push({ pieces: trackedRef.current, clock: clockRef.current ? { ...clockRef.current } : null, kills: kills.current })
       g.placeDuck(sq)
       addIncrement(mover)
       recomputePoses()
@@ -496,15 +537,16 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       } while (cfg.opponent !== 'human' && !(g.turn === cfg.playAs && g.state.phase === 'move'))
       if (!restored) return
       trackedRef.current = restored.pieces
+      kills.current = restored.kills
       if (restored.clock) publishClock({ ...restored.clock }, true)
     }
     duckHint.current = null
     setSelected(null)
     setPromotion(null)
     recomputePoses()
-    clearAimFlash()
+    resetAims()
     bump()
-  }, [recomputePoses, publishClock, clearAimFlash])
+  }, [recomputePoses, publishClock, resetAims])
 
   const resign = useCallback(() => {
     const g = gameRef.current!
@@ -515,6 +557,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   }, [])
 
   const setPose = useCallback((id: number, pose: string | null) => {
+    const piece = trackedRef.current.find((p) => p.id === id)
+    if (piece && isChad(piece) && pose !== 'chad') return // the Chad Horse does not do other faces
     setPoses((p) => {
       const next = { ...p }
       if (pose === null) delete next[id]
@@ -540,7 +584,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setPromotion(null)
       setCine(null)
       setPoses({})
-      clearAimFlash()
+      kills.current = {}
+      resetAims(true)
       duckHint.current = null
       setFlippedState(false)
       const state: ReplayState = {
@@ -552,7 +597,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setReplay(state)
       bump()
     },
-    [emit, publishClock, clearAimFlash],
+    [emit, publishClock, resetAims],
   )
 
   const replayForward = useCallback(() => {
@@ -580,14 +625,18 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     deferred.current = []
     if (!g.undo()) return
     const entry = stackRef.current.pop()
-    if (entry) trackedRef.current = entry.pieces
+    if (entry) {
+      trackedRef.current = entry.pieces
+      kills.current = entry.kills
+    }
+    resetAims()
     const next = { ...r, cursor: r.cursor - 1 }
     replayRef.current = next
     setReplay(next)
     setSelected(null)
     recomputePoses()
     bump()
-  }, [finishCine, recomputePoses])
+  }, [finishCine, recomputePoses, resetAims])
 
   /** Jump to an action index without playing gags on the way. */
   const replayTo = useCallback(
@@ -719,8 +768,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
 
   useEffect(() => () => ai.current?.dispose(), [])
   useEffect(() => {
-    if (settings.aimMode) preloadAimSprite()
-    else clearAimFlash()
+    if (settings.aimMode) {
+      preloadAimSprite()
+      warmSfx(['reload'])
+    } else clearAimFlash()
   }, [settings.aimMode, clearAimFlash])
   useEffect(() => () => clearTimeout(aimTimer.current), [])
 

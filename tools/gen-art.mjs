@@ -67,74 +67,7 @@ for (const c of ['w', 'b']) {
 }
 out('piecesets/classic/set.json', JSON.stringify(classic, null, 2) + '\n')
 
-// --------------------------------------------------------------- chad knight
-const COAT = { w: { coat: '#ecd6b4', coatShade: '#cfb48b', beard: '#8c7a66', beardDark: '#4d4036', hair: '#3d2f26', plate: '#ffffff', plateEdge: '#141414' },
-               b: { coat: '#4a4a4f', coatShade: '#2f2f33', beard: '#232326', beardDark: '#0b0b0c', hair: '#0e0e10', plate: '#262626', plateEdge: '#000000' } }
-
-function chadKnight(c, pose) {
-  const p = COAT[c]
-  const ol = '#111'
-  // Beard hatching: short strokes inside the beard block.
-  let hatch = ''
-  for (let i = 0; i < 26; i++) {
-    const x = 36 + (i % 9) * 4.4 + (Math.floor(i / 9) % 2) * 2
-    const y = 56 + Math.floor(i / 9) * 9 + (i % 3)
-    hatch += `M${x.toFixed(1)} ${y}l-1.6 6.5`
-  }
-  const eyeY = 35
-  const eye = {
-    idle: `<path d="M55 ${eyeY}q6-4 12 0q-6 4-12 0z" fill="#fff" stroke="${ol}" stroke-width="1.8"/><circle cx="62" cy="${eyeY}" r="2.1" fill="${ol}"/><path d="M53 ${eyeY - 3}q7-4 15 0l0 2q-8-3-15 1z" fill="${p.hair}" stroke="${ol}" stroke-width="1.2"/>`,
-    smug: `<path d="M55 ${eyeY}q6-3 12 0q-6 2.5-12 0z" fill="#fff" stroke="${ol}" stroke-width="1.8"/><circle cx="63" cy="${eyeY}" r="1.7" fill="${ol}"/><path d="M52 ${eyeY - 2}q8-3 16 1l0 3q-8-3-16 0z" fill="${p.coatShade}" stroke="${ol}" stroke-width="1.4"/>`,
-    shocked: `<circle cx="61" cy="${eyeY}" r="6.6" fill="#fff" stroke="${ol}" stroke-width="2"/><circle cx="62" cy="${eyeY}" r="1.6" fill="${ol}"/>`,
-  }[pose]
-  const brow = {
-    idle: `<path d="M51 ${eyeY - 6}L70 ${eyeY - 3.5}" stroke="${p.hair}" stroke-width="5" stroke-linecap="round"/>`,
-    smug: `<path d="M51 ${eyeY - 5}L70 ${eyeY - 9}" stroke="${p.hair}" stroke-width="5" stroke-linecap="round"/>`,
-    shocked: `<path d="M52 ${eyeY - 10}Q61 ${eyeY - 16} 70 ${eyeY - 10}" fill="none" stroke="${p.hair}" stroke-width="4.5" stroke-linecap="round"/>`,
-  }[pose]
-  const mouth = {
-    idle: `<path d="M72 59q10 4 22 -1" fill="none" stroke="${ol}" stroke-width="2.4" stroke-linecap="round"/><rect x="77" y="57" width="15" height="6" rx="2" fill="#fff" stroke="${ol}" stroke-width="1.4"/><path d="M82 57v6M87 57v6" stroke="${ol}" stroke-width="1"/>`,
-    smug: `<path d="M70 58q12 8 26 -3" fill="none" stroke="${ol}" stroke-width="2.6" stroke-linecap="round"/><path d="M73 58q10 7 21 -3v5q-10 8 -21 1z" fill="#fff" stroke="${ol}" stroke-width="1.6"/><path d="M79 59v6M84 59v6M89 57v6" stroke="${ol}" stroke-width="1"/>`,
-    shocked: `<ellipse cx="86" cy="62" rx="7.5" ry="9" fill="#2a0d10" stroke="${ol}" stroke-width="2"/><rect x="80" y="53.5" width="12" height="5" rx="1.5" fill="#fff" stroke="${ol}" stroke-width="1.2"/>`,
-  }[pose]
-  const shake = pose === 'shocked' ? `<path d="M14 40l-6-2M14 52l-7 1M16 28l-5-5M92 24l5-5M98 36l6-1" stroke="#ffd23f" stroke-width="2.4" stroke-linecap="round"/>` : ''
-  const sweat = pose === 'shocked' ? `<path d="M70 14q4 6 0 9q-4-3 0-9z" fill="#7fd4ff" stroke="${ol}" stroke-width="1.2"/>` : ''
-  return svg(
-    '0 0 110 100',
-    `<g stroke="${ol}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round">
-      <ellipse cx="55" cy="93" rx="38" ry="6.5" fill="${p.plate}" stroke="${p.plateEdge}"/>
-      <path d="M24 92C24 76 22 58 32 38L58 50C60 60 62 70 74 78C70 84 68 88 70 92z" fill="${p.coat}"/>
-      <path d="M36 6l9 20-13 4z" fill="${p.coat}"/><path d="M47 8l8 18-11 1z" fill="${p.coatShade}"/>
-      <path d="M31 32C22 46 20 66 22 90" fill="none" stroke="${p.hair}" stroke-width="9" stroke-linecap="round"/>
-      <path d="M30 31C37 17 56 17 67 25C77 30 85 40 93 45C98 48 98 56 93 58L70 58C62 58 52 56 44 52C35 48 28 40 30 31z" fill="${p.coat}"/>
-      <path d="M31 31C34 19 46 14 58 19C50 20 44 25 42 32C38 24 34 26 31 31z" fill="${p.hair}"/>
-      <path d="M40 50C33 60 33 78 40 87C49 95 65 95 73 87C82 76 80 62 73 56C62 61 50 59 40 50z" fill="${p.beard}"/>
-      <path d="${hatch}" fill="none" stroke="${p.beardDark}" stroke-width="1.5"/>
-      <path d="M74 44C84 46 92 50 95 55" fill="none" stroke="${p.coatShade}" stroke-width="5" opacity="0.55"/>
-      <ellipse cx="91" cy="48" rx="3.6" ry="2.6" fill="${ol}" stroke="none" transform="rotate(25 91 48)"/>
-      ${eye}
-      ${brow}
-      ${mouth}
-    </g>${shake}${sweat}`,
-  )
-}
-
-const chad = {
-  id: 'chad',
-  name: 'Chad Pack',
-  description: 'The Chad Horse knight with reaction poses. Other pieces come from Classic.',
-  license: 'CC0, original to this project',
-  placeholder: true,
-  extends: 'classic',
-  pieces: {},
-}
-for (const c of ['w', 'b']) {
-  out(`piecesets/chad/${c}n.svg`, chadKnight(c, 'idle'))
-  out(`piecesets/chad/${c}n-smug.svg`, chadKnight(c, 'smug'))
-  out(`piecesets/chad/${c}n-shocked.svg`, chadKnight(c, 'shocked'))
-  chad.pieces[c + 'n'] = { img: `${c}n.svg`, poses: { smug: `${c}n-smug.svg`, shocked: `${c}n-shocked.svg` } }
-}
-out('piecesets/chad/set.json', JSON.stringify(chad, null, 2) + '\n')
+// The Chad Pack (piecesets/chad) is hand-maintained: Classic knights plus the generated Chad Horse 'chad' pose.
 out('piecesets/index.json', JSON.stringify(['classic', 'chad'], null, 2) + '\n')
 
 // --------------------------------------------------------------- sprites

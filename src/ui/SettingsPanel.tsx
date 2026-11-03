@@ -49,7 +49,7 @@ export function SettingsPanel({ open, onClose, pieceSets }: Props) {
         <h3>Gags</h3>
         <Toggle id="set-cine" label="Capture cinematics" hint="Short scripted gags when a piece is captured" checked={s.cinematics} onChange={(v) => update({ cinematics: v })} />
         <Slider label="Cinematic frequency" value={s.cinematicChance} min={0} max={1} step={0.05} fmt={pct} onChange={(v) => update({ cinematicChance: v })} />
-        <Toggle id="set-aim" label="Aim mode" hint="After each move, a gun hand flashes from the attacker at any undefended piece it can take" checked={s.aimMode} onChange={(v) => update({ aimMode: v })} />
+        <Toggle id="set-aim" label="Aim mode" hint="A gun hand flashes from the attacker the first time an undefended piece comes under threat" checked={s.aimMode} onChange={(v) => update({ aimMode: v })} />
         <Toggle id="set-memes" label="Reaction GIFs" hint="A quick clip on the square where the action happened" checked={s.memes} onChange={(v) => update({ memes: v })} />
         <Slider label="Meme frequency" value={s.memeChance} min={0} max={1} step={0.05} fmt={pct} onChange={(v) => update({ memeChance: v })} />
         <Slider label="Meme cooldown" value={s.memeCooldownSec} min={0} max={60} step={5} fmt={(v) => `${v}s`} onChange={(v) => update({ memeCooldownSec: v })} />

@@ -1,24 +1,12 @@
 {
   "id": "chad",
   "name": "Chad Pack",
-  "description": "The Chad Horse knight with reaction poses. Other pieces come from Classic.",
-  "license": "CC0, original to this project",
-  "placeholder": true,
+  "description": "Normal knights until one goes on a rampage: two captures and it turns into the Chad Horse. Other pieces come from Classic.",
+  "license": "Chad Horse art generated for this project from the user's sketch; the rest is CC0, original to this project",
+  "placeholder": false,
   "extends": "classic",
   "pieces": {
-    "wn": {
-      "img": "wn.svg",
-      "poses": {
-        "smug": "wn-smug.svg",
-        "shocked": "wn-shocked.svg"
-      }
-    },
-    "bn": {
-      "img": "bn.svg",
-      "poses": {
-        "smug": "bn-smug.svg",
-        "shocked": "bn-shocked.svg"
-      }
-    }
+    "wn": { "img": "wn.svg", "poses": { "chad": "wn-chad.png" } },
+    "bn": { "img": "bn.svg", "poses": { "chad": "bn-chad.png" } }
   }
 }
