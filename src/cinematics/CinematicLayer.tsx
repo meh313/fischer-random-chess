@@ -106,8 +106,8 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           img.draggable = false
           const pivot = s.pivot ?? [0.5, 0.5]
           img.style.setProperty('--size', String(s.size ?? 1))
-          img.style.left = `${-pivot[0] * 100}%`
-          img.style.top = `${-pivot[1] * 100}%`
+          img.style.setProperty('--px', String(pivot[0]))
+          img.style.setProperty('--py', String(pivot[1]))
           wrap.appendChild(img)
           layer.appendChild(wrap)
           spawned.set(s.id, wrap)

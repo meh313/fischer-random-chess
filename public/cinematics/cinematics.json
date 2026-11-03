@@ -11,7 +11,7 @@
   "duration": 1570,
       "steps": [
         {"at":0,"do":"pose","target":"victim","pose":"shocked"},
-        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.15]},
         {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
         {"at":150,"do":"sound","sfx":"bang"},
         {"at":150,"do":"caption","text":"then you die","ms":1200},
@@ -27,7 +27,7 @@
   "duration": 1470,
       "steps": [
         {"at":0,"do":"pose","target":"victim","pose":"shocked"},
-        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.15]},
         {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
         {"at":150,"do":"sound","sfx":"bang"},
         {"at":150,"do":"caption","text":["then you die","nothing personal","sit down","skill issue","get out"],"ms":1100},
@@ -65,7 +65,7 @@
   "duration": 1470,
       "steps": [
         {"at":0,"do":"pose","target":"victim","pose":"shocked"},
-        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.15]},
         {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
         {"at":150,"do":"sound","sfx":"bang"},
         {"at":150,"do":"caption","text":["slay","he is mine","you were never my type"],"ms":1100},
@@ -84,7 +84,7 @@
   "duration": 1670,
       "steps": [
         {"at":0,"do":"pose","target":"victim","pose":"shocked"},
-        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.15]},
         {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
         {"at":150,"do":"sound","sfx":"bang"},
         {"at":150,"do":"caption","text":["not the queen","NOOOO","my queen!"],"ms":1300,"style":"red"},
@@ -102,7 +102,7 @@
   "weight": 1,
   "duration": 1870,
       "steps": [
-        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.15]},
         {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
         {"at":150,"do":"sound","sfx":"bang"},
         {"at":150,"do":"caption","text":"long live the king","ms":1500,"pos":"center","style":"red"},
@@ -120,7 +120,7 @@
   "duration": 1470,
       "steps": [
         {"at":0,"do":"pose","target":"victim","pose":"shocked"},
-        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.15]},
         {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
         {"at":150,"do":"sound","sfx":"bang"},
         {"at":150,"do":"caption","text":["then you die","the duck saw that","sit down"],"ms":1100},
@@ -270,7 +270,7 @@
   "duration": 1450,
       "steps": [
         {"at":0,"do":"pose","target":"victim","pose":"shocked"},
-        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.15]},
         {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
         {"at":150,"do":"sound","sfx":"bang"},
         {"at":150,"do":"caption","text":["headshot","diagonal justice","church is out"],"ms":1100},
@@ -380,7 +380,7 @@
   "duration": 2150,
       "steps": [
         {"at":0,"do":"pose","target":"victim","pose":"shocked"},
-        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.2]},
+        {"at":0,"do":"spawn","id":"hand","sprite":"hand-gun.png","anchor":"attacker","size":1.9,"rotate":"toTarget","pivot":[0.3,0.15]},
         {"at":0,"do":"move","target":"hand","from":"attacker","to":"aim:1.2","ms":130,"ease":"outQuad"},
         {"at":150,"do":"sound","sfx":"bang"},
         {"at":150,"do":"caption","text":["checkmate","it is over","game over, king"],"ms":1700,"pos":"center","style":"red"},

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { Game } from '../engine'
-import type { Color, GameAction, GameEvent, Move, ParsedPgn, Piece, PieceKind, Square } from '../engine'
+import type { AimTarget, Color, GameAction, GameEvent, Move, ParsedPgn, Piece, PieceKind, Square } from '../engine'
 import { resolveVariants } from '../engine/variants'
 import { pickCinematic } from '../content/select'
 import type { Cinematic, CineEvent } from '../content/types'
 import { AiClient } from '../ai/client'
+import { AIM_FLASH_MS, AIM_MAX, preloadAimSprite } from '../cinematics/AimLayer'
 import { chooseAction, LEVELS, type AiAction } from '../ai/search'
 import { parseTimeControl, type Settings } from './settings'
 
@@ -74,6 +75,8 @@ function trackFromGame(game: Game, startId = 1): TrackedPiece[] {
 const displayKey = (ms: number) => (ms < 10_000 ? Math.floor(ms / 100) : 100_000 + Math.ceil(ms / 1000))
 
 const FLAG_GRACE_MS = 10_000
+/** Piece slide duration (`.piece` transition in styles.css). */
+const PIECE_MOVE_MS = 240
 
 export interface ReplayState {
   actions: GameAction[]
@@ -109,6 +112,15 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const cineRef = useRef(cine)
   cineRef.current = cine
   const [poses, setPoses] = useState<Record<number, string>>({})
+  // Aim mode: gun hands flash once after a move settles, then clear themselves.
+  const [aimFlash, setAimFlash] = useState<{ key: number; aims: AimTarget[] } | null>(null)
+  const aimTimer = useRef(0)
+  const aimKey = useRef(0)
+  const clearAimFlash = useCallback(() => {
+    clearTimeout(aimTimer.current)
+    aimTimer.current = 0
+    setAimFlash(null)
+  }, [])
 
   // Exact clock lives in a ref; the state copy only changes when the displayed text would.
   const [clock, setClock] = useState<Clock | null>(null)
@@ -177,11 +189,12 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setPromotion(null)
       setCine(null)
       setPoses({})
+      clearAimFlash()
       duckHint.current = null
       setFlippedState(settingsRef.current.opponent !== 'human' && settingsRef.current.playAs === 'b')
       bump()
     },
-    [emit, resetClock],
+    [emit, resetClock, clearAimFlash],
   )
 
   if (!gameRef.current) {
@@ -228,6 +241,26 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     if (inc && c) publishClock({ ...c, [color]: c[color] + inc })
   }
 
+  /** Flashes a gun hand from each attacker at an undefended piece of the side to move, `delay` ms from now. */
+  const flashAims = useCallback(
+    (delay: number) => {
+      clearAimFlash()
+      const g = gameRef.current!
+      if (!settingsRef.current.aimMode || g.result) return
+      const aims = g.aimTargets().slice(0, AIM_MAX)
+      if (!aims.length) return
+      const key = ++aimKey.current
+      aimTimer.current = window.setTimeout(() => {
+        setAimFlash({ key, aims })
+        aimTimer.current = window.setTimeout(() => {
+          aimTimer.current = 0
+          setAimFlash(null)
+        }, AIM_FLASH_MS)
+      }, delay)
+    },
+    [clearAimFlash],
+  )
+
   /** Hand every event that waited for the gag to the listeners (sounds, memes). */
   const flush = useCallback(
     (cinematic: boolean) => {
@@ -237,8 +270,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       deferred.current = []
       for (const e of pending) deliver(e)
       metaRef.current = { cinematic: false }
+      // After a gag the pieces already stand still; otherwise wait for the move animation to land.
+      flashAims(cinematic ? 0 : PIECE_MOVE_MS + 40)
     },
-    [deliver],
+    [deliver, flashAims],
   )
 
   const startCine = useCallback((req: CineRequest, hold: TrackedPiece[] | null) => {
@@ -308,6 +343,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       const s = settingsRef.current
       const prev = trackedRef.current
       const { next, attackerId, captured } = applyTracked(prev, m)
+      clearAimFlash()
       const allowed = s.cinematics && !suppressCine.current
       const roll = () => Math.random() < s.cinematicChance
 
@@ -371,7 +407,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       }
       bump()
     },
-    [recomputePoses, startCine, flush],
+    [recomputePoses, startCine, flush, clearAimFlash],
   )
 
   const placeDuck = useCallback(
@@ -383,9 +419,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       g.placeDuck(sq)
       addIncrement(mover)
       recomputePoses()
+      flashAims(PIECE_MOVE_MS + 40)
       bump()
     },
-    [recomputePoses],
+    [recomputePoses, flashAims],
   )
 
   const clickSquare = useCallback(
@@ -465,8 +502,9 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     setSelected(null)
     setPromotion(null)
     recomputePoses()
+    clearAimFlash()
     bump()
-  }, [recomputePoses, publishClock])
+  }, [recomputePoses, publishClock, clearAimFlash])
 
   const resign = useCallback(() => {
     const g = gameRef.current!
@@ -502,6 +540,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setPromotion(null)
       setCine(null)
       setPoses({})
+      clearAimFlash()
       duckHint.current = null
       setFlippedState(false)
       const state: ReplayState = {
@@ -513,7 +552,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setReplay(state)
       bump()
     },
-    [emit, publishClock],
+    [emit, publishClock, clearAimFlash],
   )
 
   const replayForward = useCallback(() => {
@@ -679,6 +718,11 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   }, [version, cine, promotion, replay, settings.opponent, settings.playAs])
 
   useEffect(() => () => ai.current?.dispose(), [])
+  useEffect(() => {
+    if (settings.aimMode) preloadAimSprite()
+    else clearAimFlash()
+  }, [settings.aimMode, clearAimFlash])
+  useEffect(() => () => clearTimeout(aimTimer.current), [])
 
   const subscribe = useCallback((l: Listener) => {
     listeners.current.add(l)
@@ -701,12 +745,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const last = game.records[game.records.length - 1]
   const targets = selected !== null && !cine && game.state.phase === 'move' ? game.targetsFrom(selected) : []
 
-  const aims = settings.aimMode && !cine && !game.result ? game.aimTargets() : []
-
   return {
     game,
     display,
-    aims,
+    aimFlash,
     selected,
     targets,
     lastMove: last ? { from: last.move.from, to: last.move.to } : null,
