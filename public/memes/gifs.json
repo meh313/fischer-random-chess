@@ -17,10 +17,10 @@
         {
           "attacker": "p",
           "queries": [
-            "surprised pikachu",
             "monkey puppet",
             "david and goliath",
-            "crowd goes wild"
+            "crowd goes wild",
+            "mind blown"
           ]
         },
         {
@@ -103,9 +103,8 @@
         "epic handshake",
         "shrug",
         "spiderman pointing",
-        "it is what it is",
         "meh",
-        "agree to disagree"
+        "fist bump"
       ]
     },
     "hung_queen": {
@@ -125,15 +124,13 @@
           "queries": [
             "evil kermit",
             "rubbing hands birdman",
-            "evil laugh",
-            "oh lawd he comin"
+            "evil laugh"
           ]
         },
         {
           "attacker": "n",
           "queries": [
             "gigachad",
-            "horse laugh",
             "smug",
             "sheesh"
           ]
@@ -156,7 +153,6 @@
         "epic handshake",
         "spiderman pointing",
         "uno reverse",
-        "fair trade",
         "deal with it",
         "fist bump"
       ]
@@ -199,7 +195,6 @@
           "queries": [
             "sniper",
             "headshot",
-            "360 no scope",
             "got em"
           ]
         },
@@ -271,7 +266,7 @@
             "confused horse",
             "horse fail",
             "monkey puppet",
-            "sad horse"
+            "hide the pain harold"
           ]
         },
         {
@@ -329,7 +324,6 @@
           "queries": [
             "horse dance",
             "gigachad",
-            "neigh",
             "giddy up"
           ]
         },
@@ -362,8 +356,7 @@
         "yoink",
         "dont mind if i do",
         "oprah you get a car",
-        "jackpot",
-        "snatched"
+        "jackpot"
       ],
       "refine": [
         {
@@ -393,10 +386,10 @@
             "r"
           ],
           "queries": [
-            "surprised pikachu",
             "david and goliath",
             "evil kermit",
-            "sneaky"
+            "sneaky",
+            "mind blown"
           ]
         },
         {
@@ -415,10 +408,8 @@
       "chance": 0.7,
       "queries": [
         "cookie monster eating",
-        "kirby inhale",
         "pac man",
         "nom nom",
-        "feeding frenzy",
         "om nom nom"
       ]
     },
@@ -449,10 +440,8 @@
       "chance": 0.8,
       "queries": [
         "stop it get some help",
-        "are you done",
         "eye roll",
         "cat slap",
-        "again",
         "pls stop"
       ]
     },
@@ -473,11 +462,11 @@
       "chance": 0.4,
       "queries": [
         "yoink",
-        "mine seagulls",
         "sneaky",
         "snatch",
         "grabby hands",
-        "petty theft"
+        "its free real estate",
+        "gotcha"
       ]
     },
     "castling": {
@@ -497,7 +486,6 @@
       "chance": 0.15,
       "queries": [
         "duck",
-        "quack",
         "rubber duck",
         "untitled goose",
         "duck walk",
@@ -614,12 +602,12 @@
       "priority": 101,
       "chance": 1,
       "queries": [
-        "cant breathe",
-        "suffocating",
+        "trapped",
+        "gotcha",
         "gigachad",
         "horse dance",
-        "trapped",
-        "we did it"
+        "we did it",
+        "its a trap"
       ]
     },
     "bongcloud": {
@@ -639,11 +627,11 @@
       "chance": 0.9,
       "queries": [
         "you had one job",
-        "thats illegal",
         "facepalm",
         "disappointed",
         "shaking my head",
-        "brick"
+        "picard facepalm",
+        "why would you do that"
       ]
     },
     "knight_fork": {
@@ -651,11 +639,10 @@
       "chance": 0.9,
       "queries": [
         "gigachad",
-        "two birds one stone",
         "its a trap",
         "gotcha",
         "spiderman pointing",
-        "choose wisely"
+        "evil kermit"
       ]
     }
   },
