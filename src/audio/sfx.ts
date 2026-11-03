@@ -1,8 +1,8 @@
 import { asset } from '../content/loaders'
 
 /**
- * Sound effects. If /public/sounds/<id>.mp3 exists it plays that, otherwise a tiny
- * synthesized placeholder, so the game is never silent and never needs audio files.
+ * Sound effects. If /public/sounds/<id>.wav exists it plays that (see public/sounds/CREDITS.md),
+ * otherwise a tiny synthesized placeholder, so the game is never silent and never needs audio files.
  */
 
 let ctx: AudioContext | null = null
@@ -36,7 +36,7 @@ async function fetchFile(name: string): Promise<AudioBuffer | null> {
   const c = getCtx()
   if (!c) return null
   try {
-    const url = /\.[a-z0-9]+$/i.test(name) ? name : `${name}.mp3`
+    const url = /\.[a-z0-9]+$/i.test(name) ? name : `${name}.wav`
     const res = await fetch(asset(`sounds/${url}`))
     if (!res.ok || !(res.headers.get('content-type') ?? '').match(/audio|octet/)) return null
     return await c.decodeAudioData(await res.arrayBuffer())

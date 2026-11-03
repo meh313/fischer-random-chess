@@ -676,6 +676,14 @@ header p {
   margin-top: 18px;
   text-align: right;
 }
+.credits {
+  margin: 18px 0 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.credits a {
+  color: inherit;
+}
 input[type='range'] {
   accent-color: var(--accent);
 }

@@ -98,6 +98,10 @@ export function SettingsPanel({ open, onClose, pieceSets }: Props) {
           </select>
         </div>
 
+        <p className="credits">
+          Sounds: gunshot by <a href="https://opengameart.org/content/chaingun-pistol-rifle-shotgun-shots" target="_blank" rel="noreferrer">Michel Baradari</a> (CC BY 3.0), reload by zer0_sol and
+          impacts by <a href="https://kenney.nl" target="_blank" rel="noreferrer">Kenney</a> (CC0).
+        </p>
         <div className="modal-foot">
           <button className="btn small" onClick={reset}>Reset to defaults</button>
         </div>

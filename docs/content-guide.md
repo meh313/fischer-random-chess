@@ -24,7 +24,7 @@ Everything below lives in `public/` and is loaded at runtime. A bad file shows a
 - The most specific match wins (attacker +4, victim +2, variant +1). Several entries in the same tier are picked by `weight`. An entry with `"match": {}` is the fallback.
 - Steps: `spawn`, `move`, `rotate`, `scale`, `caption`, `shake`, `fade`, `pose`, `sound`, `despawn`. `at` is ms from the start. `target` is `attacker`, `victim` or a spawned `id`.
 - Anchors: `attacker`, `victim`, `from`, `to`, `between`, a square like `e4`, or `aim:<reach>` (a point on the attacker to victim line, `reach` squares short of the victim). `rotate: "toTarget"` aims a sprite that faces right at the victim.
-- Sprites live in `public/sprites/`. Sounds: `sfx` is a built-in name (`bang`, `capture`, `duck`, `check`, `promote`, `mate`, `meme`) or a file `public/sounds/<name>.mp3`, which overrides the synthesized placeholder.
+- Sprites live in `public/sprites/`. Sounds: `sfx` is a built-in name (`bang`, `shot`, `reload`, `capture`, `move`, `duck`, `check`, `promote`, `mate`, `meme`) or a file under `public/sounds/`; `<name>.wav` there overrides the synthesized placeholder (shipped: bang, shot, reload, move, capture, check; sources in `public/sounds/CREDITS.md`).
 - Duration is clamped to 3000 ms. Any click or Esc skips the cinematic.
 - Offsets: add +x,y (in squares, y grows downward) to any anchor, for example "victim+0,-0.8" is a little above the victim.
 - chance: optional 0..1, the odds that the gag plays once it is picked (the shipped check gag uses 0.5 so it does not nag).
