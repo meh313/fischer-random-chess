@@ -47,13 +47,13 @@ export function SettingsPanel({ open, onClose, pieceSets }: Props) {
         </div>
 
         <h3>Gags</h3>
-        <Toggle id="set-cine" label="Capture cinematics" hint="Short scripted gags when a piece is captured" checked={s.cinematics} onChange={(v) => update({ cinematics: v })} />
+        <Toggle id="set-cine" label="Capture cinematics" hint="Short scripted gags when a piece is captured. Nobody is safe." checked={s.cinematics} onChange={(v) => update({ cinematics: v })} />
         <Slider label="Cinematic frequency" value={s.cinematicChance} min={0} max={1} step={0.05} fmt={pct} onChange={(v) => update({ cinematicChance: v })} />
-        <Toggle id="set-aim" label="Aim mode" hint="A gun hand flashes from the attacker the first time an undefended piece comes under threat" checked={s.aimMode} onChange={(v) => update({ aimMode: v })} />
-        <Toggle id="set-memes" label="Reaction GIFs" hint="A quick clip on the square where the action happened" checked={s.memes} onChange={(v) => update({ memes: v })} />
+        <Toggle id="set-aim" label="Aim mode" hint="The gun hand points at a piece the first time it is left hanging. Consider it a warning." checked={s.aimMode} onChange={(v) => update({ aimMode: v })} />
+        <Toggle id="set-memes" label="Reaction GIFs" hint="A quick reaction clip on the square where it went down" checked={s.memes} onChange={(v) => update({ memes: v })} />
         <Slider label="Meme frequency" value={s.memeChance} min={0} max={1} step={0.05} fmt={pct} onChange={(v) => update({ memeChance: v })} />
         <Slider label="Meme cooldown" value={s.memeCooldownSec} min={0} max={60} step={5} fmt={(v) => `${v}s`} onChange={(v) => update({ memeCooldownSec: v })} />
-        <Toggle id="set-gifs" label="Online GIFs (Powered by GIPHY)" hint={giphyKey() ? 'Real reaction GIFs picked to match the moment. Needs internet.' : 'Add VITE_GIPHY_KEY to .env to enable.'} checked={s.gifs && !!giphyKey()} onChange={(v) => update({ gifs: v })} />
+        <Toggle id="set-gifs" label="Online GIFs (Powered by GIPHY)" hint={giphyKey() ? 'Real GIFs picked for what just happened: a pawn taking a queen gets a different one than a queen taking a pawn. Needs internet.' : 'Add VITE_GIPHY_KEY to .env to enable.'} checked={s.gifs && !!giphyKey()} onChange={(v) => update({ gifs: v })} />
 
         <h3>Sound</h3>
         <Toggle id="set-sound" label="Sound" checked={s.sound} onChange={(v) => update({ sound: v })} />
@@ -64,9 +64,9 @@ export function SettingsPanel({ open, onClose, pieceSets }: Props) {
           <div className="label">Play against</div>
           <select value={s.opponent} onChange={(e) => update({ opponent: e.target.value as typeof s.opponent })} aria-label="Opponent">
             <option value="human">Another person</option>
-            <option value="easy">Computer: easy</option>
-            <option value="medium">Computer: medium</option>
-            <option value="hard">Computer: hard</option>
+            <option value="easy">Computer: easy (Martin energy)</option>
+            <option value="medium">Computer: medium (locked in)</option>
+            <option value="hard">Computer: hard (not Magnus, relax)</option>
           </select>
         </div>
         <div className="row">

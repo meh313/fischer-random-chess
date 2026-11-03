@@ -65,10 +65,12 @@ export function useMemes(memes: readonly MemeEntry[], gifs: GifFile | null, sett
   const generation = useRef(0)
   const inFlight = useRef(0)
   const backoffUntil = useRef(0)
+  /** While a gag plays the board belongs to it: flashes wait (or close) until it ends. */
+  const held = useRef(false)
 
   const pump = useCallback(() => {
     const s = settingsRef.current
-    if (!s.memes || timer.current) return
+    if (!s.memes || timer.current || held.current) return
     let next = queue.current.shift()
     while (next && next.until < Date.now()) next = queue.current.shift()
     if (!next) return
@@ -88,7 +90,8 @@ export function useMemes(memes: readonly MemeEntry[], gifs: GifFile | null, sett
     if (wait > 0) {
       timer.current = window.setTimeout(() => {
         timer.current = 0
-        start()
+        if (held.current) queue.current.unshift(next) // a gag started meanwhile: back in line until it ends
+        else start()
       }, wait)
     } else start()
   }, [])
@@ -188,7 +191,16 @@ export function useMemes(memes: readonly MemeEntry[], gifs: GifFile | null, sett
     if (!settings.memes) reset()
   }, [settings.memes, reset])
 
+  const hold = useCallback(
+    (on: boolean) => {
+      held.current = on
+      if (on) dismiss()
+      else pump()
+    },
+    [dismiss, pump],
+  )
+
   useEffect(() => () => clearTimeout(timer.current), [])
 
-  return { active, trigger, dismiss, reset }
+  return { active, trigger, dismiss, reset, hold }
 }

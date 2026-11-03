@@ -79,6 +79,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
     const spawned = new Map<string, HTMLElement>()
     const timers: number[] = []
     const animations: Animation[] = []
+    const moved = new Map<HTMLElement, { left: string; top: string }>()
 
     const pieceEl = (id: number) => board.querySelector<HTMLElement>(`[data-pid="${id}"]`)
     const targetEl = (name: string): HTMLElement | null =>
@@ -118,7 +119,9 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           const from = s.from ? at(anchor(s.from)) : null
           const to = at(anchor(s.to))
           if (el) {
-            const start = from ?? { left: el.style.left, top: el.style.top }
+            // A WAAPI fill never writes style.left/top, so a second move on the same target starts from where the last one went.
+            const start = from ?? moved.get(el) ?? { left: el.style.left, top: el.style.top }
+            moved.set(el, to)
             run(el, [start, to], { duration: s.ms, easing: EASE[s.ease ?? 'outQuad'] ?? 'ease-out' })
           }
           break

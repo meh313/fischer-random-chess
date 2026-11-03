@@ -4,6 +4,6 @@ import type { Variant } from '../variant'
 export const fischer960: Variant = {
   id: 'fischer960',
   name: 'Fischer Random',
-  blurb: 'Chess960: shuffled back rank, bishops on opposite colors, king between the rooks.',
+  blurb: 'Chess960: shuffled back rank, bishops on opposite colors, king between the rooks. Your opening prep is cooked.',
   setupFen: (rng) => chess960Fen(rng),
 }

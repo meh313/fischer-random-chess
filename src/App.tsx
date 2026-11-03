@@ -47,6 +47,7 @@ function Chass() {
   const { game } = chass
   // A new game drops memes still pending from the old one.
   useEffect(() => memes.reset(), [game, memes.reset])
+  useEffect(() => memes.hold(!!chass.cine), [chass.cine, memes.hold])
 
   // Content is data: load it once, report problems without crashing the game.
   useEffect(() => {
@@ -79,40 +80,49 @@ function Chass() {
   useEffect(() => configureAudio(settings.sound, settings.volume), [settings.sound, settings.volume])
 
   // Sound and memes listen to the same typed events as everything else.
-  useEffect(
-    () =>
-      chass.subscribe((e, meta) => {
-        switch (e.type) {
-          case 'move':
-            if (!e.move.capture) void playSfx(e.move.castle ? 'castle' : 'move')
-            break
-          case 'capture':
-            if (!meta.cinematic) void playSfx('shot')
-            break
-          case 'check':
-            setTimeout(() => void playSfx('check'), 120)
-            break
-          case 'promotion':
-            void playSfx('promote')
-            break
-          case 'duckPlaced':
-            void playSfx('duck')
-            break
-          case 'checkmate':
-            void playSfx('mate')
-            break
-          case 'draw':
-          case 'stalemate':
-            void playSfx('draw')
-            break
-          case 'blunder':
-            void playSfx('blunder')
-            break
+  useEffect(() => {
+    // A gag carries its own sound for the part of the move it covered; a mate's check is part of the mate.
+    let mateAt = 0
+    return chass.subscribe((e, meta) => {
+      memes.trigger(e)
+      const gagged = (...events: string[]) => !!meta.gagged?.some((g) => events.includes(g))
+      switch (e.type) {
+        case 'move':
+          if (!e.move.capture && !gagged('castling')) void playSfx(e.move.castle ? 'castle' : 'move')
+          break
+        case 'capture':
+          if (!gagged('capture')) void playSfx('capture') // a plain take: wood on wood, the gun only fires inside a gag
+          break
+        case 'check': {
+          if (gagged('check', 'checkmate')) break
+          const at = Date.now()
+          setTimeout(() => {
+            if (mateAt < at - 500) void playSfx('check')
+          }, 120)
+          break
         }
-        memes.trigger(e)
-      }),
-    [chass.subscribe, memes.trigger], // eslint-disable-line react-hooks/exhaustive-deps
-  )
+        case 'promotion':
+          if (!gagged('promotion')) void playSfx('promote')
+          break
+        case 'duckPlaced':
+          void playSfx('duck')
+          break
+        case 'checkmate':
+          mateAt = Date.now()
+          if (!gagged('checkmate')) void playSfx('mate')
+          break
+        case 'stalemate':
+          if (!gagged('stalemate')) void playSfx('draw')
+          break
+        case 'draw':
+          void playSfx('draw')
+          break
+        case 'blunder':
+          void playSfx('blunder')
+          break
+      }
+    })
+  }, [chass.subscribe, memes.trigger]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -226,15 +236,15 @@ function Chass() {
     const name = (c: 'w' | 'b') => settings.names[c] || (c === 'w' ? 'White' : 'Black')
     const who = result.winner ? name(result.winner) : null
     switch (result.reason) {
-      case 'checkmate': return `Checkmate. ${who} wins.`
-      case 'kingCaptured': return `King captured. ${who} wins.`
-      case 'stalemateWin': return `No legal moves. ${who} wins.`
-      case 'resign': return `${who} wins by resignation.`
-      case 'timeout': return `${who} wins on time.`
-      case 'stalemate': return 'Stalemate. Draw.'
-      case 'fiftyMove': return 'Draw by the 50-move rule.'
-      case 'threefold': return 'Draw by threefold repetition.'
-      case 'insufficient': return 'Draw by insufficient material.'
+      case 'checkmate': return `Checkmate. ${who} wins. GG go next.`
+      case 'kingCaptured': return `King captured. ${who} wins. The duck saw everything.`
+      case 'stalemateWin': return `No legal moves. ${who} wins. Duck chess things.`
+      case 'resign': return `${who} wins by resignation. Someone rage quit.`
+      case 'timeout': return `${who} wins on time. Flagged.`
+      case 'stalemate': return 'Stalemate. Draw. Nobody wins. Everybody loses.'
+      case 'fiftyMove': return 'Draw by the 50-move rule. Fifty moves of nothing.'
+      case 'threefold': return 'Draw by threefold repetition. Groundhog Day.'
+      case 'insufficient': return 'Draw by insufficient material. Nobody left to shoot.'
     }
   }, [result, settings.names])
 
@@ -268,7 +278,7 @@ function Chass() {
       </div>
       <header>
         <h1>CHASS</h1>
-        <p>The Ultimate Random Chess Experience</p>
+        <p>The Ultimate Random Chess Experience. Yes, the pieces are armed.</p>
       </header>
 
       {problems.length > 0 && (
@@ -343,9 +353,9 @@ function Chass() {
               <span>Opponent</span>
               <select value={settings.opponent} onChange={(e) => update({ opponent: e.target.value as typeof settings.opponent })} aria-label="Opponent">
                 <option value="human">Another person</option>
-                <option value="easy">Computer: easy</option>
-                <option value="medium">Computer: medium</option>
-                <option value="hard">Computer: hard</option>
+                <option value="easy">Computer: easy (Martin energy)</option>
+                <option value="medium">Computer: medium (locked in)</option>
+                <option value="hard">Computer: hard (not Magnus, relax)</option>
               </select>
             </label>
           </section>
@@ -353,7 +363,7 @@ function Chass() {
           <section className="card c-history">
             <h2>Move History</h2>
             <div className="history" aria-label="Move history">
-              {pairs.length === 0 && <div className="empty">No moves yet</div>}
+              {pairs.length === 0 && <div className="empty">No moves yet. Bongcloud is right there.</div>}
               {pairs.map((p) => (
                 <div className="hrow" key={p.n}>
                   <span className="dim">{p.n}.</span>
@@ -384,7 +394,7 @@ function Chass() {
             />
           )}
           <div className="board-wrap">
-            {ready ? <Board ref={boardRef} chass={chass} set={pieceSet} flash={memes.active} onFlashEnd={memes.dismiss} /> : <div className="board loading">Loading pieces...</div>}
+            {ready ? <Board ref={boardRef} chass={chass} set={pieceSet} flash={memes.active} onFlashEnd={memes.dismiss} /> : <div className="board loading">Waking up the pieces...</div>}
             {rolling && <DiceOverlay key={rolling.seed} ids={rolling.ids} seed={rolling.seed} onDone={finishRoll} />}
           </div>
           {settings.memes && settings.gifs && giphyKey() && (
@@ -403,7 +413,7 @@ function Chass() {
               <div className="phead">
                 <h2>
                   {c === 'w' ? 'White' : 'Black'} Player
-                  {settings.opponent !== 'human' && c !== settings.playAs && <span className="ai-tag">{chass.thinking ? 'Computer: thinking...' : 'Computer'}</span>}
+                  {settings.opponent !== 'human' && c !== settings.playAs && <span className="ai-tag">{chass.thinking ? 'Computer: cooking...' : 'Computer'}</span>}
                 </h2>
                 <span className={`dot ${c}`} />
               </div>
@@ -428,7 +438,7 @@ function Chass() {
           <section className="card c-instr">
             <h2>Instructions</h2>
             <div className="instr">
-              <p><b>Standard Chess:</b> Click a piece, then a highlighted square. Captures may trigger a gag. Click or press Esc to skip it.</p>
+              <p><b>Standard Chess:</b> Click a piece, then a highlighted square. Captures may trigger a gag (yes, that is a gun). Click or press Esc to skip it.</p>
               {game.variants.map((v) => (
                 <p key={v.id}><b>{v.name}:</b> {v.blurb}</p>
               ))}

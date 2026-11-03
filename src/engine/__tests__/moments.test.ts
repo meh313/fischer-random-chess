@@ -29,9 +29,35 @@ describe('move moments', () => {
     expect(play('3qk3/8/8/8/8/8/8/3QK3 w - - 0 1', 'd1d8', 'e8d8')).toContain('queen_trade')
   })
 
-  it('spots an early king walk but not castling', () => {
-    expect(play(undefined, 'e2e4', 'e7e5', 'e1e2')).toContain('king_walk')
+  it('spots an early king walk but not castling, and the bongcloud by name', () => {
+    expect(play(undefined, 'e2e4', 'e7e5', 'e1e2')).toContain('bongcloud')
+    expect(play(undefined, 'e2e4', 'e7e5', 'e1e2')).not.toContain('king_walk')
+    expect(play('4k3/8/8/8/8/8/8/R3K3 w - - 0 1', 'e1e2')).not.toContain('bongcloud')
+    expect(play(undefined, 'e2e4', 'e7e5', 'g1f3', 'b8c6', 'f1c4', 'g8f6', 'e1e2')).toContain('king_walk')
     expect(play('4k3/8/8/8/8/8/8/4K2R w K - 0 1', 'e1g1')).not.toContain('king_walk')
+  })
+
+  it('calls out a missed en passant but not the capture itself', () => {
+    expect(play(undefined, 'e2e4', 'a7a6', 'e4e5', 'd7d5', 'g1f3')).toContain('missed_en_passant')
+    expect(play(undefined, 'e2e4', 'a7a6', 'e4e5', 'd7d5', 'e5d6')).not.toContain('missed_en_passant')
+    // Winning the pushed pawn another way is not a brick either.
+    expect(play('4k3/3p4/8/4P3/8/5B2/8/4K3 b - - 0 1', 'd7d5', 'f3d5')).not.toContain('missed_en_passant')
+  })
+
+  it('sees a safe knight fork of king and rook', () => {
+    expect(play('2r1k3/8/8/8/4N3/8/8/4K3 w - - 0 1', 'e4d6')).toContain('knight_fork')
+    // Defended knight next to the enemy king: the king cannot take it, so the fork stands.
+    expect(play('8/2q1r3/4k3/8/8/1BN5/8/4K3 w - - 0 1', 'c3d5')).toContain('knight_fork')
+    // Pinned against its own king: it forks nothing.
+    expect(play('k3r3/8/8/8/3q1r2/8/8/4K1N1 w - - 0 1', 'g1e2')).not.toContain('knight_fork')
+    // Same jump, but the rook is not there: only the king is hit.
+    expect(play('4k3/7p/8/8/4N3/8/8/4K3 w - - 0 1', 'e4d6')).not.toContain('knight_fork')
+  })
+
+  it('knows a smothered mate when it sees one', () => {
+    expect(play('6rk/6pp/8/6N1/8/8/8/4K3 w - - 0 1', 'g5f7')).toContain('smothered_mate')
+    // Mate in the open is just mate.
+    expect(play('7k/8/8/8/8/8/6R1/4K1R1 w - - 0 1', 'g2h2')).not.toContain('smothered_mate')
   })
 
   it('counts a third check in a row as check spam', () => {

@@ -8,7 +8,7 @@ import type { Variant } from '../variant'
 export const duck: Variant = {
   id: 'duck',
   name: 'Duck Chess',
-  blurb: 'After each move, place the duck on an empty square. Nothing can pass through it. Capture the king to win.',
+  blurb: 'After each move, drop the duck on an empty square. Nothing gets through it. Capture the king to win. The duck sees everything.',
   conflictsWith: [],
   noCheck: true,
   twoPhase: true,

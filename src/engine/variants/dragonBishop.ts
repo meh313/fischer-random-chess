@@ -27,7 +27,7 @@ const legOpen = (s: State, leg: Square) => s.board[leg] === null && s.duck !== l
 export const dragonBishop: Variant = {
   id: 'dragonBishop',
   name: 'Dragon Bishop',
-  blurb: 'Bishops also jump like a Xiangqi horse (one step straight, one diagonal; the first step can be blocked).',
+  blurb: 'Bishops also jump like a Xiangqi horse (one step straight, one diagonal; the first step can be blocked). Yes, that is legal here.',
 
   transformStart(state) {
     return {

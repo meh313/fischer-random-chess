@@ -36,8 +36,10 @@ export interface CineRequest {
 }
 
 export interface EventMeta {
-  /** True when a cinematic already played (or is playing) its own capture sound. */
+  /** True when a cinematic already played (or is playing) its own sound for this move. */
   cinematic: boolean
+  /** Which parts of the move a gag covered (its sound replaces the plain one for that event only). */
+  gagged?: CineEvent[]
 }
 
 type Listener = (e: GameEvent, meta: EventMeta) => void
@@ -156,8 +158,11 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const [replay, setReplay] = useState<ReplayState | null>(null)
   const replayRef = useRef<ReplayState | null>(null)
   const suppressCine = useRef(false)
+  /** Replay jumps: skipped moves make no sound, show no meme and flash no hand. */
+  const muted = useRef(false)
   const deferred = useRef<GameEvent[]>([])
   const cineSounded = useRef(false)
+  const gagged = useRef<CineEvent[]>([])
 
   const publishClock = useCallback((next: Clock | null, force = false) => {
     clockRef.current = next
@@ -276,7 +281,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       clearAimFlash()
       const g = gameRef.current!
       // During the duck phase the mover is still to move and nothing hangs yet; wait for the duck.
-      if (!settingsRef.current.aimMode || g.result || g.state.phase !== 'move') return
+      const cfg = settingsRef.current
+      if (!cfg.aimMode || g.result || g.state.phase !== 'move') return
+      // The warning is for the player: no hands while the computer thinks about its own hanging pieces.
+      if (cfg.opponent !== 'human' && g.turn !== cfg.playAs) return
       const turn = g.turn
       const seen = seenAims.current[turn]
       const aims = g.aimTargets().filter((a) => !seen.has(`${a.attacker}-${a.victim}`)).slice(0, AIM_MAX)
@@ -301,9 +309,11 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const flush = useCallback(
     (cinematic: boolean) => {
       deferring.current = false
-      metaRef.current = { cinematic }
+      metaRef.current = { cinematic, gagged: gagged.current }
+      gagged.current = []
       const pending = deferred.current
       deferred.current = []
+      if (muted.current) return
       for (const e of pending) deliver(e)
       metaRef.current = { cinematic: false }
       // After a gag the pieces already stand still; otherwise wait for the move animation to land.
@@ -328,17 +338,20 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         startCine(next, null)
         return
       }
-      const wasCapture = cineRef.current.req.event === 'capture'
+      if (next) gagged.current = gagged.current.filter((e) => e !== next.event) // skipped: its plain sound still plays
       cineRef.current = null
       setCine(null)
-      if (wasCapture) recomputePoses() // the Chad Horse appears on the landing square once the gag is over
+      recomputePoses() // the Chad Horse appears on the landing square once the gags are over; gag faces come off
       flush(cineSounded.current)
     },
     [flush, startCine, recomputePoses],
   )
 
   /** Picks a gag for what the move did besides capturing: mate, stalemate, promotion, castling or check. */
-  const chooseEventCine = (g: Game, m: Move, events: GameEvent[], next: TrackedPiece[], attackerId: number): CineRequest | null => {
+  /** True when a gag pulls the gun hand (so two in a row can be avoided: one bang per move is enough). */
+  const usesGun = (c: Cinematic) => c.steps.some((st) => st.do === 'spawn' && /hand-gun/.test(st.sprite))
+
+  const chooseEventCine = (g: Game, m: Move, events: GameEvent[], next: TrackedPiece[], attackerId: number, after?: Cinematic): CineRequest | null => {
     const has = (t: GameEvent['type']) => events.some((e) => e.type === t)
     const event: CineEvent | null = has('checkmate') ? 'checkmate' : has('stalemate') ? 'stalemate' : has('promotion') ? 'promotion' : has('castling') ? 'castling' : has('check') ? 'check' : null
     if (!event) return null
@@ -365,8 +378,9 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       victimSq = king.sq
     }
 
+    const pool = after && usesGun(after) ? cinRef.current.filter((c) => !usesGun(c)) : cinRef.current
     const cin = pickCinematic(
-      cinRef.current,
+      pool,
       { attacker: attacker.kind, victim: victim.kind, attackerColor: attacker.color, victimColor: victim.color, variants: g.variantIds, event },
       Math.random,
     )
@@ -438,7 +452,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setSelected(null)
       setPromotion(null)
 
-      const eventReq = allowed && roll() ? chooseEventCine(g, m, events, next, attackerId) : null
+      const eventReq = allowed && roll() ? chooseEventCine(g, m, events, next, attackerId, captureReq?.cin) : null
+      gagged.current = [captureReq?.event, eventReq?.event].filter((e): e is CineEvent => !!e)
       const first = captureReq ?? eventReq
       if (first) {
         cineNext.current = captureReq ? eventReq : null
@@ -457,13 +472,21 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       metaRef.current = { cinematic: false }
       const mover = g.turn
       stackRef.current.push({ pieces: trackedRef.current, clock: clockRef.current ? { ...clockRef.current } : null, kills: kills.current })
-      g.placeDuck(sq)
+      deferring.current = true // same gate as a move: replay jumps stay silent
+      gagged.current = []
+      try {
+        g.placeDuck(sq)
+      } catch (err) {
+        deferring.current = false
+        stackRef.current.pop()
+        throw err
+      }
       addIncrement(mover)
       recomputePoses()
-      flashAims(PIECE_MOVE_MS + 40)
+      flush(false)
       bump()
     },
-    [recomputePoses, flashAims],
+    [recomputePoses, flush],
   )
 
   const clickSquare = useCallback(
@@ -645,6 +668,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       if (!r) return
       const goal = Math.max(0, Math.min(r.actions.length, target))
       suppressCine.current = true
+      muted.current = true
       try {
         let guard = r.actions.length + 2
         while (replayRef.current && replayRef.current.cursor !== goal && guard-- > 0) {
@@ -653,9 +677,11 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         }
       } finally {
         suppressCine.current = false
+        muted.current = false
       }
+      resetAims()
     },
-    [replayBack, replayForward],
+    [replayBack, replayForward, resetAims],
   )
 
   /** Leave the viewer and keep playing from the current position. */

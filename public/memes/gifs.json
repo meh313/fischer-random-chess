@@ -2,58 +2,662 @@
   "version": 1,
   "rating": "g",
   "keys": {
-    "checkmate":      { "priority": 100, "chance": 1,    "queries": ["mic drop", "victory dance", "game over", "you got served"],
-                        "refine": [
-                          { "attacker": "p", "queries": ["unbelievable", "underdog wins", "shocked"] },
-                          { "attacker": "n", "queries": ["flex", "too easy", "smug"] },
-                          { "attacker": "q", "queries": ["queen", "slay", "boss"] }
-                        ] },
-    "stalemate":      { "priority": 95,  "chance": 1,    "queries": ["confused", "what just happened", "awkward silence", "disappointed"] },
-    "draw":           { "priority": 90,  "chance": 0.9,  "queries": ["shrug", "handshake", "meh", "ok fine"] },
-    "hung_queen":     { "priority": 85,  "chance": 1,    "queries": ["facepalm", "oh no", "big mistake", "panic"],
-                        "refine": [
-                          { "attacker": "p", "queries": ["david and goliath", "sneaky", "evil laugh"] },
-                          { "attacker": "k", "queries": ["come here", "evil grin", "rubbing hands"] }
-                        ] },
-    "queen_trade":    { "priority": 80,  "chance": 0.8,  "queries": ["deal", "handshake deal", "fair trade", "even"] },
-    "queen_lost":     { "priority": 78,  "chance": 1,    "queries": ["shocked", "jaw drop", "noooo", "betrayal"],
-                        "refine": [
-                          { "attacker": "p", "queries": ["david and goliath", "underdog", "mind blown"] },
-                          { "attacker": "n", "queries": ["flex", "smug", "too easy"] },
-                          { "attacker": ["b", "d"], "queries": ["sniper", "headshot", "sneaky"] },
-                          { "attacker": "r", "queries": ["bulldozer", "steamroller", "crushed"] },
-                          { "attacker": "k", "queries": ["do it yourself", "boss", "power move"] }
-                        ] },
-    "comeback":       { "priority": 75,  "chance": 1,    "queries": ["comeback", "im back", "never give up", "plot twist"] },
-    "hung_piece":     { "priority": 70,  "chance": 0.8,  "queries": ["oops", "facepalm", "awkward", "nervous"],
-                        "refine": [
-                          { "victim": "r", "queries": ["oh no", "uh oh", "big oops"] },
-                          { "victim": "n", "queries": ["horse", "oops", "awkward"] }
-                        ] },
-    "steamroll":      { "priority": 65,  "chance": 0.8,  "queries": ["unstoppable", "domination", "too easy", "rampage"] },
-    "underpromotion": { "priority": 62,  "chance": 1,    "queries": ["big brain", "genius", "trust me", "galaxy brain"],
-                        "refine": [ { "attacker": "n", "queries": ["horse", "giddy up", "neigh"] } ] },
-    "free_piece":     { "priority": 60,  "chance": 0.8,  "queries": ["thank you", "yoink", "dont mind if i do", "free"],
-                        "refine": [
-                          { "victim": "n", "queries": ["horse", "yoink", "gotcha"] },
-                          { "victim": "r", "queries": ["jackpot", "free money", "rich"] },
-                          { "attacker": "p", "victim": ["n", "b", "d", "r"], "queries": ["david and goliath", "underdog", "sneaky"] }
-                        ] },
-    "capture_spree":  { "priority": 55,  "chance": 0.7,  "queries": ["hungry", "eating", "nom nom", "rampage"] },
-    "promotion":      { "priority": 50,  "chance": 0.6,  "queries": ["glow up", "level up", "transformation", "crowned"] },
-    "check_spam":     { "priority": 45,  "chance": 0.8,  "queries": ["annoying", "stop it", "again", "go away"] },
-    "king_walk":      { "priority": 40,  "chance": 0.7,  "queries": ["casual walk", "strolling", "confident walk", "walking away"] },
-    "free_pawn":      { "priority": 30,  "chance": 0.4,  "queries": ["yoink", "sneaky", "mine", "steal"] },
-    "castling":       { "priority": 20,  "chance": 0.25, "queries": ["safe", "hiding", "home sweet home", "nope"] },
-    "duckPlaced":     { "priority": 10,  "chance": 0.15, "queries": ["duck", "quack", "rubber duck"] },
-    "check":          { "priority": 8,   "chance": 0.15, "queries": ["watch out", "danger", "uh oh", "scared"],
-                        "refine": [ { "attacker": "p", "queries": ["poke", "annoying", "sneaky"] } ] },
-    "capture":        { "priority": 5,   "chance": 0.12, "queries": ["bye", "see ya", "gone", "deleted"],
-                        "refine": [
-                          { "attacker": "p", "victim": "p", "queries": ["fight", "slap", "brawl"] },
-                          { "attacker": "n", "queries": ["horse", "jump", "flex"] },
-                          { "attacker": "k", "queries": ["do it yourself", "boss", "power move"] }
-                        ] }
+    "checkmate": {
+      "priority": 100,
+      "chance": 1,
+      "queries": [
+        "obama mic drop",
+        "its over anakin",
+        "thanos inevitable",
+        "mortal kombat fatality",
+        "leonardo dicaprio cheers",
+        "and thats on period"
+      ],
+      "refine": [
+        {
+          "attacker": "p",
+          "queries": [
+            "surprised pikachu",
+            "monkey puppet",
+            "david and goliath",
+            "crowd goes wild"
+          ]
+        },
+        {
+          "attacker": "n",
+          "queries": [
+            "gigachad",
+            "shaq shimmy",
+            "horse dance",
+            "flex"
+          ]
+        },
+        {
+          "attacker": "q",
+          "queries": [
+            "slay queen",
+            "hair flip",
+            "yas queen",
+            "mic drop"
+          ]
+        },
+        {
+          "attacker": "r",
+          "queries": [
+            "steamroller",
+            "bulldozer",
+            "hulk smash",
+            "wrecking ball"
+          ]
+        },
+        {
+          "attacker": [
+            "b",
+            "d"
+          ],
+          "queries": [
+            "sniper",
+            "headshot",
+            "got em",
+            "amen"
+          ]
+        },
+        {
+          "attacker": "k",
+          "queries": [
+            "the rock eyebrow",
+            "fine ill do it myself",
+            "im the captain now",
+            "bow down"
+          ]
+        }
+      ]
+    },
+    "stalemate": {
+      "priority": 95,
+      "chance": 1,
+      "queries": [
+        "confused math lady",
+        "blinking white guy",
+        "confused travolta",
+        "visible confusion",
+        "michael scott no",
+        "are you kidding me"
+      ],
+      "refine": [
+        {
+          "attacker": "q",
+          "queries": [
+            "you had one job",
+            "picard facepalm",
+            "michael scott no",
+            "confused math lady"
+          ]
+        }
+      ]
+    },
+    "draw": {
+      "priority": 90,
+      "chance": 0.9,
+      "queries": [
+        "epic handshake",
+        "shrug",
+        "spiderman pointing",
+        "it is what it is",
+        "meh",
+        "agree to disagree"
+      ]
+    },
+    "hung_queen": {
+      "priority": 85,
+      "chance": 1,
+      "queries": [
+        "this is fine",
+        "michael scott no",
+        "homer bush",
+        "sad pablo escobar",
+        "panik",
+        "i have made a huge mistake"
+      ],
+      "refine": [
+        {
+          "attacker": "p",
+          "queries": [
+            "evil kermit",
+            "rubbing hands birdman",
+            "evil laugh",
+            "oh lawd he comin"
+          ]
+        },
+        {
+          "attacker": "n",
+          "queries": [
+            "gigachad",
+            "horse laugh",
+            "smug",
+            "sheesh"
+          ]
+        },
+        {
+          "attacker": "k",
+          "queries": [
+            "come here",
+            "the rock eyebrow",
+            "evil grin",
+            "rubbing hands birdman"
+          ]
+        }
+      ]
+    },
+    "queen_trade": {
+      "priority": 80,
+      "chance": 0.8,
+      "queries": [
+        "epic handshake",
+        "spiderman pointing",
+        "uno reverse",
+        "fair trade",
+        "deal with it",
+        "fist bump"
+      ]
+    },
+    "queen_lost": {
+      "priority": 78,
+      "chance": 1,
+      "queries": [
+        "sad pablo escobar",
+        "crying jordan",
+        "darth vader no",
+        "emotional damage",
+        "squidward sad",
+        "noooo"
+      ],
+      "refine": [
+        {
+          "attacker": "p",
+          "queries": [
+            "surprised pikachu",
+            "monkey puppet",
+            "david and goliath",
+            "mind blown"
+          ]
+        },
+        {
+          "attacker": "n",
+          "queries": [
+            "gigachad",
+            "shaq shimmy",
+            "horse dance",
+            "flex"
+          ]
+        },
+        {
+          "attacker": [
+            "b",
+            "d"
+          ],
+          "queries": [
+            "sniper",
+            "headshot",
+            "360 no scope",
+            "got em"
+          ]
+        },
+        {
+          "attacker": "r",
+          "queries": [
+            "steamroller",
+            "bulldozer",
+            "wrecking ball",
+            "crushed"
+          ]
+        },
+        {
+          "attacker": "k",
+          "queries": [
+            "the rock eyebrow",
+            "fine ill do it myself",
+            "im the captain now",
+            "boss move"
+          ]
+        },
+        {
+          "attacker": "q",
+          "queries": [
+            "drag race lip sync",
+            "sashay away",
+            "there can be only one",
+            "slap fight"
+          ]
+        }
+      ]
+    },
+    "comeback": {
+      "priority": 75,
+      "chance": 1,
+      "queries": [
+        "we are so back",
+        "guess whos back",
+        "rocky training",
+        "terminator ill be back",
+        "plot twist",
+        "i took that personally"
+      ]
+    },
+    "hung_piece": {
+      "priority": 70,
+      "chance": 0.8,
+      "queries": [
+        "this is fine",
+        "homer bush",
+        "hide the pain harold",
+        "monkey puppet",
+        "kombucha girl",
+        "nervous sweating"
+      ],
+      "refine": [
+        {
+          "victim": "r",
+          "queries": [
+            "this is fine",
+            "panik",
+            "mr krabs confused",
+            "mistakes were made"
+          ]
+        },
+        {
+          "victim": "n",
+          "queries": [
+            "confused horse",
+            "horse fail",
+            "monkey puppet",
+            "sad horse"
+          ]
+        },
+        {
+          "victim": [
+            "b",
+            "d"
+          ],
+          "queries": [
+            "picard facepalm",
+            "chloe side eye",
+            "nervous laugh",
+            "sweating"
+          ]
+        }
+      ]
+    },
+    "blunder": {
+      "priority": 68,
+      "chance": 0.9,
+      "queries": [
+        "picard facepalm",
+        "this is fine",
+        "homer bush",
+        "i have made a huge mistake",
+        "michael scott no",
+        "why would you do that"
+      ]
+    },
+    "steamroll": {
+      "priority": 65,
+      "chance": 0.8,
+      "queries": [
+        "i am inevitable",
+        "thanos snap",
+        "godzilla",
+        "hulk smash",
+        "steamroller",
+        "unstoppable"
+      ]
+    },
+    "underpromotion": {
+      "priority": 62,
+      "chance": 1,
+      "queries": [
+        "roll safe",
+        "big brain time",
+        "galaxy brain",
+        "modern problems require modern solutions",
+        "well yes but actually no",
+        "trust me bro"
+      ],
+      "refine": [
+        {
+          "attacker": "n",
+          "queries": [
+            "horse dance",
+            "gigachad",
+            "neigh",
+            "giddy up"
+          ]
+        },
+        {
+          "attacker": "r",
+          "queries": [
+            "bulldozer",
+            "why though",
+            "steamroller"
+          ]
+        },
+        {
+          "attacker": [
+            "b",
+            "d"
+          ],
+          "queries": [
+            "why though",
+            "big brain time",
+            "sniper"
+          ]
+        }
+      ]
+    },
+    "free_piece": {
+      "priority": 60,
+      "chance": 0.8,
+      "queries": [
+        "its free real estate",
+        "yoink",
+        "dont mind if i do",
+        "oprah you get a car",
+        "jackpot",
+        "snatched"
+      ],
+      "refine": [
+        {
+          "victim": "n",
+          "queries": [
+            "horse",
+            "yoink",
+            "gotcha",
+            "stolen"
+          ]
+        },
+        {
+          "victim": "r",
+          "queries": [
+            "jackpot",
+            "cha ching",
+            "make it rain",
+            "money printer go brrr"
+          ]
+        },
+        {
+          "attacker": "p",
+          "victim": [
+            "n",
+            "b",
+            "d",
+            "r"
+          ],
+          "queries": [
+            "surprised pikachu",
+            "david and goliath",
+            "evil kermit",
+            "sneaky"
+          ]
+        },
+        {
+          "attacker": "k",
+          "queries": [
+            "im the captain now",
+            "fine ill do it myself",
+            "the rock eyebrow",
+            "power move"
+          ]
+        }
+      ]
+    },
+    "capture_spree": {
+      "priority": 55,
+      "chance": 0.7,
+      "queries": [
+        "cookie monster eating",
+        "kirby inhale",
+        "pac man",
+        "nom nom",
+        "feeding frenzy",
+        "om nom nom"
+      ]
+    },
+    "promotion": {
+      "priority": 50,
+      "chance": 0.6,
+      "queries": [
+        "glow up",
+        "sailor moon transformation",
+        "super saiyan",
+        "level up",
+        "mario power up",
+        "yas queen"
+      ],
+      "refine": [
+        {
+          "attacker": "n",
+          "queries": [
+            "horse dance",
+            "gigachad",
+            "horse"
+          ]
+        }
+      ]
+    },
+    "check_spam": {
+      "priority": 45,
+      "chance": 0.8,
+      "queries": [
+        "stop it get some help",
+        "are you done",
+        "eye roll",
+        "cat slap",
+        "again",
+        "pls stop"
+      ]
+    },
+    "king_walk": {
+      "priority": 40,
+      "chance": 0.7,
+      "queries": [
+        "john travolta walk",
+        "walking away explosion",
+        "confident walk",
+        "strut",
+        "what are you doing",
+        "nope walk away"
+      ]
+    },
+    "free_pawn": {
+      "priority": 30,
+      "chance": 0.4,
+      "queries": [
+        "yoink",
+        "mine seagulls",
+        "sneaky",
+        "snatch",
+        "grabby hands",
+        "petty theft"
+      ]
+    },
+    "castling": {
+      "priority": 20,
+      "chance": 0.25,
+      "queries": [
+        "homer bush",
+        "hiding",
+        "home sweet home",
+        "barricade",
+        "lock the door",
+        "nope"
+      ]
+    },
+    "duckPlaced": {
+      "priority": 10,
+      "chance": 0.15,
+      "queries": [
+        "duck",
+        "quack",
+        "rubber duck",
+        "untitled goose",
+        "duck walk",
+        "ducks running"
+      ]
+    },
+    "check": {
+      "priority": 8,
+      "chance": 0.15,
+      "queries": [
+        "knock knock",
+        "watch out",
+        "hello there",
+        "heads up",
+        "wake up",
+        "alarm"
+      ],
+      "refine": [
+        {
+          "attacker": "p",
+          "queries": [
+            "poke",
+            "bonk",
+            "annoying",
+            "disrespect"
+          ]
+        },
+        {
+          "attacker": "n",
+          "queries": [
+            "horse",
+            "jump scare",
+            "surprise"
+          ]
+        },
+        {
+          "attacker": "q",
+          "queries": [
+            "slay",
+            "excuse me",
+            "watch out"
+          ]
+        }
+      ]
+    },
+    "capture": {
+      "priority": 5,
+      "chance": 0.12,
+      "queries": [
+        "bye felicia",
+        "peace out",
+        "deleted",
+        "reduced to atoms",
+        "yeet",
+        "boy bye"
+      ],
+      "refine": [
+        {
+          "attacker": "p",
+          "victim": "p",
+          "queries": [
+            "slap fight",
+            "pillow fight",
+            "brawl",
+            "street fight"
+          ]
+        },
+        {
+          "attacker": "n",
+          "queries": [
+            "horse",
+            "gigachad",
+            "flex"
+          ]
+        },
+        {
+          "attacker": "q",
+          "queries": [
+            "slay",
+            "hair flip",
+            "sashay away"
+          ]
+        },
+        {
+          "attacker": "k",
+          "queries": [
+            "the rock eyebrow",
+            "fine ill do it myself",
+            "im the captain now"
+          ]
+        },
+        {
+          "attacker": "r",
+          "queries": [
+            "steamroller",
+            "bulldozer",
+            "truck"
+          ]
+        },
+        {
+          "attacker": [
+            "b",
+            "d"
+          ],
+          "queries": [
+            "sniper",
+            "headshot",
+            "got em"
+          ]
+        }
+      ]
+    },
+    "smothered_mate": {
+      "priority": 101,
+      "chance": 1,
+      "queries": [
+        "cant breathe",
+        "suffocating",
+        "gigachad",
+        "horse dance",
+        "trapped",
+        "we did it"
+      ]
+    },
+    "bongcloud": {
+      "priority": 72,
+      "chance": 1,
+      "queries": [
+        "galaxy brain",
+        "big brain time",
+        "roll safe",
+        "chef kiss",
+        "slow clap",
+        "respect"
+      ]
+    },
+    "missed_en_passant": {
+      "priority": 64,
+      "chance": 0.9,
+      "queries": [
+        "you had one job",
+        "thats illegal",
+        "facepalm",
+        "disappointed",
+        "shaking my head",
+        "brick"
+      ]
+    },
+    "knight_fork": {
+      "priority": 63,
+      "chance": 0.9,
+      "queries": [
+        "gigachad",
+        "two birds one stone",
+        "its a trap",
+        "gotcha",
+        "spiderman pointing",
+        "choose wisely"
+      ]
+    }
   },
   "blocked": []
 }
