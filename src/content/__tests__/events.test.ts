@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { pickCinematic, scoreMatch, validateCinematicsReport } from '../select'
+import { pickCinematic, scoreMatch, usesGun, validateCinematicsReport } from '../select'
 import { CINE_EVENTS, type Cinematic } from '../types'
+import { MOMENT_GAG_ORDER } from '../../state/momentGags'
 
 const base = { attacker: 'p', victim: 'n', attackerColor: 'w', victimColor: 'b', variants: [] } as const
 const c = (id: string, match: Cinematic['match']): Cinematic => ({ id, match, duration: 1000, steps: [] })
@@ -42,6 +43,59 @@ describe('event gag selection', () => {
     expect(problems.join('\n')).toMatch(/unknown event "explosion"/)
     expect(problems.join('\n')).toMatch(/chance outside/)
     expect(problems.join('\n')).toMatch(/unknown anchor "victim\+up"/)
+  })
+})
+
+describe('moment gags', () => {
+  const fork = { ...base, attacker: 'n', victim: 'k', victims: ['k', 'r'], event: 'moment', moment: 'knight_fork' } as const
+  it('match only their moment, in single or list form, and never captures', () => {
+    expect(scoreMatch({ event: 'moment', moment: 'knight_fork' }, fork)).toBe(0)
+    expect(scoreMatch({ event: 'moment', moment: ['pawn_fork', 'knight_fork'] }, fork)).toBe(0)
+    expect(scoreMatch({ event: 'moment', moment: 'pin' }, fork)).toBe(-1)
+    expect(scoreMatch({ event: 'moment', moment: 'knight_fork' }, base)).toBe(-1)
+    expect(scoreMatch({}, fork)).toBe(-1)
+    expect(scoreMatch({ event: 'moment' }, fork)).toBe(-1)
+  })
+
+  it('victim matches any piece the moment involves', () => {
+    expect(scoreMatch({ event: 'moment', moment: 'knight_fork', victim: 'r' }, fork)).toBe(2)
+    expect(scoreMatch({ event: 'moment', moment: 'knight_fork', victim: 'q' }, fork)).toBe(-1)
+  })
+
+  it('validation wants a moment on moment gags and nowhere else', () => {
+    const { problems } = validateCinematicsReport({
+      version: 1,
+      cinematics: [
+        { id: 'nomo', match: { event: 'moment' }, steps: [] },
+        { id: 'stray', match: { moment: 'pin' }, steps: [] },
+        { id: 'typo', match: { event: 'moment', moment: 'pinn' }, steps: [] },
+      ],
+    })
+    const text = problems.join('\n')
+    expect(text).toMatch(/names no moment/)
+    expect(text).toMatch(/its event is not "moment"/)
+    expect(text).toMatch(/unknown moment "pinn"/)
+  })
+
+  it('every moment with a gag slot has a gag, with and without the gun', () => {
+    const noGun = shipped.filter((g) => !usesGun(g))
+    for (const id of MOMENT_GAG_ORDER) {
+      const ctx = { ...base, attacker: 'q', victim: 'r', event: 'moment', moment: id } as const
+      expect(pickCinematic(shipped, ctx), id).toBeDefined()
+      expect(pickCinematic(noGun, ctx), `${id} without the gun`).toBeDefined()
+    }
+    for (const id of ['pin', 'hung_piece', 'discovered_attack', 'mate_threat']) {
+      for (const g of shipped.filter((c) => [c.match.moment].flat().includes(id as never))) expect(g.chance ?? 1, g.id).toBeLessThan(1)
+    }
+  })
+
+  it('a bang needs a gun on the board first', () => {
+    for (const g of shipped) {
+      const bang = g.steps.find((s) => s.do === 'sound' && s.sfx === 'bang')
+      if (!bang) continue
+      const gun = g.steps.some((s) => s.at <= bang.at && (s.do === 'aim' || (s.do === 'spawn' && /hand-gun/.test(s.sprite))))
+      expect(gun, g.id).toBe(true)
+    }
   })
 })
 

@@ -71,6 +71,9 @@ describe('cinematic validation', () => {
           id: 'all',
           steps: [
             { at: 0, do: 'spawn', id: 'h', sprite: 'a.svg', anchor: 'attacker' },
+            { at: 0, do: 'aim', id: 'g', from: 'sq1', to: 'sq2+0.2,-0.3' },
+            { at: 0, do: 'shake', target: 'sq3', ms: 100 },
+            { at: 0, do: 'fade', target: 'g', to: 0, ms: 100 },
             { at: 0, do: 'move', target: 'h', from: 'attacker', to: 'aim:1.2', ms: 400 },
             { at: 0, do: 'rotate', target: 'h', deg: 10, ms: 100 },
             { at: 0, do: 'scale', target: 'attacker', to: 1.2, ms: 100 },
@@ -83,6 +86,15 @@ describe('cinematic validation', () => {
       ],
     })
     expect(problems).toEqual([])
+  })
+
+  it('rejects squares beyond sq4', () => {
+    const { problems } = validateCinematicsReport({
+      version: 1,
+      cinematics: [{ id: 'far', steps: [{ at: 0, do: 'aim', id: 'g', from: 'sq5', to: 'sq1' }, { at: 0, do: 'shake', target: 'sq9', ms: 10 }] }],
+    })
+    expect(problems.join('\n')).toMatch(/unknown anchor "sq5"/)
+    expect(problems.join('\n')).toMatch(/targets "sq9"/)
   })
 
   it('colour-specific matches outrank generic ones', () => {

@@ -715,6 +715,28 @@ input[type='range'] {
     opacity: 0;
   }
 }
+/* The `aim` step of a gag: same slide, but the hand holds under the caption (duration set inline). */
+.aim-sprite.aim-hold {
+  animation-name: aimHold;
+}
+@keyframes aimHold {
+  0% {
+    translate: var(--from);
+    opacity: 0.6;
+  }
+  15% {
+    translate: 0 0;
+    opacity: 0.95;
+  }
+  85% {
+    translate: 0 0;
+    opacity: 0.95;
+  }
+  100% {
+    translate: 0 0;
+    opacity: 0;
+  }
+}
 @keyframes aimFade {
   0%,
   80% {

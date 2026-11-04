@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { Game } from '../engine'
-import type { AimTarget, Color, GameAction, GameEvent, Move, ParsedPgn, Piece, PieceKind, Square } from '../engine'
+import type { AimTarget, Color, GameAction, GameEvent, MomentId, Move, ParsedPgn, Piece, PieceKind, Square } from '../engine'
 import { resolveVariants } from '../engine/variants'
-import { pickCinematic } from '../content/select'
+import { pickCinematic, usesGun } from '../content/select'
+import type { CaptureContext } from '../content/select'
 import type { Cinematic, CineEvent } from '../content/types'
+import { momentCandidates, momentGeometry } from './momentGags'
 import { AiClient } from '../ai/client'
 import { AIM_FLASH_MS, AIM_MAX, preloadAimSprite } from '../cinematics/AimLayer'
 import { playSfx, warmSfx } from '../audio/sfx'
@@ -33,6 +35,10 @@ export interface CineRequest {
   victimSq: Square
   attacker: Piece
   victim: Piece
+  /** Moment gags: the moment, its squares (sq1..sq4 in the gag) and the pieces the gag points a hand at. */
+  moment?: MomentId
+  extra?: { sq: Square; id: number | null }[]
+  aimVictims?: Square[]
 }
 
 export interface EventMeta {
@@ -40,6 +46,8 @@ export interface EventMeta {
   cinematic: boolean
   /** Which parts of the move a gag covered (its sound replaces the plain one for that event only). */
   gagged?: CineEvent[]
+  /** Moments a gag covered this move: no reaction GIF for the same beat. */
+  gaggedMoments?: MomentId[]
 }
 
 type Listener = (e: GameEvent, meta: EventMeta) => void
@@ -135,18 +143,15 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const aimKeys = (g: Game) => (g.result || g.state.phase !== 'move' ? [] : g.aimTargets()).map((a) => `${a.attacker}-${a.victim}`)
 
   /**
-   * Treats the current position's threats as already seen (undo, replay jumps) so they do not flash again.
-   * The other side keeps its list; `fresh` (new game) forgets both.
+   * Treats the current position's threats as already seen (undo, replay jumps) so they do not flash again,
+   * and forgets the other side's list: after a takeback its threats are history too.
    */
-  const resetAims = useCallback(
-    (fresh = false) => {
-      clearAimFlash()
-      const g = gameRef.current
-      if (fresh) seenAims.current = { w: new Set(), b: new Set() }
-      if (g && g.state.phase === 'move') seenAims.current[g.turn] = new Set(aimKeys(g))
-    },
-    [clearAimFlash],
-  )
+  const resetAims = useCallback(() => {
+    clearAimFlash()
+    const g = gameRef.current
+    seenAims.current = { w: new Set(), b: new Set() }
+    if (g && g.state.phase === 'move') seenAims.current[g.turn] = new Set(aimKeys(g))
+  }, [clearAimFlash])
 
   // Exact clock lives in a ref; the state copy only changes when the displayed text would.
   const [clock, setClock] = useState<Clock | null>(null)
@@ -162,7 +167,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const muted = useRef(false)
   const deferred = useRef<GameEvent[]>([])
   const cineSounded = useRef(false)
+  /** True when a gag of this move put a gun hand on the board (the aim flash after it then stays quiet). */
+  const cineHands = useRef(false)
   const gagged = useRef<CineEvent[]>([])
+  const gaggedMoments = useRef<MomentId[]>([])
 
   const publishClock = useCallback((next: Clock | null, force = false) => {
     clockRef.current = next
@@ -219,7 +227,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setCine(null)
       setPoses({})
       kills.current = {}
-      resetAims(true)
+      resetAims()
       duckHint.current = null
       setFlippedState(settingsRef.current.opponent !== 'human' && settingsRef.current.playAs === 'b')
       bump()
@@ -275,9 +283,12 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     if (inc && c) publishClock({ ...c, [color]: c[color] + inc })
   }
 
-  /** Flashes a gun hand from each attacker at an undefended piece of the side to move, `delay` ms from now. */
+  /**
+   * Flashes a gun hand from each attacker at a piece of the side to move that is en prise, `delay` ms from now.
+   * `afterHands`: a gag already drew hands this move, so the flash skips the reload sound.
+   */
   const flashAims = useCallback(
-    (delay: number) => {
+    (delay: number, afterHands = false) => {
       clearAimFlash()
       const g = gameRef.current!
       // During the duck phase the mover is still to move and nothing hangs yet; wait for the duck.
@@ -288,14 +299,14 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       const turn = g.turn
       const seen = seenAims.current[turn]
       const aims = g.aimTargets().filter((a) => !seen.has(`${a.attacker}-${a.victim}`)).slice(0, AIM_MAX)
-      const keys = aimKeys(g)
+      const current = new Set(aimKeys(g))
       const key = ++aimKey.current
       aimTimer.current = window.setTimeout(() => {
-        // Marked seen only once shown: a flash cancelled by a quick next move gets another chance.
-        seenAims.current[turn] = new Set(keys)
+        // Seen = what was seen and still stands, plus what is shown now. A flash cancelled by a quick next move gets another chance.
+        seenAims.current[turn] = new Set([...seen].filter((k) => current.has(k)).concat(aims.map((a) => `${a.attacker}-${a.victim}`)))
         if (!aims.length) return
         setAimFlash({ key, aims })
-        void playSfx('reload')
+        if (!afterHands) void playSfx('reload')
         aimTimer.current = window.setTimeout(() => {
           aimTimer.current = 0
           setAimFlash(null)
@@ -309,15 +320,16 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const flush = useCallback(
     (cinematic: boolean) => {
       deferring.current = false
-      metaRef.current = { cinematic, gagged: gagged.current }
+      metaRef.current = { cinematic, gagged: gagged.current, gaggedMoments: gaggedMoments.current }
       gagged.current = []
+      gaggedMoments.current = []
       const pending = deferred.current
       deferred.current = []
       if (muted.current) return
       for (const e of pending) deliver(e)
       metaRef.current = { cinematic: false }
       // After a gag the pieces already stand still; otherwise wait for the move animation to land.
-      flashAims(cinematic ? 0 : PIECE_MOVE_MS + 40)
+      flashAims(cinematic ? 0 : PIECE_MOVE_MS + 40, cineHands.current)
     },
     [deliver, flashAims],
   )
@@ -326,6 +338,13 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     const entry = { req, hold }
     cineRef.current = entry
     setCine(entry)
+    if (usesGun(req.cin)) cineHands.current = true
+    // A moment gag that points at pieces counts as their warning: the aim flash after it does not redraw those hands.
+    const g = gameRef.current
+    if (req.aimVictims?.length && g && !g.result && g.state.phase === 'move') {
+      const seen = seenAims.current[g.turn]
+      for (const a of g.aimTargets()) if (req.aimVictims.includes(a.victim)) seen.add(`${a.attacker}-${a.victim}`)
+    }
   }, [])
 
   /** Ends the current gag. A queued event gag (mate after a capture, say) starts next unless the player skipped. */
@@ -338,7 +357,11 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         startCine(next, null)
         return
       }
-      if (next) gagged.current = gagged.current.filter((e) => e !== next.event) // skipped: its plain sound still plays
+      if (next) {
+        // Skipped: its plain sound and GIF still play.
+        gagged.current = gagged.current.filter((e) => e !== next.event)
+        if (next.moment) gaggedMoments.current = gaggedMoments.current.filter((m) => m !== next.moment)
+      }
       cineRef.current = null
       setCine(null)
       recomputePoses() // the Chad Horse appears on the landing square once the gags are over; gag faces come off
@@ -347,46 +370,84 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     [flush, startCine, recomputePoses],
   )
 
-  /** Picks a gag for what the move did besides capturing: mate, stalemate, promotion, castling or check. */
-  /** True when a gag pulls the gun hand (so two in a row can be avoided: one bang per move is enough). */
-  const usesGun = (c: Cinematic) => c.steps.some((st) => st.do === 'spawn' && /hand-gun/.test(st.sprite))
-
+  /**
+   * Picks a gag for what the move did besides capturing. A cascade: mate or stalemate (final), then promotion,
+   * castling, the move's moments (forks, pins, blunders... best first) and plain check. The first gag that
+   * matches and wins its chance roll plays; a moment without a gag falls through to the next candidate.
+   */
   const chooseEventCine = (g: Game, m: Move, events: GameEvent[], next: TrackedPiece[], attackerId: number, after?: Cinematic): CineRequest | null => {
     const has = (t: GameEvent['type']) => events.some((e) => e.type === t)
-    const event: CineEvent | null = has('checkmate') ? 'checkmate' : has('stalemate') ? 'stalemate' : has('promotion') ? 'promotion' : has('castling') ? 'castling' : has('check') ? 'check' : null
-    if (!event) return null
-
+    const pool = after && usesGun(after) ? cinRef.current.filter((c) => !usesGun(c)) : cinRef.current
+    const tryPick = (ctx: CaptureContext) => {
+      const cin = pickCinematic(pool, ctx, Math.random)
+      return cin && Math.random() < (cin.chance ?? 1) ? cin : null
+    }
     const color = m.piece.color
-    let attacker: Piece = m.piece
-    let victim: Piece
-    let victimId = attackerId
-    let victimSq: Square = m.to
-    if (event === 'promotion') {
-      attacker = { color, kind: m.promotion ?? 'q' }
-      victim = { color, kind: 'p' }
-    } else if (event === 'castling') {
-      const rook = next.find((p) => p.color === color && p.kind === 'r' && p.sq === m.castle?.rookTo)
-      if (!rook) return null
-      victim = { color, kind: 'r' }
-      victimId = rook.id
-      victimSq = rook.sq
-    } else {
-      const king = next.find((p) => p.kind === 'k' && p.color === g.state.turn)
-      if (!king) return null
-      victim = { color: king.color, kind: 'k' }
-      victimId = king.id
-      victimSq = king.sq
+
+    const plain = (event: Exclude<CineEvent, 'capture' | 'moment'>): CineRequest | null => {
+      let attacker: Piece = m.piece
+      let victim: Piece
+      let victimId = attackerId
+      let victimSq: Square = m.to
+      if (event === 'promotion') {
+        attacker = { color, kind: m.promotion ?? 'q' }
+        victim = { color, kind: 'p' }
+      } else if (event === 'castling') {
+        const rook = next.find((p) => p.color === color && p.kind === 'r' && p.sq === m.castle?.rookTo)
+        if (!rook) return null
+        victim = { color, kind: 'r' }
+        victimId = rook.id
+        victimSq = rook.sq
+      } else {
+        const king = next.find((p) => p.kind === 'k' && p.color === g.state.turn)
+        if (!king) return null
+        victim = { color: king.color, kind: 'k' }
+        victimId = king.id
+        victimSq = king.sq
+      }
+      const cin = tryPick({ attacker: attacker.kind, victim: victim.kind, attackerColor: attacker.color, victimColor: victim.color, variants: g.variantIds, event })
+      if (!cin) return null
+      // The pieces already stand on their final squares, so 'attacker' anchors at the square the mover ended on.
+      return { key: ++cineKey.current, event, cin, attackerId, victimId, from: m.to, to: m.to, victimSq, attacker, victim }
     }
 
-    const pool = after && usesGun(after) ? cinRef.current.filter((c) => !usesGun(c)) : cinRef.current
-    const cin = pickCinematic(
-      pool,
-      { attacker: attacker.kind, victim: victim.kind, attackerColor: attacker.color, victimColor: victim.color, variants: g.variantIds, event },
-      Math.random,
-    )
-    if (!cin || Math.random() >= (cin.chance ?? 1)) return null
-    // The pieces already stand on their final squares, so 'attacker' anchors at the square the mover ended on.
-    return { key: ++cineKey.current, event, cin, attackerId, victimId, from: m.to, to: m.to, victimSq, attacker, victim }
+    if (has('checkmate')) return plain('checkmate')
+    if (has('stalemate')) return plain('stalemate')
+    for (const ev of ['promotion', 'castling'] as const) {
+      if (!has(ev)) continue
+      const r = plain(ev)
+      if (r) return r
+    }
+    for (const mo of momentCandidates(events)) {
+      const geo = momentGeometry(mo, m, next, attackerId)
+      const cin = tryPick({
+        attacker: geo.attacker.kind,
+        victim: geo.victim.kind,
+        victims: geo.victims,
+        attackerColor: geo.attacker.color,
+        victimColor: geo.victim.color,
+        variants: g.variantIds,
+        event: 'moment',
+        moment: mo.moment,
+      })
+      if (!cin) continue
+      return {
+        key: ++cineKey.current,
+        event: 'moment',
+        cin,
+        attackerId: geo.attackerId,
+        victimId: geo.victimId,
+        from: geo.from,
+        to: geo.to,
+        victimSq: geo.victimSq,
+        attacker: geo.attacker,
+        victim: geo.victim,
+        moment: mo.moment,
+        extra: geo.extra,
+        aimVictims: geo.aimVictims,
+      }
+    }
+    return has('check') ? plain('check') : null
   }
 
   const perform = useCallback(
@@ -431,6 +492,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       }
 
       cineSounded.current = false
+      cineHands.current = false
       deferring.current = true // sounds and memes for this move wait until we know whether a gag plays
       metaRef.current = { cinematic: !!captureReq }
       const mover = g.turn
@@ -454,8 +516,18 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
 
       const eventReq = allowed && roll() ? chooseEventCine(g, m, events, next, attackerId, captureReq?.cin) : null
       gagged.current = [captureReq?.event, eventReq?.event].filter((e): e is CineEvent => !!e)
+      gaggedMoments.current = eventReq?.moment ? [eventReq.moment] : []
       const first = captureReq ?? eventReq
       if (first) {
+        if (!captureReq) {
+          // The pieces have landed and the gag plays on the final position: the move's own click plays now, not after the gag.
+          const i = deferred.current.findIndex((e) => e.type === 'move')
+          if (i >= 0) {
+            const [mv] = deferred.current.splice(i, 1)
+            metaRef.current = { cinematic: false, gagged: gagged.current }
+            deliver(mv!)
+          }
+        }
         cineNext.current = captureReq ? eventReq : null
         startCine(first, captureReq ? prev : null)
       } else {
@@ -463,7 +535,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       }
       bump()
     },
-    [recomputePoses, startCine, flush, clearAimFlash],
+    [recomputePoses, startCine, flush, clearAimFlash, deliver],
   )
 
   const placeDuck = useCallback(
@@ -474,6 +546,8 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       stackRef.current.push({ pieces: trackedRef.current, clock: clockRef.current ? { ...clockRef.current } : null, kills: kills.current })
       deferring.current = true // same gate as a move: replay jumps stay silent
       gagged.current = []
+      gaggedMoments.current = []
+      cineHands.current = false
       try {
         g.placeDuck(sq)
       } catch (err) {
@@ -608,7 +682,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       setCine(null)
       setPoses({})
       kills.current = {}
-      resetAims(true)
+      resetAims()
       duckHint.current = null
       setFlippedState(false)
       const state: ReplayState = {

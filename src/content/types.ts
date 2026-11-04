@@ -7,14 +7,16 @@ import type { GameEventType } from '../engine/events'
 
 export type KindMatch = PieceKind | '*' | PieceKind[]
 
-/** What triggers a cinematic. Entries without an event are capture gags. */
-export type CineEvent = 'capture' | 'castling' | 'promotion' | 'check' | 'checkmate' | 'stalemate'
-export const CINE_EVENTS: readonly CineEvent[] = ['capture', 'castling', 'promotion', 'check', 'checkmate', 'stalemate']
+/** What triggers a cinematic. Entries without an event are capture gags; 'moment' gags name a moment in `match.moment`. */
+export type CineEvent = 'capture' | 'castling' | 'promotion' | 'check' | 'checkmate' | 'stalemate' | 'moment'
+export const CINE_EVENTS: readonly CineEvent[] = ['capture', 'castling', 'promotion', 'check', 'checkmate', 'stalemate', 'moment']
 
 export interface CinematicMatch {
   /** Default 'capture'. For castling, attacker is the king and victim the rook. For promotion, attacker is the new piece
    * and victim the pawn. For check, checkmate and stalemate, attacker is the piece that moved and victim the king. */
   event?: CineEvent
+  /** Moment gags only (event "moment"): the moment id(s) this gag is for. Required there, not allowed elsewhere. */
+  moment?: MomentId | MomentId[]
   /** Capture gags only: true matches en passant captures, false matches ordinary ones. */
   enPassant?: boolean
   attacker?: KindMatch
@@ -26,7 +28,7 @@ export interface CinematicMatch {
 }
 
 /**
- * 'attacker' | 'victim' | 'from' | 'to' | 'between' | a square name like "e4" | 'aim:<reach>'.
+ * 'attacker' | 'victim' | 'from' | 'to' | 'between' | 'sq1'..'sq4' (a moment's squares) | a square name like "e4" | 'aim:<reach>'.
  * Add an offset in squares with +x,y, for example "victim+0,-0.8" (a little above the victim).
  */
 export type Anchor = string
@@ -49,6 +51,17 @@ export type CinematicStep =
       rotate?: number | 'toTarget'
       /** Where the sprite's pivot sits inside the image, 0..1. Default [0.5, 0.5]. */
       pivot?: [number, number]
+    })
+  | (StepBase & {
+      /** A gun hand with the aim-mode geometry: slides out of `from`, points at `to`, holds, fades. Plays no sound. */
+      do: 'aim'
+      id: string
+      from: Anchor
+      to: Anchor
+      /** How long it stays, ms. Default 900. */
+      ms?: number
+      /** Size in squares. Default 1.4. */
+      size?: number
     })
   | (StepBase & { do: 'move'; target: string; from?: Anchor; to: Anchor; ms: number; ease?: string })
   | (StepBase & { do: 'rotate'; target: string; deg: number; ms: number })

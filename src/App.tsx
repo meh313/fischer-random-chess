@@ -84,7 +84,7 @@ function Chass() {
     // A gag carries its own sound for the part of the move it covered; a mate's check is part of the mate.
     let mateAt = 0
     return chass.subscribe((e, meta) => {
-      memes.trigger(e)
+      memes.trigger(e, meta)
       const gagged = (...events: string[]) => !!meta.gagged?.some((g) => events.includes(g))
       switch (e.type) {
         case 'move':

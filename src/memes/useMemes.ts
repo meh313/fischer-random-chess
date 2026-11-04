@@ -4,6 +4,7 @@ import { clampFlashMs, pickMeme, pickMemeKey, pickText, queriesFor } from '../co
 import type { GifFile, MemeEntry } from '../content/types'
 import { asset } from '../content/loaders'
 import type { Settings } from '../state/settings'
+import type { EventMeta } from '../state/useChass'
 import { giphyKey, preload, searchGif, type GifHit } from './giphy'
 
 /** One reaction flash on a board square. No text: just the clip, played once. */
@@ -157,7 +158,9 @@ export function useMemes(memes: readonly MemeEntry[], gifs: GifFile | null, sett
   }, [enqueue, fetchGif])
 
   const trigger = useCallback(
-    (event: GameEvent) => {
+    (event: GameEvent, meta?: EventMeta) => {
+      // A gag already told this beat; the move's other events still compete at their own chances.
+      if (event.type === 'moment' && meta?.gaggedMoments?.includes(event.moment)) return
       // A move delivers its events in one synchronous burst; decide once for the whole burst.
       if (!batch.current.length) queueMicrotask(decide)
       batch.current.push(event)

@@ -6,6 +6,8 @@ import { pickText } from '../content/select'
 import type { CinematicStep } from '../content/types'
 import { playSfx } from '../audio/sfx'
 import type { CineRequest } from '../state/useChass'
+import { HAND_PIVOT, HAND_SIZE, HAND_SPRITE, handPose } from './AimLayer'
+import type { Pt } from './AimLayer'
 
 interface Props {
   request: CineRequest
@@ -16,17 +18,17 @@ interface Props {
   onSound?: () => void
 }
 
-interface Pt {
-  x: number
-  y: number
-}
-
 const EASE: Record<string, string> = {
   linear: 'linear',
   outQuad: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
   inQuad: 'cubic-bezier(0.55, 0.085, 0.68, 0.53)',
   outBack: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
 }
+
+/** How long an `aim` step keeps its hand on the board when the gag does not say. */
+const AIM_HOLD_MS = 900
+
+const SQ_TARGET = /^sq([1-4])$/
 
 /**
  * Plays one scripted cinematic over the board. Coordinates are in squares:
@@ -42,7 +44,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
   useEffect(() => {
     const layer = layerRef.current!
     const board = layer.parentElement as HTMLElement
-    const { cin, attackerId, victimId } = request
+    const { cin, attackerId, victimId, extra = [] } = request
 
     const center = (sq: Square): Pt => {
       const f = fileOf(sq)
@@ -53,12 +55,17 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
     const V = center(request.victimSq)
     const dist = Math.hypot(V.x - A.x, V.y - A.y) || 1
 
-    /** Anchors: attacker, victim, from, to, between, a square name, or "aim:<reach>" (see docs). */
-    const baseAnchor = (name: string): Pt => {
+    /** Anchors: attacker, victim, from, to, between, sq1..sq4 (a moment's squares), a square name, or "aim:<reach>". null = nothing there. */
+    const baseAnchor = (name: string): Pt | null => {
       if (name === 'attacker' || name === 'from') return A
       if (name === 'victim') return V
       if (name === 'to') return center(request.to)
       if (name === 'between') return { x: (A.x + V.x) / 2, y: (A.y + V.y) / 2 }
+      const sq = SQ_TARGET.exec(name)
+      if (sq) {
+        const e = extra[Number(sq[1]) - 1]
+        return e ? center(e.sq) : null
+      }
       if (name.startsWith('aim:')) {
         // Stop `reach` squares short of the victim, but never back behind the attacker.
         const reach = Number(name.slice(4)) || 0
@@ -70,9 +77,10 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
     }
 
     // "victim+0,-0.8" means 0.8 squares above the victim (x then y, in squares, y grows downward).
-    const anchor = (raw: string): Pt => {
+    const anchor = (raw: string): Pt | null => {
       const m = /^(.*?)(?:\+(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?))?$/.exec(raw)
       const base = baseAnchor(m?.[1] ?? raw)
+      if (!base) return null
       return m?.[2] === undefined ? base : { x: base.x + Number(m[2]), y: base.y + Number(m[3]) }
     }
 
@@ -81,9 +89,18 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
     const animations: Animation[] = []
     const moved = new Map<HTMLElement, { left: string; top: string }>()
 
-    const pieceEl = (id: number) => board.querySelector<HTMLElement>(`[data-pid="${id}"]`)
-    const targetEl = (name: string): HTMLElement | null =>
-      name === 'attacker' ? pieceEl(attackerId) : name === 'victim' ? pieceEl(victimId) : spawned.get(name) ?? null
+    const pieceEl = (id: number | null) => (id === null ? null : board.querySelector<HTMLElement>(`[data-pid="${id}"]`))
+    /** The tracked piece a target names: attacker, victim or the piece standing on sq1..sq4. */
+    const targetId = (name: string): number | null => {
+      if (name === 'attacker') return attackerId
+      if (name === 'victim') return victimId
+      const sq = SQ_TARGET.exec(name)
+      return sq ? extra[Number(sq[1]) - 1]?.id ?? null : null
+    }
+    const targetEl = (name: string): HTMLElement | null => {
+      if (name === 'attacker' || name === 'victim' || SQ_TARGET.test(name)) return pieceEl(targetId(name))
+      return spawned.get(name) ?? null
+    }
     const run = (el: HTMLElement | null, keyframes: Keyframe[], options: KeyframeAnimationOptions) => {
       if (!el) return
       animations.push(el.animate(keyframes, { fill: 'forwards', ...options }))
@@ -92,37 +109,64 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
     const aimDeg = (Math.atan2(V.y - A.y, V.x - A.x) * 180) / Math.PI
     const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
 
+    /** A sprite element at `p`, rotated `deg` and mirrored when `flip` (kept across later rotate steps). */
+    const makeSprite = (sprite: string, size: number, pivot: readonly [number, number], p: Pt, deg: number, flip: boolean) => {
+      const wrap = document.createElement('div')
+      wrap.className = 'cine-sprite'
+      Object.assign(wrap.style, at(p))
+      wrap.style.transform = `rotate(${deg}deg)${flip ? ' scaleY(-1)' : ''}`
+      wrap.dataset.rot = String(deg)
+      if (flip) wrap.dataset.flip = '1'
+      const img = document.createElement('img')
+      img.src = asset(sprite)
+      img.draggable = false
+      img.style.setProperty('--size', String(size))
+      img.style.setProperty('--px', String(pivot[0]))
+      img.style.setProperty('--py', String(pivot[1]))
+      wrap.appendChild(img)
+      return wrap
+    }
+
     const exec = (s: CinematicStep) => {
       switch (s.do) {
         case 'spawn': {
-          const wrap = document.createElement('div')
-          wrap.className = 'cine-sprite'
           const p = anchor(s.anchor)
-          Object.assign(wrap.style, at(p))
+          if (!p) break
           const rot = s.rotate === 'toTarget' ? aimDeg : s.rotate ?? 0
-          wrap.style.transform = `rotate(${rot}deg)`
-          wrap.dataset.rot = String(rot)
-          const img = document.createElement('img')
-          img.src = asset(`sprites/${s.sprite}`)
-          img.draggable = false
-          const pivot = s.pivot ?? [0.5, 0.5]
-          img.style.setProperty('--size', String(s.size ?? 1))
-          img.style.setProperty('--px', String(pivot[0]))
-          img.style.setProperty('--py', String(pivot[1]))
-          wrap.appendChild(img)
+          // A sprite aimed leftwards would hang upside down (the gun's grip above the barrel): mirror it.
+          const flip = s.rotate === 'toTarget' && Math.abs(aimDeg) > 90
+          const wrap = makeSprite(`sprites/${s.sprite}`, s.size ?? 1, s.pivot ?? [0.5, 0.5], p, rot, flip)
           layer.appendChild(wrap)
           spawned.set(s.id, wrap)
           break
         }
+        case 'aim': {
+          // A gun hand with the aim-mode geometry: slides out of `from`, points at `to`, holds `ms`, fades.
+          const from = anchor(s.from)
+          const to = anchor(s.to)
+          if (!from || !to) break
+          const size = s.size ?? HAND_SIZE
+          const h = handPose(from, to, size)
+          const grip = { x: h.x, y: h.y }
+          const wrap = makeSprite(HAND_SPRITE, size, HAND_PIVOT, grip, h.deg, h.flip)
+          wrap.classList.add('aim-sprite', 'aim-hold')
+          wrap.style.setProperty('--from', `${(from.x - grip.x) * 12.5}cqw ${(from.y - grip.y) * 12.5}cqh`)
+          wrap.style.animationDuration = `${s.ms ?? AIM_HOLD_MS}ms`
+          layer.appendChild(wrap)
+          spawned.set(s.id, wrap)
+          moved.set(wrap, at(grip))
+          break
+        }
         case 'move': {
           const el = targetEl(s.target)
-          const from = s.from ? at(anchor(s.from)) : null
-          const to = at(anchor(s.to))
-          if (el) {
+          const from = s.from ? anchor(s.from) : null
+          const to = anchor(s.to)
+          if (el && to) {
             // A WAAPI fill never writes style.left/top, so a second move on the same target starts from where the last one went.
-            const start = from ?? moved.get(el) ?? { left: el.style.left, top: el.style.top }
-            moved.set(el, to)
-            run(el, [start, to], { duration: s.ms, easing: EASE[s.ease ?? 'outQuad'] ?? 'ease-out' })
+            const start = (from && at(from)) ?? moved.get(el) ?? { left: el.style.left, top: el.style.top }
+            const end = at(to)
+            moved.set(el, end)
+            run(el, [start, end], { duration: s.ms, easing: EASE[s.ease ?? 'outQuad'] ?? 'ease-out' })
           }
           break
         }
@@ -130,8 +174,9 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           const el = targetEl(s.target)
           // WAAPI fill does not update style.transform, so the running angle is tracked on the element.
           const cur = Number(el?.dataset.rot ?? 0)
+          const flip = el?.dataset.flip ? ' scaleY(-1)' : ''
           if (el) el.dataset.rot = String(cur + s.deg)
-          run(el, [{ transform: `rotate(${cur}deg)` }, { transform: `rotate(${cur + s.deg}deg)` }], { duration: s.ms })
+          run(el, [{ transform: `rotate(${cur}deg)${flip}` }, { transform: `rotate(${cur + s.deg}deg)${flip}` }], { duration: s.ms })
           break
         }
         case 'scale': {
@@ -149,11 +194,13 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           run(targetEl(s.target), frames, { duration: s.ms, fill: 'none' })
           break
         }
-        case 'fade':
-          run(targetEl(s.target), [{ opacity: getComputedStyle(targetEl(s.target) ?? layer).opacity }, { opacity: s.to }], { duration: s.ms })
+        case 'fade': {
+          const el = targetEl(s.target)
+          if (el) run(el, [{ opacity: getComputedStyle(el).opacity }, { opacity: s.to }], { duration: s.ms })
           break
+        }
         case 'pose': {
-          const id = s.target === 'attacker' ? attackerId : s.target === 'victim' ? victimId : null
+          const id = targetId(s.target)
           if (id !== null) setPose(id, s.pose)
           break
         }

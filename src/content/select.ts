@@ -1,4 +1,4 @@
-import type { Color, PieceKind, Square } from '../engine'
+import type { Color, MomentId, PieceKind, Square } from '../engine'
 import type { GameEvent } from '../engine/events'
 import { MAX_CINEMATIC_MS } from './types'
 import { CINE_EVENTS } from './types'
@@ -14,7 +14,16 @@ export interface CaptureContext {
   /** Defaults to 'capture'. */
   event?: CineEvent
   enPassant?: boolean
+  /** Moment gags: which moment this is. */
+  moment?: MomentId
+  /** Every other piece the moment involves (forked pieces, pinned and shielded). `victim` matches if any of them hits. */
+  victims?: readonly PieceKind[]
 }
+
+const asList = <T,>(v: T | T[] | undefined): T[] => (v === undefined ? [] : Array.isArray(v) ? v : [v])
+
+/** True when a gag puts the gun hand on the board (spawned or aimed): one gun gag per move is enough. */
+export const usesGun = (c: Cinematic) => c.steps.some((st) => st.do === 'aim' || (st.do === 'spawn' && /hand-gun/.test(st.sprite)))
 
 const isWild = (m: KindMatch | undefined) => m === undefined || m === '*'
 const kindHits = (m: KindMatch, k: PieceKind) => (Array.isArray(m) ? m.includes(k) : m === k)
@@ -23,6 +32,7 @@ const kindHits = (m: KindMatch, k: PieceKind) => (Array.isArray(m) ? m.includes(
 export function scoreMatch(match: CinematicMatch, ctx: CaptureContext): number {
   let score = 0
   if ((match.event ?? 'capture') !== (ctx.event ?? 'capture')) return -1
+  if (ctx.event === 'moment' && (!ctx.moment || !asList(match.moment).includes(ctx.moment))) return -1
   if (match.enPassant !== undefined) {
     if (match.enPassant !== !!ctx.enPassant) return -1
     if (match.enPassant) score += 7 // beats even attacker+victim matches (6): en passant is rare and deserves its own gag
@@ -32,7 +42,8 @@ export function scoreMatch(match: CinematicMatch, ctx: CaptureContext): number {
     score += 4
   }
   if (!isWild(match.victim)) {
-    if (!kindHits(match.victim!, ctx.victim)) return -1
+    const kinds = ctx.victims?.length ? ctx.victims : [ctx.victim]
+    if (!kinds.some((k) => kindHits(match.victim!, k))) return -1
     score += 2
   }
   if (match.attackerColor) {
@@ -196,6 +207,7 @@ export function pickText(text: string | string[], rand: () => number = Math.rand
 
 const STEP_FIELDS: Record<string, string[]> = {
   spawn: ['id', 'sprite', 'anchor'],
+  aim: ['id', 'from', 'to'],
   move: ['target', 'to', 'ms'],
   rotate: ['target', 'deg', 'ms'],
   scale: ['target', 'to', 'ms'],
@@ -206,7 +218,8 @@ const STEP_FIELDS: Record<string, string[]> = {
   sound: ['sfx'],
   despawn: ['target'],
 }
-const ANCHOR = /^(attacker|victim|from|to|between|[a-h][1-8]|aim:-?\d+(\.\d+)?)(\+-?\d+(\.\d+)?,-?\d+(\.\d+)?)?$/
+const ANCHOR = /^(attacker|victim|from|to|between|sq[1-4]|[a-h][1-8]|aim:-?\d+(\.\d+)?)(\+-?\d+(\.\d+)?,-?\d+(\.\d+)?)?$/
+const FIXED_TARGETS = new Set(['attacker', 'victim', 'sq1', 'sq2', 'sq3', 'sq4'])
 
 /** Human-readable problems with one cinematic (empty array = fine). */
 export function checkCinematic(c: Cinematic): string[] {
@@ -215,6 +228,10 @@ export function checkCinematic(c: Cinematic): string[] {
   const spawned = new Set<string>()
   const ev = c.match?.event
   if (ev !== undefined && !CINE_EVENTS.includes(ev)) out.push(`"${c.id}" has unknown event "${String(ev)}"`)
+  const moments = asList(c.match?.moment)
+  if (ev === 'moment' && !moments.length) out.push(`"${c.id}" is a moment gag but names no moment`)
+  if (ev !== 'moment' && moments.length) out.push(`"${c.id}" names a moment but its event is not "moment"`)
+  for (const mo of moments) if (!(MOMENTS as readonly string[]).includes(mo)) out.push(`"${c.id}" has unknown moment "${String(mo)}"`)
   if (c.chance !== undefined && !(c.chance >= 0 && c.chance <= 1)) out.push(`"${c.id}" has a chance outside 0..1`)
   for (const [i, step] of c.steps.entries()) {
     const at = `"${c.id}" step ${i + 1}`
@@ -226,13 +243,13 @@ export function checkCinematic(c: Cinematic): string[] {
       continue
     }
     for (const field of required) if (st[field] === undefined) out.push(`${at} (${String(st.do)}) is missing "${field}"`)
-    if (st.do === 'spawn' && typeof st.id === 'string') spawned.add(st.id)
+    if ((st.do === 'spawn' || st.do === 'aim') && typeof st.id === 'string') spawned.add(st.id)
     for (const key of ['anchor', 'from', 'to']) {
       const v = st[key]
       if (typeof v === 'string' && st.do !== 'scale' && st.do !== 'fade' && !ANCHOR.test(v)) out.push(`${at} has an unknown anchor "${v}"`)
     }
     const t = st.target
-    if (typeof t === 'string' && t !== 'attacker' && t !== 'victim' && !spawned.has(t)) out.push(`${at} targets "${t}", which is never spawned before it`)
+    if (typeof t === 'string' && !FIXED_TARGETS.has(t) && !spawned.has(t)) out.push(`${at} targets "${t}", which is never spawned before it`)
   }
   return out
 }
