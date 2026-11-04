@@ -48,6 +48,7 @@ function Chass() {
   // A new game drops memes still pending from the old one.
   useEffect(() => memes.reset(), [game, memes.reset])
   useEffect(() => memes.hold(!!chass.cine), [chass.cine, memes.hold])
+  useEffect(() => chass.holdClock(!!memes.active), [memes.active, chass.holdClock])
 
   // Content is data: load it once, report problems without crashing the game.
   useEffect(() => {

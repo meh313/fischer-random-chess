@@ -28,6 +28,14 @@ const EASE: Record<string, string> = {
 /** How long an `aim` step keeps its hand on the board when the gag does not say. */
 const AIM_HOLD_MS = 900
 
+/**
+ * Playback speed. Gags are authored at a comfortable 1.5 to 2.4 s but a capture should resolve in about
+ * a second, so every `at`, `ms` and duration is scaled by this on play. Content stays authored at 1x.
+ */
+export const CINE_SPEED = 0.6
+/** Authored milliseconds to played milliseconds. */
+export const played = (ms: number) => Math.round(ms * CINE_SPEED)
+
 const SQ_TARGET = /^sq([1-4])$/
 
 /**
@@ -146,12 +154,12 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           const to = anchor(s.to)
           if (!from || !to) break
           const size = s.size ?? HAND_SIZE
-          const h = handPose(from, to, size)
+          const h = handPose(from, to)
           const grip = { x: h.x, y: h.y }
           const wrap = makeSprite(HAND_SPRITE, size, HAND_PIVOT, grip, h.deg, h.flip)
           wrap.classList.add('aim-sprite', 'aim-hold')
           wrap.style.setProperty('--from', `${(from.x - grip.x) * 12.5}cqw ${(from.y - grip.y) * 12.5}cqh`)
-          wrap.style.animationDuration = `${s.ms ?? AIM_HOLD_MS}ms`
+          wrap.style.animationDuration = `${played(s.ms ?? AIM_HOLD_MS)}ms`
           layer.appendChild(wrap)
           spawned.set(s.id, wrap)
           moved.set(wrap, at(grip))
@@ -166,7 +174,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
             const start = (from && at(from)) ?? moved.get(el) ?? { left: el.style.left, top: el.style.top }
             const end = at(to)
             moved.set(el, end)
-            run(el, [start, end], { duration: s.ms, easing: EASE[s.ease ?? 'outQuad'] ?? 'ease-out' })
+            run(el, [start, end], { duration: played(s.ms), easing: EASE[s.ease ?? 'outQuad'] ?? 'ease-out' })
           }
           break
         }
@@ -176,7 +184,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           const cur = Number(el?.dataset.rot ?? 0)
           const flip = el?.dataset.flip ? ' scaleY(-1)' : ''
           if (el) el.dataset.rot = String(cur + s.deg)
-          run(el, [{ transform: `rotate(${cur}deg)${flip}` }, { transform: `rotate(${cur + s.deg}deg)${flip}` }], { duration: s.ms })
+          run(el, [{ transform: `rotate(${cur}deg)${flip}` }, { transform: `rotate(${cur + s.deg}deg)${flip}` }], { duration: played(s.ms) })
           break
         }
         case 'scale': {
@@ -184,19 +192,19 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           if (reduced) break
           // Start from wherever the element is now so a later scale-back animates instead of snapping.
           const current = el ? getComputedStyle(el).scale : 'none'
-          run(el, [{ scale: current === 'none' ? '1' : current }, { scale: String(s.to) }], { duration: s.ms })
+          run(el, [{ scale: current === 'none' ? '1' : current }, { scale: String(s.to) }], { duration: played(s.ms) })
           break
         }
         case 'shake': {
           if (reduced) break
           const a = s.amp ?? 6
           const frames: Keyframe[] = [0, -1, 0.7, -0.4, 0.15, 0].map((m) => ({ translate: `${m * a}px ${m * a * 0.3}px` }))
-          run(targetEl(s.target), frames, { duration: s.ms, fill: 'none' })
+          run(targetEl(s.target), frames, { duration: played(s.ms), fill: 'none' })
           break
         }
         case 'fade': {
           const el = targetEl(s.target)
-          if (el) run(el, [{ opacity: getComputedStyle(el).opacity }, { opacity: s.to }], { duration: s.ms })
+          if (el) run(el, [{ opacity: getComputedStyle(el).opacity }, { opacity: s.to }], { duration: played(s.ms) })
           break
         }
         case 'pose': {
@@ -217,7 +225,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
                 { opacity: 1, transform: 'translateX(-50%) scale(1)', offset: 0.85 },
                 { opacity: 0, transform: 'translateX(-50%) scale(1)' },
               ],
-              { duration: s.ms, fill: 'forwards' },
+              { duration: played(s.ms), fill: 'forwards' },
             ),
           )
           break
@@ -235,8 +243,8 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
       }
     }
 
-    for (const step of cin.steps) timers.push(window.setTimeout(() => exec(step), step.at))
-    timers.push(window.setTimeout(() => doneRef.current(), cin.duration))
+    for (const step of cin.steps) timers.push(window.setTimeout(() => exec(step), played(step.at)))
+    timers.push(window.setTimeout(() => doneRef.current(), played(cin.duration)))
 
     return () => {
       timers.forEach(clearTimeout)

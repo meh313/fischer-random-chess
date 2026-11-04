@@ -15,6 +15,9 @@ export interface PieceAt {
 }
 
 /** Which moment gets the gag when one move carries several. Mirrors gifs.json priorities (a test checks). */
+/** The only moments worth a second gag right after a capture gag: a capture should resolve in about a second. */
+export const CHAIN_AFTER_CAPTURE: readonly MomentId[] = ['missed_mate', 'hung_queen']
+
 export const MOMENT_GAG_ORDER: readonly MomentId[] = [
   'missed_mate',
   'hung_queen',

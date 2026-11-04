@@ -5,7 +5,7 @@ import { resolveVariants } from '../engine/variants'
 import { pickCinematic, usesGun } from '../content/select'
 import type { CaptureContext } from '../content/select'
 import type { Cinematic, CineEvent } from '../content/types'
-import { momentCandidates, momentGeometry } from './momentGags'
+import { CHAIN_AFTER_CAPTURE, momentCandidates, momentGeometry } from './momentGags'
 import { AiClient } from '../ai/client'
 import { AIM_FLASH_MS, AIM_MAX, preloadAimSprite } from '../cinematics/AimLayer'
 import { playSfx, warmSfx } from '../audio/sfx'
@@ -134,6 +134,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const seenAims = useRef<Record<Color, Set<string>>>({ w: new Set(), b: new Set() })
   /** Captures per tracked piece id (rampage poses). */
   const kills = useRef<Record<number, number>>({})
+  /** Set by the app while a reaction GIF is up: the clock waits for it like for any other animation. */
+  const [clockHold, setClockHold] = useState(false)
+  /** The clock does not run before this time (a piece is still sliding). */
+  const busyUntil = useRef(0)
   const clearAimFlash = useCallback(() => {
     clearTimeout(aimTimer.current)
     aimTimer.current = 0
@@ -167,8 +171,6 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const muted = useRef(false)
   const deferred = useRef<GameEvent[]>([])
   const cineSounded = useRef(false)
-  /** True when a gag of this move put a gun hand on the board (the aim flash after it then stays quiet). */
-  const cineHands = useRef(false)
   const gagged = useRef<CineEvent[]>([])
   const gaggedMoments = useRef<MomentId[]>([])
 
@@ -283,12 +285,9 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     if (inc && c) publishClock({ ...c, [color]: c[color] + inc })
   }
 
-  /**
-   * Flashes a gun hand from each attacker at a piece of the side to move that is en prise, `delay` ms from now.
-   * `afterHands`: a gag already drew hands this move, so the flash skips the reload sound.
-   */
+  /** Flashes a gun hand from each attacker at a piece of the side to move that is en prise, `delay` ms from now. */
   const flashAims = useCallback(
-    (delay: number, afterHands = false) => {
+    (delay: number) => {
       clearAimFlash()
       const g = gameRef.current!
       // During the duck phase the mover is still to move and nothing hangs yet; wait for the duck.
@@ -306,7 +305,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         seenAims.current[turn] = new Set([...seen].filter((k) => current.has(k)).concat(aims.map((a) => `${a.attacker}-${a.victim}`)))
         if (!aims.length) return
         setAimFlash({ key, aims })
-        if (!afterHands) void playSfx('reload')
+        void playSfx('reload')
         aimTimer.current = window.setTimeout(() => {
           aimTimer.current = 0
           setAimFlash(null)
@@ -329,7 +328,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       for (const e of pending) deliver(e)
       metaRef.current = { cinematic: false }
       // After a gag the pieces already stand still; otherwise wait for the move animation to land.
-      flashAims(cinematic ? 0 : PIECE_MOVE_MS + 40, cineHands.current)
+      flashAims(cinematic ? 0 : PIECE_MOVE_MS + 40)
     },
     [deliver, flashAims],
   )
@@ -339,7 +338,6 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     cineRef.current = entry
     setCine(entry)
     if (!usesGun(req.cin)) return
-    cineHands.current = true
     // A moment gag that points hands at pieces counts as their warning: the aim flash after it does not redraw those hands.
     const g = gameRef.current
     if (req.aimVictims?.length && g && !g.result && g.state.phase === 'move') {
@@ -420,6 +418,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       if (r) return r
     }
     for (const mo of momentCandidates(events)) {
+      if (after && !CHAIN_AFTER_CAPTURE.includes(mo.moment)) continue
       const geo = momentGeometry(mo, m, next, attackerId)
       const cin = tryPick({
         attacker: geo.attacker.kind,
@@ -458,6 +457,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       const prev = trackedRef.current
       const { next, attackerId, captured } = applyTracked(prev, m)
       clearAimFlash()
+      busyUntil.current = performance.now() + PIECE_MOVE_MS
       const allowed = s.cinematics && !suppressCine.current
       const roll = () => Math.random() < s.cinematicChance
 
@@ -493,7 +493,6 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       }
 
       cineSounded.current = false
-      cineHands.current = false
       deferring.current = true // sounds and memes for this move wait until we know whether a gag plays
       metaRef.current = { cinematic: !!captureReq }
       const mover = g.turn
@@ -548,7 +547,6 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       deferring.current = true // same gate as a move: replay jumps stay silent
       gagged.current = []
       gaggedMoments.current = []
-      cineHands.current = false
       try {
         g.placeDuck(sq)
       } catch (err) {
@@ -770,28 +768,30 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     cineSounded.current = true
   }, [])
 
-  // Clock: runs for the side to move after the first move, paused during cinematics.
-  const active = !game.result && game.records.length > 0 && !cine && clock !== null ? game.turn : null
+  // Clock: runs for the side to move after the first move. Every animation stops it: gags, gun hands,
+  // reaction GIFs and the piece slide itself, so nobody pays for the show.
+  const active = !game.result && game.records.length > 0 && clock !== null ? game.turn : null
+  const running = active && !cine && !aimFlash && !clockHold ? active : null
   useEffect(() => {
-    if (!active) return
+    if (!running) return
     let last = performance.now()
     const id = setInterval(() => {
       const c = clockRef.current
       const g = gameRef.current!
       const now = performance.now()
-      const dt = now - last
+      const dt = now - Math.max(last, busyUntil.current)
       last = now
-      if (!c || g.result) return
-      const left = Math.max(0, c[active] - dt)
-      publishClock({ ...c, [active]: left })
+      if (!c || g.result || dt <= 0) return
+      const left = Math.max(0, c[running] - dt)
+      publishClock({ ...c, [running]: left })
       if (left <= 0) {
         metaRef.current = { cinematic: false }
-        g.timeout(active)
+        g.timeout(running)
         bump()
       }
     }, 100)
     return () => clearInterval(id)
-  }, [active, game, publishClock])
+  }, [running, game, publishClock])
 
   // Computer opponent: think in a worker, wait for any cinematic to finish, then play.
   const aiTurn = settings.opponent !== 'human' && !game.result && game.turn !== settings.playAs
@@ -914,6 +914,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     aiTurn,
     canUndo,
     activeClock: active,
+    holdClock: setClockHold,
     duckTargets: game.duckSquares(),
     newGame,
     clickSquare,

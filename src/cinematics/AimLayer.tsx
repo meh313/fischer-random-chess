@@ -31,11 +31,16 @@ export interface HandPose {
   flip: boolean
 }
 
-/** Where a gun hand of `size` squares sits so its barrel lies on the A to V line with the muzzle a quarter square into V. */
-export function handPose(A: Pt, V: Pt, size = HAND_SIZE): HandPose {
+/** How far in front of the attacker (in squares, along the aim line) the grip of the hand sits. */
+export const HAND_REACH = 0.6
+
+/**
+ * Where a gun hand sits: its grip a little in front of A, the barrel on the A to V line pointing at V.
+ * The hand never travels to the victim; on an adjacent victim it stops short of its centre.
+ */
+export function handPose(A: Pt, V: Pt): HandPose {
   const dist = Math.hypot(V.x - A.x, V.y - A.y) || 1
-  const muzzle = (1 - HAND_PIVOT[0]) * size // barrel ends at the sprite's right edge
-  const d = Math.max(dist - muzzle + 0.25, 0.2) // never back behind the attacker
+  const d = Math.min(HAND_REACH, Math.max(dist - 0.45, 0.2))
   const deg = (Math.atan2(V.y - A.y, V.x - A.x) * 180) / Math.PI
   return { x: A.x + ((V.x - A.x) / dist) * d, y: A.y + ((V.y - A.y) / dist) * d, deg, flip: Math.abs(deg) > 90 }
 }
