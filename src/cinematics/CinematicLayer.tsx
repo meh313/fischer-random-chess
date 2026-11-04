@@ -106,10 +106,8 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
       const sq = SQ_TARGET.exec(name)
       return sq ? extra[Number(sq[1]) - 1]?.id ?? null : null
     }
-    const targetEl = (name: string): HTMLElement | null => {
-      if (name === 'attacker' || name === 'victim' || SQ_TARGET.test(name)) return pieceEl(targetId(name))
-      return spawned.get(name) ?? null
-    }
+    const isPiece = (name: string) => name === 'attacker' || name === 'victim' || SQ_TARGET.test(name)
+    const targetEl = (name: string): HTMLElement | null => (isPiece(name) ? pieceEl(targetId(name)) : spawned.get(name) ?? null)
     const run = (el: HTMLElement | null, keyframes: Keyframe[], options: KeyframeAnimationOptions) => {
       if (!el) return
       animations.push(el.animate(keyframes, { fill: 'forwards', ...options }))
@@ -171,9 +169,11 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           const from = s.from ? anchor(s.from) : null
           const to = anchor(s.to)
           if (el && to) {
+            // Anchors are square centres; a sprite sits at its pivot but a piece is laid out from its top-left corner.
+            const place = isPiece(s.target) ? (p: Pt) => at({ x: p.x - 0.5, y: p.y - 0.5 }) : at
             // A WAAPI fill never writes style.left/top, so a second move on the same target starts from where the last one went.
-            const start = (from && at(from)) ?? moved.get(el) ?? { left: el.style.left, top: el.style.top }
-            const end = at(to)
+            const start = (from && place(from)) ?? moved.get(el) ?? { left: el.style.left, top: el.style.top }
+            const end = place(to)
             moved.set(el, end)
             run(el, [start, end], { duration: played(s.ms), easing: EASE[s.ease ?? 'outQuad'] ?? 'ease-out' })
           }
