@@ -3,9 +3,10 @@ import { detectMoments } from './moments'
 import type { GameEvent, GameEventHandler } from './events'
 import { fenCastling, fenPlacement, parseFen, STANDARD_FEN, toFen } from './fen'
 import { createRng } from './rng'
-import { aimTargets, applyMove, hasNoCheck, inCheck, isTwoPhase, legalMoves, promotionKinds } from './rules'
+import { applyMove, hasNoCheck, inCheck, isTwoPhase, legalMoves, promotionKinds } from './rules'
 import { toSan } from './san'
-import type { AimTarget } from './rules'
+import { aimTargets } from './threats'
+import type { AimTarget } from './threats'
 import type { Color, GameResult, Move, PieceKind, Square, State } from './types'
 import type { Variant } from './variant'
 import { resolveVariants } from './variants'
@@ -137,7 +138,7 @@ export class Game {
   get inCheck(): boolean {
     return inCheck(this.state, this.vs)
   }
-  /** Attacked, undefended pieces of the side to move (kings excluded), most valuable first. */
+  /** Pieces of the side to move that are en prise by static exchange (kings excluded), biggest loss first. */
   aimTargets(): AimTarget[] {
     return this.result || this.state.phase !== 'move' ? [] : aimTargets(this.state, this.vs)
   }

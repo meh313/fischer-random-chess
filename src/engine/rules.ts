@@ -2,12 +2,12 @@ import { fileOf, opposite, piece, rankOf, sq } from './board'
 import type { Color, Move, Piece, PieceKind, Square, State } from './types'
 import type { Variant } from './variant'
 
-type Dir = readonly [number, number]
-const KNIGHT: Dir[] = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
-const KING: Dir[] = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]]
-const ORTH: Dir[] = [[1, 0], [-1, 0], [0, 1], [0, -1]]
-const DIAG: Dir[] = [[1, 1], [1, -1], [-1, 1], [-1, -1]]
-const SLIDE: Partial<Record<PieceKind, Dir[]>> = { b: DIAG, d: DIAG, r: ORTH, q: [...ORTH, ...DIAG] }
+export type Dir = readonly [number, number]
+export const KNIGHT: Dir[] = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]]
+export const KING: Dir[] = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]]
+export const ORTH: Dir[] = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+export const DIAG: Dir[] = [[1, 1], [1, -1], [-1, 1], [-1, -1]]
+export const SLIDE: Partial<Record<PieceKind, Dir[]>> = { b: DIAG, d: DIAG, r: ORTH, q: [...ORTH, ...DIAG] }
 
 export const BASE_PROMOTIONS: readonly PieceKind[] = ['q', 'r', 'b', 'n']
 
@@ -114,33 +114,6 @@ export function attackersOf(state: State, target: Square, by: Color, vs: readonl
     if (vs.some((v) => v.attacksFrom?.(state, s, p, target))) out.push(s)
   }
   return out
-}
-
-const VALUE: Record<PieceKind, number> = { p: 1, n: 3, b: 3, d: 3, r: 5, q: 9, k: 100 }
-
-export interface AimTarget {
-  attacker: Square
-  victim: Square
-}
-
-/**
- * Pieces of the side to move that are attacked and not defended (kings excluded).
- * The aimer is the cheapest attacker. Used by the optional "aim mode" gun hand.
- */
-export function aimTargets(state: State, vs: readonly Variant[]): AimTarget[] {
-  const us = state.turn
-  const them = opposite(us)
-  const out: (AimTarget & { value: number })[] = []
-  for (let s = 0; s < 64; s++) {
-    const p = state.board[s]
-    if (!p || p.color !== us || p.kind === 'k') continue
-    const attackers = attackersOf(state, s, them, vs)
-    if (!attackers.length) continue
-    if (attackersOf(state, s, us, vs).length) continue
-    const attacker = attackers.reduce((a, c) => (VALUE[state.board[c]!.kind] < VALUE[state.board[a]!.kind] ? c : a))
-    out.push({ attacker, victim: s, value: VALUE[p.kind] })
-  }
-  return out.sort((a, b) => b.value - a.value).map(({ attacker, victim }) => ({ attacker, victim }))
 }
 
 export function inCheck(state: State, vs: readonly Variant[], color: Color = state.turn): boolean {
