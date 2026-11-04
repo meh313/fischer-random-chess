@@ -52,7 +52,7 @@ Drop the file in `public/memes/`. `on` is any event type (`checkmate`, `check`, 
 
 ## Online GIFs: `public/memes/gifs.json`
 
-Memes react to what a move did, not just to its type. The engine tags each move with moments: `hung_queen`, `hung_piece`, `queen_lost`, `queen_trade`, `free_piece`, `free_pawn`, `capture_spree`, `check_spam`, `king_walk`, `comeback`, `steamroll`, `underpromotion`, `bongcloud`, `missed_en_passant`, `knight_fork`, `smothered_mate` (see `src/engine/moments.ts`). One move can fire several events; only the highest-priority key shows a meme.
+Memes react to what a move did, not just to its type. The engine tags each move with moments: `hung_queen`, `hung_piece`, `queen_lost`, `queen_trade`, `free_piece`, `free_pawn`, `capture_spree`, `check_spam`, `king_walk`, `comeback`, `steamroll`, `underpromotion`, `bongcloud`, `missed_en_passant`, `knight_fork`, `smothered_mate`, `pawn_fork`, `fork`, `double_attack`, `pin`, `skewer`, `discovered_attack`, `trapped_piece`, `mate_threat`, `missed_mate` (see `src/engine/moments.ts` and `tactics.ts`). One move can fire several events; only the highest-priority key shows a meme.
 
 ```json
 "hung_queen": { "priority": 85, "chance": 1, "queries": ["facepalm", "oh no"], "refine": [{ "attacker": "p", "queries": ["david and goliath"] }] }

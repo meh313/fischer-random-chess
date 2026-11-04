@@ -1,5 +1,8 @@
 import { opposite } from './board'
-import { attackersOf, inCheck, isAttacked, legalMoves } from './rules'
+import { attackersOf, hasNoCheck, inCheck, legalMoves } from './rules'
+import { detectTactics } from './tactics'
+import { cheapestCaptor, see, TACTICAL_VALUE } from './threats'
+import { threatensMate } from './threats'
 import type { Color, Move, PieceKind, Square, State } from './types'
 import type { Variant } from './variant'
 
@@ -24,6 +27,15 @@ export const MOMENTS = [
   'missed_en_passant',
   'knight_fork',
   'smothered_mate',
+  'pawn_fork',
+  'fork',
+  'double_attack',
+  'pin',
+  'skewer',
+  'discovered_attack',
+  'trapped_piece',
+  'mate_threat',
+  'missed_mate',
 ] as const
 export type MomentId = (typeof MOMENTS)[number]
 
@@ -56,34 +68,13 @@ export interface MoveLog {
   move: Move
 }
 
-const VALUE: Record<PieceKind, number> = { p: 1, n: 3, b: 3, d: 3, r: 5, q: 9, k: 0 }
+const VALUE = TACTICAL_VALUE
 
 /** Material of `color` minus the opponent's, in pawns. */
 export function materialBalance(state: State, color: Color): number {
   let sum = 0
   for (const p of state.board) if (p) sum += p.color === color ? VALUE[p.kind] : -VALUE[p.kind]
   return sum
-}
-
-/** Pieces of `color` worth at least `min` that the opponent attacks and `color` does not defend. */
-function hanging(state: State, color: Color, vs: readonly Variant[], min: number): Set<number> {
-  const out = new Set<number>()
-  const them = opposite(color)
-  for (let s = 0; s < 64; s++) {
-    const p = state.board[s]
-    if (!p || p.color !== color || p.kind === 'k' || VALUE[p.kind] < min) continue
-    if (!attackersOf(state, s, them, vs).length) continue
-    if (attackersOf(state, s, color, vs).length) continue
-    out.add(s)
-  }
-  return out
-}
-
-/** True when a cheaper enemy piece attacks the piece standing on `sq`. */
-function attackedByCheaper(state: State, sq: number, vs: readonly Variant[]): boolean {
-  const p = state.board[sq]
-  if (!p) return false
-  return attackersOf(state, sq, opposite(p.color), vs).some((a) => VALUE[state.board[a]!.kind] < VALUE[p.kind])
 }
 
 /**
@@ -95,8 +86,8 @@ export function detectMoments(before: State, after: State, move: Move, log: read
   const legalBefore = () => ctx.legalBefore ?? (ctx.legalBefore = legalMoves(before, vs))
   const legalAfter = () => ctx.legalAfter ?? (ctx.legalAfter = legalMoves(after, vs))
   const out: Moment[] = []
-  const add = (id: MomentId, square: Square = move.to, attacker: PieceKind = move.piece.kind, victimKind: PieceKind | undefined = move.capture?.kind) =>
-    out.push({ id, color, square, attacker, victim: victimKind })
+  const add = (id: MomentId, square: Square = move.to, attacker: PieceKind = move.piece.kind, victimKind: PieceKind | undefined = move.capture?.kind, squares?: Square[]) =>
+    out.push({ id, color, square, attacker, victim: victimKind, ...(squares ? { squares } : {}) })
   const duck = vs.some((v) => v.twoPhase)
   const victim = move.capture
 
@@ -118,21 +109,29 @@ export function detectMoments(before: State, after: State, move: Move, log: read
     }
   }
 
-  // A fresh blunder: a piece of ours is now loose that was not before, or we put a big piece next to a cheaper attacker.
-  if (!duck) {
-    const was = hanging(before, color, vs, 3)
-    const now = hanging(after, color, vs, 3)
-    // What was risked on the landing square is the moving piece (a pawn for a promotion), not what it became.
-    const risked = VALUE[move.piece.kind]
-    const fairTrade = !!victim && VALUE[victim.kind] >= risked
-    const fresh = [...now].filter((s) => (s === move.to ? !fairTrade && !move.promotion : !was.has(s)))
-    if (!fairTrade && !move.promotion && risked >= 5 && attackedByCheaper(after, move.to, vs) && !fresh.includes(move.to)) fresh.push(move.to)
-    // Only counts if the opponent can actually take it next move (we did not just give check that forces something else).
-    if (fresh.length && !inCheck(after, vs)) {
-      const loose = fresh.find((s) => after.board[s]?.kind === 'q') ?? fresh[0]!
-      const takers = attackersOf(after, loose, opposite(color), vs)
-      const taker = takers.reduce((a, c) => (VALUE[after.board[c]!.kind] < VALUE[after.board[a]!.kind] ? c : a), takers[0]!)
-      add(after.board[loose]?.kind === 'q' ? 'hung_queen' : 'hung_piece', loose, after.board[taker]?.kind ?? 'p', after.board[loose]?.kind)
+  // A fresh blunder: a piece of ours can now be taken at a profit (static exchange, pins and the king's limits
+  // included), it was safe before, the opponent can really take it this move, and we are not threatening mate ourselves.
+  if (!duck && legalAfter().length > 0) {
+    const them = opposite(color)
+    const gained = victim ? VALUE[victim.kind] : 0
+    let best: { sq: Square; net: number; by: Square } | null = null
+    for (let s = 0; s < 64; s++) {
+      const p = after.board[s]
+      if (!p || p.color !== color || p.kind === 'k' || p.kind === 'p') continue
+      const loss = see(after, s, them, vs)
+      if (loss <= 0) continue
+      if (s === move.to ? !!move.promotion : see(before, s, them, vs) > 0) continue
+      const net = loss - gained
+      if (net <= 0) continue
+      if (!legalAfter().some((m) => (m.captureSq ?? m.to) === s)) continue
+      const by = cheapestCaptor(after, s, them, vs)
+      if (by === undefined) continue
+      const better = !best || (p.kind === 'q' && after.board[best.sq]!.kind !== 'q') || (after.board[best.sq]!.kind !== 'q' && net > best.net)
+      if (better) best = { sq: s, net, by }
+    }
+    if (best && !threatensMate(after, vs)) {
+      const kind = after.board[best.sq]!.kind
+      add(kind === 'q' ? 'hung_queen' : 'hung_piece', best.sq, after.board[best.by]!.kind, kind, [best.by, best.sq])
     }
   }
 
@@ -168,30 +167,6 @@ export function detectMoments(before: State, after: State, move: Move, log: read
     if ((move.captureSq ?? move.to) !== pushed && legalBefore().some((m) => m.enPassant)) add('missed_en_passant', before.ep, 'p', 'p')
   }
 
-  // Knight fork: the horsey lands, hits two things that matter (king, queen, rook or a loose piece worth 3+) and survives.
-  if (move.piece.kind === 'n' && !duck) {
-    const them = opposite(color)
-    const hit: Square[] = []
-    for (let s = 0; s < 64; s++) {
-      const p = after.board[s]
-      if (!p || p.color !== them || !attackersOf(after, s, color, vs).includes(move.to)) continue
-      const loose = !attackersOf(after, s, them, vs).length
-      if (p.kind === 'k' || p.kind === 'q' || p.kind === 'r' || (loose && VALUE[p.kind] >= 3)) hit.push(s)
-    }
-    // Safe: not attacked by something cheaper (the king does not count: it cannot take a defended knight),
-    // defended if attacked at all, and not pinned against its own king.
-    const takers = attackersOf(after, move.to, them, vs)
-    const cheaper = takers.some((a) => after.board[a]!.kind !== 'k' && VALUE[after.board[a]!.kind] < VALUE.n)
-    const defended = attackersOf(after, move.to, color, vs).length > 0
-    const lifted = { ...after, board: after.board.map((p, i) => (i === move.to ? null : p)) }
-    const pinned = after.kings[color] >= 0 && !isAttacked(after, after.kings[color], them, vs) && isAttacked(lifted, after.kings[color], them, vs)
-    const safe = !cheaper && (!takers.length || defended) && !pinned
-    if (hit.length >= 2 && safe) {
-      const best = [...hit].sort((a, b) => VALUE[after.board[b]!.kind] - VALUE[after.board[a]!.kind])[0]! // the king is worth 0 here, so the real prize wins
-      add('knight_fork', move.to, 'n', after.board[best]!.kind)
-    }
-  }
-
   // Smothered mate: the knight mates alone while the king's own pieces or the edge block every exit.
   if (gaveCheck && move.piece.kind === 'n' && legalAfter().length === 0) {
     const k = after.kings[opposite(color)]
@@ -213,5 +188,8 @@ export function detectMoments(before: State, after: State, move: Move, log: read
     }
     if (smothered) add('smothered_mate', k, 'n', 'k')
   }
+
+  // Forks, pins, skewers, discovered attacks, trapped pieces, mate threats, missed mates (not in duck chess).
+  if (!duck && !hasNoCheck(vs)) out.push(...detectTactics({ before, after, move, vs, legalBefore: legalBefore(), legalAfter: legalAfter(), prev: ctx.prev ?? [] }))
   return out
 }
