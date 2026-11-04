@@ -6,7 +6,7 @@ import { pickText } from '../content/select'
 import type { CinematicStep } from '../content/types'
 import { playSfx } from '../audio/sfx'
 import type { CineRequest } from '../state/useChass'
-import { HAND_PIVOT, HAND_SIZE, HAND_SPRITE, handPose } from './AimLayer'
+import { HAND_PIVOT, HAND_REACH, HAND_SIZE, HAND_SPRITE, handPose } from './AimLayer'
 import type { Pt } from './AimLayer'
 
 interface Props {
@@ -75,9 +75,10 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
         return e ? center(e.sq) : null
       }
       if (name.startsWith('aim:')) {
-        // Stop `reach` squares short of the victim, but never back behind the attacker.
+        // The gun's spot: a little in front of the attacker on the line to the victim (the hand never travels
+        // across the board), and never closer than `reach` squares to the victim when the victim is adjacent.
         const reach = Number(name.slice(4)) || 0
-        const d = Math.max(dist - reach, 0.2)
+        const d = Math.min(HAND_REACH, Math.max(dist - reach, 0.2))
         return { x: A.x + ((V.x - A.x) / dist) * d, y: A.y + ((V.y - A.y) / dist) * d }
       }
       if (/^[a-h][1-8]$/.test(name)) return center((name.charCodeAt(1) - 49) * 8 + (name.charCodeAt(0) - 97))

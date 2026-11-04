@@ -19,7 +19,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -97,7 +97,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -183,7 +183,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -264,7 +264,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -840,7 +840,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -919,7 +919,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -1066,7 +1066,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -1539,7 +1539,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -1616,7 +1616,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -1946,7 +1946,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -2043,7 +2043,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -2135,7 +2135,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -2259,7 +2259,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -2927,7 +2927,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -3075,7 +3075,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -3270,7 +3270,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
@@ -3434,7 +3434,7 @@
           "id": "hand",
           "sprite": "hand-gun.png",
           "anchor": "attacker",
-          "size": 1.9,
+          "size": 1.4,
           "rotate": "toTarget",
           "pivot": [
             0.3,
