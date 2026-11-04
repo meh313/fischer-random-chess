@@ -37,6 +37,16 @@ export interface Moment {
   attacker: PieceKind
   /** The piece it happens to, when there is one. */
   victim?: PieceKind
+  /** The squares involved, first the piece whose threat it is, then its main target (forks, pins, hands). */
+  squares?: Square[]
+}
+
+/** What the Game already knows about this move, so detection never regenerates it. */
+export interface MomentContext {
+  legalBefore?: readonly Move[]
+  legalAfter?: readonly Move[]
+  /** Moment ids this side produced with its previous move (standing tactics are told once). */
+  prev?: readonly MomentId[]
 }
 
 /** Earlier moves, oldest first, as the Game records them. */
@@ -80,8 +90,10 @@ function attackedByCheaper(state: State, sq: number, vs: readonly Variant[]): bo
  * Works out the story beats of `move` (already applied: before -> after).
  * `log` holds the moves before this one. Pure and cheap: a few attack scans, no search.
  */
-export function detectMoments(before: State, after: State, move: Move, log: readonly MoveLog[], vs: readonly Variant[]): Moment[] {
+export function detectMoments(before: State, after: State, move: Move, log: readonly MoveLog[], vs: readonly Variant[], ctx: MomentContext = {}): Moment[] {
   const color = move.piece.color
+  const legalBefore = () => ctx.legalBefore ?? (ctx.legalBefore = legalMoves(before, vs))
+  const legalAfter = () => ctx.legalAfter ?? (ctx.legalAfter = legalMoves(after, vs))
   const out: Moment[] = []
   const add = (id: MomentId, square: Square = move.to, attacker: PieceKind = move.piece.kind, victimKind: PieceKind | undefined = move.capture?.kind) =>
     out.push({ id, color, square, attacker, victim: victimKind })
@@ -153,7 +165,7 @@ export function detectMoments(before: State, after: State, move: Move, log: read
   // Taking that pawn some other way is not a brick.
   if (before.ep !== null && !move.enPassant) {
     const pushed = color === 'w' ? before.ep - 8 : before.ep + 8
-    if ((move.captureSq ?? move.to) !== pushed && legalMoves(before, vs).some((m) => m.enPassant)) add('missed_en_passant', before.ep, 'p', 'p')
+    if ((move.captureSq ?? move.to) !== pushed && legalBefore().some((m) => m.enPassant)) add('missed_en_passant', before.ep, 'p', 'p')
   }
 
   // Knight fork: the horsey lands, hits two things that matter (king, queen, rook or a loose piece worth 3+) and survives.
@@ -181,7 +193,7 @@ export function detectMoments(before: State, after: State, move: Move, log: read
   }
 
   // Smothered mate: the knight mates alone while the king's own pieces or the edge block every exit.
-  if (gaveCheck && move.piece.kind === 'n' && legalMoves(after, vs).length === 0) {
+  if (gaveCheck && move.piece.kind === 'n' && legalAfter().length === 0) {
     const k = after.kings[opposite(color)]
     const kf = k & 7
     const kr = k >> 3

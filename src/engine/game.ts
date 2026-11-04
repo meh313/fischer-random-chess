@@ -1,5 +1,6 @@
 import { fileOf, opposite, parseSquare, rankOf, sq } from './board'
 import { detectMoments } from './moments'
+import type { MomentId } from './moments'
 import type { GameEvent, GameEventHandler } from './events'
 import { fenCastling, fenPlacement, parseFen, STANDARD_FEN, toFen } from './fen'
 import { createRng } from './rng'
@@ -36,9 +37,10 @@ interface Snapshot {
   result: GameResult | null
   keys: string[]
   records: MoveRecord[]
+  lastMoments: Record<Color, MomentId[]>
 }
 
-export function positionKey(state: State, vs: readonly Variant[] = []): string {
+export function positionKey(state: State, vs: readonly Variant[] = [], legal?: readonly Move[]): string {
   let ep = '-'
   if (state.ep !== null) {
     const dir = state.turn === 'w' ? 1 : -1
@@ -51,7 +53,7 @@ export function positionKey(state: State, vs: readonly Variant[] = []): string {
       if (p && p.kind === 'p' && p.color === state.turn) ep = String(state.ep)
     }
     // FIDE: the ep square only counts if the capture is actually legal (not pinned).
-    if (ep !== '-' && state.phase === 'move' && !legalMoves(state, vs).some((m) => m.enPassant)) ep = '-'
+    if (ep !== '-' && state.phase === 'move' && !(legal ?? legalMoves(state, vs)).some((m) => m.enPassant)) ep = '-'
   }
   return `${fenPlacement(state)} ${state.turn} ${fenCastling(state)} ${ep} ${state.phase} ${state.duck ?? '-'}`
 }
@@ -104,6 +106,8 @@ export class Game {
   private readonly vs: Variant[]
   private keys: string[] = []
   private history: Snapshot[] = []
+  /** Moment ids each side produced with its last move: standing tactics are told once. */
+  private lastMoments: Record<Color, MomentId[]> = { w: [], b: [] }
   private handlers = new Set<GameEventHandler>()
 
   constructor(opts: GameOptions = {}) {
@@ -195,7 +199,8 @@ export class Game {
 
   play(move: Move): GameEvent[] {
     if (this.result) throw new Error('Game is over')
-    const m = this.legalMoves().find(
+    const legalBefore = this.legalMoves()
+    const m = legalBefore.find(
       (x) => x.from === move.from && x.to === move.to && x.promotion === move.promotion && !x.castle === !move.castle,
     )
     if (!m) throw new Error('Illegal move')
@@ -203,8 +208,10 @@ export class Game {
     this.snapshot()
     const before = this.state
     const color = before.turn
-    const san = toSan(before, m, this.vs)
     const after = applyMove(before, m, this.vs)
+    // Generated once and handed to SAN, repetition keys, adjudication and the moments.
+    const legalAfter = legalMoves(after, this.vs)
+    const san = toSan(before, m, this.vs, { legal: legalBefore, after, legalAfter })
     this.state = after
     this.records.push({ color, san, move: m })
 
@@ -238,12 +245,14 @@ export class Game {
       // Turn completes after the duck is placed. A captured king ends the game now.
       this.result = this.evaluate()
     } else {
-      this.keys.push(positionKey(after, this.vs))
-      this.result = this.evaluate()
+      this.keys.push(positionKey(after, this.vs, legalAfter))
+      this.result = this.evaluate(legalAfter)
       if (inCheck(after, this.vs)) events.push({ type: 'check', color: after.turn, kingSq: after.kings[after.turn] })
       this.maybeBlunder(before, after, color, m, events)
     }
-    for (const mo of detectMoments(before, after, m, this.records.slice(0, -1), this.vs)) events.push({ type: 'moment', color: mo.color, moment: mo.id, square: mo.square, attacker: mo.attacker, victim: mo.victim })
+    const moments = detectMoments(before, after, m, this.records.slice(0, -1), this.vs, { legalBefore, legalAfter, prev: this.lastMoments[color] })
+    this.lastMoments[color] = moments.map((mo) => mo.id)
+    for (const mo of moments) events.push({ type: 'moment', color: mo.color, moment: mo.id, square: mo.square, attacker: mo.attacker, victim: mo.victim, squares: mo.squares })
     this.resultEvents(events)
     this.emit(events)
     return events
@@ -278,6 +287,7 @@ export class Game {
     this.result = snap.result
     this.keys = snap.keys
     this.records = snap.records
+    this.lastMoments = snap.lastMoments
     return true
   }
 
@@ -320,6 +330,7 @@ export class Game {
       result: this.result,
       keys: [...this.keys],
       records: this.records.map((r) => ({ ...r })),
+      lastMoments: { w: [...this.lastMoments.w], b: [...this.lastMoments.b] },
     })
   }
 
@@ -356,9 +367,8 @@ export class Game {
     events.push({ type: 'gameOver', result: r })
   }
 
-  private evaluate(): GameResult | null {
+  private evaluate(legal: readonly Move[] = legalMoves(this.state, this.vs)): GameResult | null {
     const s = this.state
-    const legal = legalMoves(s, this.vs)
     for (const v of this.vs) {
       const r = v.adjudicate?.(s, legal)
       if (r) return r
