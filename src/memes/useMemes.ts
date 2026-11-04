@@ -146,7 +146,7 @@ export function useMemes(memes: readonly MemeEntry[], gifs: GifFile | null, sett
     // Small moments never pile up: skip them while a flash is showing, queued, loading or cooling down.
     const busy = showing.current || queue.current.length > 0 || inFlight.current > 0 || Date.now() < lastEnd.current + s.memeCooldownSec * 1000
     if (busy && !big) return
-    if (Math.random() >= (pick.cfg?.chance ?? 1) * s.memeChance) return
+    if (Math.random() >= (pick.cfg?.chance ?? 1) * (pick.cfg?.sure ? 1 : s.memeChance)) return
     if (queue.current.length + inFlight.current >= MAX_QUEUE) return
     const until = Date.now() + (big ? BIG_STALE_MS : STALE_MS)
     if (gifsUsable && pick.cfg) {

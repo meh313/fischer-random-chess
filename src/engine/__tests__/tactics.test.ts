@@ -103,10 +103,13 @@ describe('discovered attacks, trapped pieces, mates', () => {
     expect(ids('6bk/5prp/6p1/8/8/8/8/B3K3 w - - 0 1', 'a1b2')).not.toContain('trapped_piece')
   })
 
-  it('mate threats and missed mates', () => {
-    expect(ids(undefined, 'e2e4', 'e7e5', 'f1c4', 'b8c6', 'd1h5')).toContain('mate_threat')
-    expect(ids(undefined, 'e2e4', 'e7e5', 'f1c4', 'b8c6', 'd1h5', 'g8f6', 'g1f3')).toContain('missed_mate')
-    expect(squaresOf('6k1/5ppp/8/8/8/8/8/R3K3 w - - 0 1', 'missed_mate', 'a1a2')).toEqual(sq('a2', 'a8', 'g8'))
+  it('missed mates (a mate threat is never a moment: it would tip off the defender)', () => {
+    expect(ids(undefined, 'e2e4', 'e7e5', 'f1c4', 'b8c6', 'd1h5')).toEqual([])
+    // Qxf7# is still on after 4.Nf3: saying so would warn Black. Told only once the mate is gone.
+    expect(ids(undefined, 'e2e4', 'e7e5', 'f1c4', 'b8c6', 'd1h5', 'g8f6', 'g1f3')).not.toContain('missed_mate')
+    expect(ids('6k1/5ppp/8/8/8/8/8/R3K3 w - - 0 1', 'a1a2')).not.toContain('missed_mate')
+    // Rf1 walks away from the back rank (f7 blocks Rf8+): the missed mate is history now, so it is told.
+    expect(squaresOf('6k1/5ppp/8/8/8/8/4K3/R7 w - - 0 1', 'missed_mate', 'a1f1')).toEqual(sq('f1', 'a8', 'g8'))
     expect(ids('6k1/5ppp/8/8/8/8/8/R3K3 w - - 0 1', 'a1a8')).not.toContain('missed_mate')
     expect(ids('6k1/4bppp/8/8/8/8/8/R3K3 w - - 0 1', 'a1a2')).not.toContain('missed_mate')
     // Two quiet moves in a row with a mate on the board: said once.
@@ -128,7 +131,7 @@ describe('hung pieces on static exchange', () => {
 describe('quiet chess stays quiet', () => {
   const quiet = (...ucis: string[]) => {
     const g = new Game()
-    const tactical = new Set(['pawn_fork', 'knight_fork', 'fork', 'double_attack', 'pin', 'skewer', 'discovered_attack', 'trapped_piece', 'mate_threat', 'missed_mate', 'hung_piece', 'hung_queen'])
+    const tactical = new Set(['pawn_fork', 'knight_fork', 'fork', 'double_attack', 'pin', 'skewer', 'discovered_attack', 'trapped_piece', 'missed_mate', 'hung_piece', 'hung_queen'])
     const fired: string[] = []
     for (const u of ucis) for (const m of momentsOf(g.playUci(u))) if (tactical.has(m.moment)) fired.push(`${u}:${m.moment}`)
     return fired

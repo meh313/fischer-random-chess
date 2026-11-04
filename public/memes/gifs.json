@@ -717,17 +717,6 @@
         "decisions decisions"
       ]
     },
-    "mate_threat": {
-      "priority": 64,
-      "chance": 0.5,
-      "queries": [
-        "uh oh",
-        "nervous sweating",
-        "oh no",
-        "brace yourself",
-        "this is fine"
-      ]
-    },
     "discovered_attack": {
       "priority": 61,
       "chance": 0.8,
@@ -745,6 +734,18 @@
         "dont move",
         "stop right there",
         "house arrest"
+      ]
+    },
+    "long_shot": {
+      "priority": 84,
+      "chance": 1,
+      "sure": true,
+      "queries": [
+        "sniper",
+        "sniper shot",
+        "headshot",
+        "snipe",
+        "sniper rifle"
       ]
     }
   },

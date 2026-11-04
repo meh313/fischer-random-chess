@@ -27,7 +27,6 @@ export const MOMENT_GAG_ORDER: readonly MomentId[] = [
   'skewer',
   'fork',
   'double_attack',
-  'mate_threat',
   'knight_fork',
   'discovered_attack',
   'pin',

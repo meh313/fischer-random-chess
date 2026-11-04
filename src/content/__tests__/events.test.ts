@@ -84,7 +84,7 @@ describe('moment gags', () => {
       expect(pickCinematic(shipped, ctx), id).toBeDefined()
       expect(pickCinematic(noGun, ctx), `${id} without the gun`).toBeDefined()
     }
-    for (const id of ['pin', 'hung_piece', 'discovered_attack', 'mate_threat']) {
+    for (const id of ['pin', 'hung_piece', 'discovered_attack']) {
       for (const g of shipped.filter((c) => [c.match.moment].flat().includes(id as never))) expect(g.chance ?? 1, g.id).toBeLessThan(1)
     }
   })

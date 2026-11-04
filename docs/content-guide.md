@@ -46,20 +46,20 @@ Shipped sprites for gags: hand-gun.png (supplied art), and duck, crown, sparkle,
 
 ### Gags for moments (forks, pins, blunders...)
 
-Set `match.event` to `moment` and `match.moment` to a moment id or a list (`pawn_fork`, `knight_fork`, `fork`, `double_attack`, `pin`, `skewer`, `discovered_attack`, `trapped_piece`, `mate_threat`, `missed_mate`, `hung_queen`, `hung_piece`). The gag plays on the final position. `sq1`..`sq4` anchor and target the moment's squares:
+Set `match.event` to `moment` and `match.moment` to a moment id or a list (`pawn_fork`, `knight_fork`, `fork`, `double_attack`, `pin`, `skewer`, `discovered_attack`, `trapped_piece`, `missed_mate`, `hung_queen`, `hung_piece`). The gag plays on the final position. `sq1`..`sq4` anchor and target the moment's squares:
 
 - forks: sq1 the forking piece, sq2, sq3... its targets (most valuable first, the king first). `attacker` = sq1, `victim` = sq2.
 - double_attack: sq1 attacker one, sq2 its target, sq3 attacker two, sq4 its target.
 - pin and skewer: sq1 the slider, sq2 the piece in front, sq3 the piece behind.
 - discovered_attack: sq1 the piece whose line opened, sq2 what it hits, sq3 the piece that moved. For a discovered check that also hits something: sq1 the piece that moved, sq2 what it hits, sq3 the piece giving check.
 - trapped_piece, hung_queen, hung_piece: sq1 the piece that can take, sq2 the piece that is lost.
-- mate_threat: sq1 the piece that moved, sq2 the king in trouble. missed_mate: sq1 the piece that could have mated, sq2 the mating square, sq3 the king that got away.
+- missed_mate: sq1 the piece that could have mated, sq2 the mating square, sq3 the king that got away.
 
-`match.victim` on a moment gag matches any involved piece after sq1, so `"victim": "k"` on a fork gag means a king is among the forked pieces. One move gets at most one event gag, chosen in this order: checkmate or stalemate, promotion, castling, then the moments by priority (missed_mate, hung_queen, pawn_fork, trapped_piece, hung_piece, skewer, fork, double_attack, mate_threat, knight_fork, discovered_attack, pin), then check. A gag that fails its `chance` falls through to the next candidate. Only one gun per move: when a capture gag already pulled the hand, gags with `aim` or the hand sprite are skipped, so every moment id ships a caption-only fallback too. A moment a gag told gets no reaction GIF on top.
+`match.victim` on a moment gag matches any involved piece after sq1, so `"victim": "k"` on a fork gag means a king is among the forked pieces. One move gets at most one event gag, chosen in this order: checkmate or stalemate, promotion, castling, then the moments by priority (missed_mate, hung_queen, pawn_fork, trapped_piece, hung_piece, skewer, fork, double_attack, knight_fork, discovered_attack, pin), then check. A gag that fails its `chance` falls through to the next candidate. Only one gun per move: when a capture gag already pulled the hand, gags with `aim` or the hand sprite are skipped, so every moment id ships a caption-only fallback too. A moment a gag told gets no reaction GIF on top. There is no moment for a mate threat on purpose: telling it would warn the defender.
 
 ### Aim mode
 
-A gun hand flashes (0.4 s) from each attacker at a piece of the side to move that is en prise: taking it wins material after every recapture, pins and the king's limits counted (static exchange). Each threat is shown once; a gag that pointed hands at pieces counts as their warning.
+A gun hand flashes (0.4 s) from each attacker at a piece of the side to move that is obviously hanging: attacked by something cheaper, or attacked with nothing covering it. Subtle losses (a pinned defender, a battery, a long exchange) get no hand, and a mate threat is never shown: the hands are a gag, not coaching. Each threat is shown once; a gag that pointed hands at pieces counts as their warning.
 
 ## A new meme: `public/memes/memes.json`
 
@@ -71,7 +71,7 @@ Drop the file in `public/memes/`. `on` is any event type (`checkmate`, `check`, 
 
 ## Online GIFs: `public/memes/gifs.json`
 
-Memes react to what a move did, not just to its type. The engine tags each move with moments: `hung_queen`, `hung_piece`, `queen_lost`, `queen_trade`, `free_piece`, `free_pawn`, `capture_spree`, `check_spam`, `king_walk`, `comeback`, `steamroll`, `underpromotion`, `bongcloud`, `missed_en_passant`, `knight_fork`, `smothered_mate`, `pawn_fork`, `fork`, `double_attack`, `pin`, `skewer`, `discovered_attack`, `trapped_piece`, `mate_threat`, `missed_mate` (see `src/engine/moments.ts` and `tactics.ts`). One move can fire several events; only the highest-priority key shows a meme.
+Memes react to what a move did, not just to its type. The engine tags each move with moments: `hung_queen`, `hung_piece`, `queen_lost`, `queen_trade`, `free_piece`, `free_pawn`, `capture_spree`, `check_spam`, `king_walk`, `comeback`, `steamroll`, `underpromotion`, `bongcloud`, `missed_en_passant`, `knight_fork`, `smothered_mate`, `pawn_fork`, `fork`, `double_attack`, `pin`, `skewer`, `discovered_attack`, `trapped_piece`, `missed_mate`, `long_shot` (see `src/engine/moments.ts` and `tactics.ts`). One move can fire several events; only the highest-priority key shows a meme. `long_shot` (a bishop or dragon capture from 4+ squares away) sits on the square the bishop shot from and is marked `sure`: a `sure` key ignores the meme frequency slider, so the sniper shows whenever memes are on.
 
 ```json
 "hung_queen": { "priority": 85, "chance": 1, "queries": ["facepalm", "oh no"], "refine": [{ "attacker": "p", "queries": ["david and goliath"] }] }

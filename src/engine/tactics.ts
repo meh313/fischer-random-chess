@@ -7,7 +7,7 @@ import type { Variant } from './variant'
 
 /**
  * Tactics the mover just created: forks, double attacks, pins, skewers, discovered attacks,
- * trapped pieces, mate threats and the mate in one that was not played.
+ * trapped pieces and the mate in one that was not played. Mate threats are never told: it would tip off the defender.
  * Every "they lose something" claim is checked against the opponent's legal replies, so a block,
  * a king step or an even trade of the attacker keeps a tempo from being announced as a tactic.
  */
@@ -221,9 +221,9 @@ export function detectTactics(ctx: TacticsContext): Moment[] {
     }
   }
 
-  // ---- mate next move, and the mate that was on the board and not played.
-  if (!gaveCheck && !prev.includes('mate_threat') && threatensMate(after, vs)) add('mate_threat', king, F, king, [F, king])
-  if (!prev.includes('missed_mate')) {
+  // ---- the mate that was on the board and not played. Told only once the mate is gone (the mating piece
+  // wandered off, the move blocked its own mate): while it still stands, telling it would warn the defender.
+  if (!prev.includes('missed_mate') && !threatensMate(after, vs)) {
     const mates = matesInOne(before, vs, legalBefore).sort((a, b) => a.from - b.from || a.to - b.to)
     const m0 = mates[0]
     if (m0) {

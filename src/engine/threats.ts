@@ -244,10 +244,12 @@ function poisoned(state: State, sq: Square, by: Square, vs: readonly Variant[]):
 }
 
 /**
- * Pieces of the side to move that are en prise (kings excluded): taking them wins material even after every
- * recapture, counting pins and the king's limits. The hand comes from the cheapest piece that can start it.
- * Poisoned pieces (the capture allows mate in one) get no hand. In duck chess only unblockable attackers count.
- * Sorted by what is lost, then by square.
+ * The obvious dangers for the side to move, the ones a player sees at a glance (kings excluded): a piece
+ * attacked by something cheaper, or attacked with nothing at all covering it. Subtle losses (a defender that
+ * is pinned, an x-ray battery, a long exchange) get no hand: a warning for those would be coaching, and the
+ * hands are a gag, not an engine. The attacker must be able to take right now (not pinned, a king only on
+ * a loose piece); a poisoned piece (taking it allows mate in one) is bait, not a target.
+ * In duck chess only knight, pawn and king attacks count: any line can be ducked.
  */
 export function aimTargets(state: State, vs: readonly Variant[]): AimTarget[] {
   const us = state.turn
@@ -256,10 +258,14 @@ export function aimTargets(state: State, vs: readonly Variant[]): AimTarget[] {
   for (let s = 0; s < 64; s++) {
     const p = state.board[s]
     if (!p || p.color !== us || p.kind === 'k') continue
+    // It must really be lost (static exchange: no hand at a piece covered through its attacker)...
     const e = enPrise(state, s, vs)
     if (!e) continue
     const captor = state.board[e.by]!.kind
     if (duckGame && captor !== 'p' && captor !== 'n' && captor !== 'k') continue
+    // ...and obviously so: taken by something cheaper, or with nothing standing guard at all.
+    const cheaper = captor !== 'k' && TACTICAL_VALUE[captor] < TACTICAL_VALUE[p.kind]
+    if (!cheaper && attackersOf(state, s, us, vs).length > 0) continue
     if (poisoned(state, s, e.by, vs)) continue
     out.push({ attacker: e.by, victim: s, loss: e.loss })
   }

@@ -1,4 +1,4 @@
-import { opposite } from './board'
+import { fileOf, opposite, rankOf } from './board'
 import { attackersOf, hasNoCheck, inCheck, legalMoves } from './rules'
 import { detectTactics } from './tactics'
 import { cheapestCaptor, see, TACTICAL_VALUE } from './threats'
@@ -10,6 +10,9 @@ import type { Variant } from './variant'
  * Story beats a single move can create, beyond the plain rules events.
  * Memes, GIFs and captions key off these so they match what just happened.
  */
+/** Squares (king distance) a bishop capture must cross to count as a long shot. */
+export const LONG_SHOT = 4
+
 export const MOMENTS = [
   'hung_queen',
   'hung_piece',
@@ -34,8 +37,8 @@ export const MOMENTS = [
   'skewer',
   'discovered_attack',
   'trapped_piece',
-  'mate_threat',
   'missed_mate',
+  'long_shot',
 ] as const
 export type MomentId = (typeof MOMENTS)[number]
 
@@ -107,6 +110,11 @@ export function detectMoments(before: State, after: State, move: Move, log: read
       const recapture = prevByThem?.move.capture && prevByThem.move.to === move.to
       if (!retakeable && !recapture) add(VALUE[victim.kind] >= 3 ? 'free_piece' : 'free_pawn')
     }
+  }
+
+  // A bishop (or dragon) sniping from across the board: the shot came from `move.from`.
+  if (victim && (move.piece.kind === 'b' || move.piece.kind === 'd') && !move.enPassant && Math.max(Math.abs(fileOf(move.to) - fileOf(move.from)), Math.abs(rankOf(move.to) - rankOf(move.from))) >= LONG_SHOT) {
+    add('long_shot', move.from, move.piece.kind, victim.kind, [move.from, move.to])
   }
 
   // A fresh blunder: a piece of ours can now be taken at a profit (static exchange, pins and the king's limits
@@ -189,7 +197,7 @@ export function detectMoments(before: State, after: State, move: Move, log: read
     if (smothered) add('smothered_mate', k, 'n', 'k')
   }
 
-  // Forks, pins, skewers, discovered attacks, trapped pieces, mate threats, missed mates (not in duck chess).
+  // Forks, pins, skewers, discovered attacks, trapped pieces, missed mates (not in duck chess).
   if (!duck && !hasNoCheck(vs)) out.push(...detectTactics({ before, after, move, vs, legalBefore: legalBefore(), legalAfter: legalAfter(), prev: ctx.prev ?? [] }))
   return out
 }

@@ -129,6 +129,8 @@ export interface GifKey {
   priority: number
   /** 0..1 odds a meme shows once this key is picked (multiplied by the meme frequency setting). */
   chance?: number
+  /** Not scaled by the meme frequency setting: it shows whenever memes are on at all (a bishop's sniper shot). */
+  sure?: boolean
   /** GIPHY search phrases; one is picked at random. */
   queries: string[]
   /** More specific searches for who did what, e.g. a pawn taking a queen. The most specific match wins. */

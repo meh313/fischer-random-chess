@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { Game } from '../game'
 import type { GameEvent } from '../events'
+import { parseSquare as S } from '../board'
 
 const moments = (events: GameEvent[]) => events.flatMap((e) => (e.type === 'moment' ? [e.moment] : []))
 const play = (fen: string | undefined, ...ucis: string[]) => {
@@ -95,5 +96,13 @@ describe('move moments', () => {
   it('stays quiet on ordinary opening moves', () => {
     expect(play(undefined, 'e2e4')).toEqual([])
     expect(play(undefined, 'g1f3')).toEqual([])
+  })
+
+  it('a bishop capture from four or more squares away is a long shot, from its old square', () => {
+    const far = new Game({ fen: '4k2r/8/8/8/8/8/8/B3K3 w - - 0 1' })
+    const shot = far.playUci('a1h8').find((e) => e.type === 'moment' && e.moment === 'long_shot')
+    expect(shot).toMatchObject({ square: S('a1'), attacker: 'b', victim: 'r', squares: [S('a1'), S('h8')] })
+    expect(play('4k3/8/8/8/3r4/8/1B6/4K3 w - - 0 1', 'b2d4')).not.toContain('long_shot')
+    expect(play('4k3/8/8/8/8/8/4K3/R6r w - - 0 1', 'a1h1')).not.toContain('long_shot')
   })
 })

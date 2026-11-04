@@ -4823,64 +4823,6 @@
       ]
     },
     {
-      "id": "mate-threat",
-      "match": {
-        "event": "moment",
-        "moment": "mate_threat"
-      },
-      "weight": 2,
-      "chance": 0.5,
-      "duration": 1500,
-      "steps": [
-        {
-          "at": 0,
-          "do": "pose",
-          "target": "sq2",
-          "pose": "shocked"
-        },
-        {
-          "at": 0,
-          "do": "spawn",
-          "id": "alarm",
-          "sprite": "exclamation.svg",
-          "anchor": "sq2+0.45,-0.55",
-          "size": 0.7
-        },
-        {
-          "at": 0,
-          "do": "scale",
-          "target": "alarm",
-          "to": 1.35,
-          "ms": 250
-        },
-        {
-          "at": 100,
-          "do": "shake",
-          "target": "sq2",
-          "ms": 400,
-          "amp": 5
-        },
-        {
-          "at": 200,
-          "do": "caption",
-          "text": [
-            "mate is on the table.",
-            "one move from the funeral",
-            "do you see it? he sees it.",
-            "the king should be nervous rn"
-          ],
-          "ms": 1200,
-          "pos": "top",
-          "style": "small"
-        },
-        {
-          "at": 1400,
-          "do": "despawn",
-          "target": "alarm"
-        }
-      ]
-    },
-    {
       "id": "missed-mate",
       "match": {
         "event": "moment",

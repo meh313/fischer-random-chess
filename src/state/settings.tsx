@@ -21,7 +21,7 @@ export interface Settings {
   opponent: 'human' | 'easy' | 'medium' | 'hard'
   /** Your color against the computer. */
   playAs: 'w' | 'b'
-  /** A gun hand aims at the mover's pieces that a capture would win material from (static exchange), once per threat. */
+  /** A gun hand aims at the mover's pieces that are obviously hanging (loose, or attacked by something cheaper), once per threat. */
   aimMode: boolean
 }
 

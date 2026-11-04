@@ -30,14 +30,21 @@ describe('aim targets', () => {
     expect(new Game({ fen: '4k3/8/4p3/3n4/2P5/8/8/4K3 b - - 0 1' }).aimTargets()).toEqual([{ attacker: S('c4'), victim: S('d5') }])
   })
 
-  it('knows pins, batteries and the limits of the king', () => {
-    // Only a pinned bishop defends the knight.
-    expect(new Game({ fen: '4k3/1p6/2b5/1B1n4/8/8/8/3RK3 b - - 0 1' }).aimTargets()).toEqual([{ attacker: S('d1'), victim: S('d5') }])
-    // Rook battery against a knight-defended knight.
-    expect(new Game({ fen: '4k3/8/5n2/3n4/8/8/3R4/3RK3 b - - 0 1' }).aimTargets()).toEqual([{ attacker: S('d2'), victim: S('d5') }])
+  it('keeps quiet about the subtle losses a player would have to calculate', () => {
+    // Only a pinned bishop defends the knight: it looks defended, so no hand.
+    expect(new Game({ fen: '4k3/1p6/2b5/1B1n4/8/8/8/3RK3 b - - 0 1' }).aimTargets()).toEqual([])
+    // Rook battery against a knight-defended knight: a two-move exchange, no hand.
+    expect(new Game({ fen: '4k3/8/5n2/3n4/8/8/3R4/3RK3 b - - 0 1' }).aimTargets()).toEqual([])
+    // The knight on d1 looks loose, but the rook on d8 recaptures through the attacker: no hand.
+    expect(new Game({ fen: '2KR4/6k1/8/3r4/8/8/8/3N4 w - - 0 1' }).aimTargets()).toEqual([])
+  })
+
+  it('respects the limits of the attacker', () => {
     // The enemy king cannot take a defended rook, but takes a loose one.
     expect(new Game({ fen: '4k3/3R4/2P5/8/8/8/8/4K3 w - - 0 1' }).aimTargets()).toEqual([])
     expect(new Game({ fen: '4k3/3R4/8/8/8/8/8/4K3 w - - 0 1' }).aimTargets()).toEqual([{ attacker: S('e8'), victim: S('d7') }])
+    // A pinned attacker cannot take: the rook on e2 is pinned to its king by the rook on e8.
+    expect(new Game({ fen: '4r1k1/8/8/8/8/8/2n1R3/4K3 b - - 0 1' }).aimTargets()).toEqual([])
   })
 
   it('keeps quiet about a poisoned piece', () => {
