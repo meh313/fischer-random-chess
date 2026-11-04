@@ -650,10 +650,11 @@
       "chance": 1,
       "queries": [
         "you had one job",
-        "bruh",
         "picard facepalm",
         "crying jordan",
-        "hide the pain harold"
+        "hide the pain harold",
+        "homer doh",
+        "facepalm"
       ]
     },
     "pawn_fork": {
@@ -664,17 +665,17 @@
         "choose wisely",
         "surprised pikachu",
         "evil kermit",
-        "sophies choice"
+        "decisions decisions"
       ]
     },
     "trapped_piece": {
       "priority": 71,
       "chance": 0.9,
       "queries": [
-        "trapped",
-        "no escape",
         "cornered",
-        "its over anakin"
+        "its over anakin",
+        "stuck",
+        "admiral ackbar"
       ]
     },
     "skewer": {
@@ -690,10 +691,10 @@
       "priority": 66,
       "chance": 0.8,
       "queries": [
-        "two for one",
         "its a trap",
         "spiderman pointing",
-        "jackpot"
+        "jackpot",
+        "gotcha"
       ],
       "refine": [
         {
@@ -701,7 +702,7 @@
           "queries": [
             "slay",
             "hair flip",
-            "two for one"
+            "gotcha"
           ]
         }
       ]
@@ -712,7 +713,8 @@
       "queries": [
         "pick one",
         "choose wisely",
-        "spiderman pointing"
+        "spiderman pointing",
+        "decisions decisions"
       ]
     },
     "mate_threat": {
@@ -720,9 +722,10 @@
       "chance": 0.5,
       "queries": [
         "uh oh",
-        "its coming",
         "nervous sweating",
-        "oh no"
+        "oh no",
+        "brace yourself",
+        "this is fine"
       ]
     },
     "discovered_attack": {
@@ -731,18 +734,17 @@
       "queries": [
         "plot twist",
         "jump scare",
-        "ambush",
-        "gotcha"
+        "gotcha",
+        "surprise"
       ]
     },
     "pin": {
       "priority": 58,
       "chance": 0.3,
       "queries": [
-        "paralyzed",
-        "cant move",
-        "house arrest",
-        "glued"
+        "dont move",
+        "stop right there",
+        "house arrest"
       ]
     }
   },
