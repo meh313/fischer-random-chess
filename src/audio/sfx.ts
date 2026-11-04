@@ -138,6 +138,8 @@ export function warmSfx(names: readonly string[]) {
 }
 
 export async function playSfx(name: string) {
+  // Dev-only tap so scripted playthroughs can check which sounds a move produced.
+  if (import.meta.env.DEV) (window as unknown as { __sfx?: string[] }).__sfx?.push(name)
   if (!master.enabled || master.volume <= 0) return
   const c = getCtx()
   if (!c) return

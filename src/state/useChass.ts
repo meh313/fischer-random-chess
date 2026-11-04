@@ -338,8 +338,9 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     const entry = { req, hold }
     cineRef.current = entry
     setCine(entry)
-    if (usesGun(req.cin)) cineHands.current = true
-    // A moment gag that points at pieces counts as their warning: the aim flash after it does not redraw those hands.
+    if (!usesGun(req.cin)) return
+    cineHands.current = true
+    // A moment gag that points hands at pieces counts as their warning: the aim flash after it does not redraw those hands.
     const g = gameRef.current
     if (req.aimVictims?.length && g && !g.result && g.state.phase === 'move') {
       const seen = seenAims.current[g.turn]

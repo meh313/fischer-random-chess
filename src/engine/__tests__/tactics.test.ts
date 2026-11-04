@@ -83,7 +83,10 @@ describe('pins and skewers', () => {
 describe('discovered attacks, trapped pieces, mates', () => {
   it('a discovered attack needs a second threat', () => {
     expect(ids('4k3/3q4/8/8/4N3/8/8/4RK2 w - - 0 1', 'e4c5')).toEqual(expect.arrayContaining(['discovered_attack']))
-    expect(ids(undefined, 'e2e4', 'e7e5', 'g1f3', 'g8f6', 'f3e5', 'f6e4', 'd1e2', 'e4f6', 'e5c6')).toContain('discovered_attack')
+    const petrov = play(undefined, 'e2e4', 'e7e5', 'g1f3', 'g8f6', 'f3e5', 'f6e4', 'd1e2', 'e4f6', 'e5c6')
+    expect(petrov.map((m) => m.moment)).toContain('discovered_attack')
+    expect(petrov.map((m) => m.moment)).not.toContain('knight_fork')
+    expect(petrov.find((m) => m.moment === 'discovered_attack')?.squares).toEqual(sq('c6', 'd8', 'e2'))
     expect(ids('3qk3/8/8/8/8/8/3N4/3RK3 w - - 0 1', 'd2f3')).not.toContain('discovered_attack')
     const both = ids('RBn1k3/8/8/8/8/8/8/4K3 w - - 0 1', 'b8a7')
     expect(both).toContain('pin')

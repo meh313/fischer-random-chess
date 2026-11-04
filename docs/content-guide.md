@@ -51,7 +51,7 @@ Set `match.event` to `moment` and `match.moment` to a moment id or a list (`pawn
 - forks: sq1 the forking piece, sq2, sq3... its targets (most valuable first, the king first). `attacker` = sq1, `victim` = sq2.
 - double_attack: sq1 attacker one, sq2 its target, sq3 attacker two, sq4 its target.
 - pin and skewer: sq1 the slider, sq2 the piece in front, sq3 the piece behind.
-- discovered_attack: sq1 the piece whose line opened, sq2 what it hits, sq3 the piece that moved.
+- discovered_attack: sq1 the piece whose line opened, sq2 what it hits, sq3 the piece that moved. For a discovered check that also hits something: sq1 the piece that moved, sq2 what it hits, sq3 the piece giving check.
 - trapped_piece, hung_queen, hung_piece: sq1 the piece that can take, sq2 the piece that is lost.
 - mate_threat: sq1 the piece that moved, sq2 the king in trouble. missed_mate: sq1 the piece that could have mated, sq2 the mating square, sq3 the king that got away.
 

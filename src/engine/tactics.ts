@@ -33,6 +33,8 @@ export function detectTactics(ctx: TacticsContext): Moment[] {
   const F = move.to
   const king = after.kings[them]
   const gaveCheck = inCheck(after, vs)
+  /** Pieces other than the moved one that give check: a discovered check is its own story, not a fork. */
+  const checkers = gaveCheck ? attackersOf(after, king, color, vs).filter((s) => s !== F) : []
 
   const enemyAt = (s: State, sq: Square) => {
     const p = s.board[sq]
@@ -82,7 +84,7 @@ export function detectTactics(ctx: TacticsContext): Moment[] {
     if (winnable(after, s)) prongs.push(s)
   }
   let forked = false
-  if (prongs.length >= 2 && see(after, F, them, vs) <= 0 && prongs.some((s) => !winnable(before, s))) {
+  if (prongs.length >= 2 && !checkers.length && see(after, F, them, vs) <= 0 && prongs.some((s) => !winnable(before, s))) {
     const plain = prongs.filter((s) => enemyAt(after, s)!.kind !== 'k')
     const holds = survives(
       (applied, reply) =>
@@ -165,7 +167,6 @@ export function detectTactics(ctx: TacticsContext): Moment[] {
 
   // ---- discovered attack: a piece that did not move now hits something, and there is a second threat to go with it.
   const ownTargets = prongs.filter((s) => enemyAt(after, s)!.kind !== 'k')
-  const checkers = gaveCheck ? attackersOf(after, king, color, vs).filter((s) => s !== F) : []
   let discovered = false
   for (let t = 0; t < 64 && !discovered; t++) {
     const p = enemyAt(after, t)
@@ -188,9 +189,9 @@ export function detectTactics(ctx: TacticsContext): Moment[] {
     }
   }
   if (!discovered && checkers.length && ownTargets.length) {
-    // Discovered check while the moved piece hits something: the Petrov trap.
+    // Discovered check while the moved piece hits something (the Petrov trap): the hand comes from the moved piece.
     const t = [...ownTargets].sort(byValue)[0]!
-    add('discovered_attack', t, checkers[0]!, t, [checkers[0]!, t, F])
+    add('discovered_attack', t, F, t, [F, t, checkers[0]!])
   }
 
   // ---- trapped piece: en prise with no legal way out (moves, blocks and counter-captures all tried), and that is news.
