@@ -92,9 +92,9 @@ describe('mates and lines', () => {
   })
 
   it('lists sliders with two enemy pieces in a row', () => {
-    const got = lines(st('2n1k3/8/8/8/8/8/8/R3K3 w - - 0 1'), 'w', [])
+    const got = lines(st('2n1k3/8/8/8/8/8/8/R3K3 w - - 0 1'), 'w')
     expect(got).toEqual([])
-    const pinned = lines(st('R1n1k3/8/8/8/8/8/8/4K3 w - - 0 1'), 'w', [])
+    const pinned = lines(st('R1n1k3/8/8/8/8/8/8/4K3 w - - 0 1'), 'w')
     expect(pinned.map((l) => [l.piece, l.front, l.behind])).toEqual([[S('a8'), S('c8'), S('e8')]])
   })
 })

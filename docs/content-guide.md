@@ -30,6 +30,7 @@ Everything below lives in `public/` and is loaded at runtime. A bad file shows a
 - Duration is clamped to 3000 ms. Any click or Esc skips the cinematic. Author at a comfortable pace: the player runs every `at`, `ms` and duration at `CINE_SPEED` (0.6, in `CinematicLayer.tsx`), so a 1500 ms gag plays in 0.9 s.
 - Offsets: add +x,y (in squares, y grows downward) to any anchor, for example "victim+0,-0.8" is a little above the victim.
 - chance: optional 0..1, the odds that the gag plays once it is picked (the shipped check gag uses 0.5 so it does not nag).
+- Validation: a gag with a problem is dropped and reported in the "Content problem" banner. `ms`, `deg`, `size` and `duration` must be numbers (`ms` and `size` not negative), and match fields are checked too: `attacker` and `victim` must be piece kinds or `*`, colours must be `w` or `b`, and `variant` must be a registered variant id.
 
 ### Gags for events, not just captures
 

@@ -1918,102 +1918,6 @@
       ]
     },
     {
-      "id": "king-down",
-      "match": {
-        "attacker": [
-          "p",
-          "n",
-          "b",
-          "d",
-          "r",
-          "q",
-          "k"
-        ],
-        "victim": "k"
-      },
-      "weight": 1,
-      "duration": 1500,
-      "steps": [
-        {
-          "at": 0,
-          "do": "pose",
-          "target": "victim",
-          "pose": "shocked"
-        },
-        {
-          "at": 0,
-          "do": "spawn",
-          "id": "hand",
-          "sprite": "hand-gun.png",
-          "anchor": "attacker",
-          "size": 1.4,
-          "rotate": "toTarget",
-          "pivot": [
-            0.3,
-            0.15
-          ]
-        },
-        {
-          "at": 0,
-          "do": "move",
-          "target": "hand",
-          "from": "attacker",
-          "to": "aim:1.2",
-          "ms": 130,
-          "ease": "outQuad"
-        },
-        {
-          "at": 420,
-          "do": "sound",
-          "sfx": "bang"
-        },
-        {
-          "at": 420,
-          "do": "shake",
-          "target": "victim",
-          "ms": 220,
-          "amp": 7
-        },
-        {
-          "at": 700,
-          "do": "sound",
-          "sfx": "bang"
-        },
-        {
-          "at": 700,
-          "do": "shake",
-          "target": "victim",
-          "ms": 220,
-          "amp": 9
-        },
-        {
-          "at": 760,
-          "do": "fade",
-          "target": "victim",
-          "to": 0,
-          "ms": 400
-        },
-        {
-          "at": 820,
-          "do": "caption",
-          "text": [
-            "double tap",
-            "no respawns",
-            "long live the king",
-            "royal L"
-          ],
-          "ms": 650,
-          "pos": "center",
-          "style": "red"
-        },
-        {
-          "at": 1400,
-          "do": "despawn",
-          "target": "hand"
-        }
-      ]
-    },
-    {
       "id": "gun-duck-games",
       "match": {
         "attacker": [
@@ -5010,10 +4914,7 @@
       "id": "hung-plain",
       "match": {
         "event": "moment",
-        "moment": [
-          "hung_queen",
-          "hung_piece"
-        ]
+        "moment": "hung_queen"
       },
       "weight": 1,
       "duration": 1400,
@@ -5040,6 +4941,43 @@
             "ma'am?",
             "she's just standing there. menacingly.",
             "oh no no no no"
+          ],
+          "ms": 1100
+        }
+      ],
+      "chance": 0.6
+    },
+    {
+      "id": "hung-piece-plain",
+      "match": {
+        "event": "moment",
+        "moment": "hung_piece"
+      },
+      "weight": 1,
+      "duration": 1400,
+      "steps": [
+        {
+          "at": 0,
+          "do": "pose",
+          "target": "sq2",
+          "pose": "shocked"
+        },
+        {
+          "at": 0,
+          "do": "shake",
+          "target": "sq2",
+          "ms": 300,
+          "amp": 4
+        },
+        {
+          "at": 200,
+          "do": "caption",
+          "text": [
+            "free real estate",
+            "oh no no no no",
+            "that one's free",
+            "left on read",
+            "who left this here"
           ],
           "ms": 1100
         }

@@ -146,17 +146,19 @@ export function see(state: State, target: Square, by: Color, vs: readonly Varian
   const victim = state.board[target]
   if (!victim || victim.color === by) return 0
   if (victim.kind === 'k' && !hasNoCheck(vs)) return 0
+  const from = cheapestCaptor(state, target, by, vs)
+  return from === undefined ? 0 : seeFrom(state, target, from, vs)
+}
+
+/** The exchange on `target` started by the piece on `from` (already known to be able to take), trading down from there. */
+function seeFrom(state: State, target: Square, first: Square, vs: readonly Variant[]): number {
   let cur: State = state
   let sq = target
-  let side = by
-  const gain: number[] = [captorValue(victim.kind)]
+  let side = state.board[first]!.color
+  const gain: number[] = [captorValue(state.board[target]!.kind)]
   let d = 0
-  for (;;) {
-    const from = cheapestCaptor(cur, sq, side, vs)
-    if (from === undefined) {
-      if (d === 0) return 0 // nobody can legally start
-      break
-    }
+  for (let from: Square | undefined = first; ; from = cheapestCaptor(cur, sq, side, vs)) {
+    if (from === undefined) break
     const mover = cur.board[from]!
     const { board, to } = simulateCapture(cur, from, sq)
     const promoted = board[to]!.kind !== mover.kind
@@ -176,11 +178,12 @@ export function see(state: State, target: Square, by: Color, vs: readonly Varian
 export function enPrise(state: State, sq: Square, vs: readonly Variant[]): { loss: number; by: Square } | null {
   const p = state.board[sq]
   if (!p) return null
+  if (p.kind === 'k' && !hasNoCheck(vs)) return null
   const them = opposite(p.color)
-  const loss = see(state, sq, them, vs)
-  if (loss <= 0) return null
   const by = cheapestCaptor(state, sq, them, vs)
-  return by === undefined ? null : { loss, by }
+  if (by === undefined) return null
+  const loss = seeFrom(state, sq, by, vs)
+  return loss > 0 ? { loss, by } : null
 }
 
 /** Legal moves of the side to move that checkmate. Empty in no-check or two-phase variants. */
@@ -215,8 +218,7 @@ export interface Line {
 }
 
 /** Every slider of `color` with two enemy pieces in a row on one of its rays (pins and skewers, unclassified). */
-export function lines(state: State, color: Color, vs: readonly Variant[]): Line[] {
-  void vs
+export function lines(state: State, color: Color): Line[] {
   const out: Line[] = []
   for (let s = 0; s < 64; s++) {
     const p = state.board[s]

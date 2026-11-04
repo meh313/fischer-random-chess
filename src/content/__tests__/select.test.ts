@@ -97,6 +97,40 @@ describe('cinematic validation', () => {
     expect(problems.join('\n')).toMatch(/targets "sq9"/)
   })
 
+  it('rejects non-numeric step times and durations', () => {
+    const { problems } = validateCinematicsReport({
+      version: 1,
+      cinematics: [
+        { id: 'ms', steps: [{ at: 0, do: 'caption', text: 'x', ms: '500' }] },
+        { id: 'neg-ms', steps: [{ at: 0, do: 'shake', target: 'victim', ms: -10 }] },
+        { id: 'dur', duration: 'long', steps: [] },
+      ],
+    })
+    const text = problems.join('\n')
+    expect(text).toMatch(/"ms" step 1 has a bad "ms"/)
+    expect(text).toMatch(/"neg-ms" step 1 has a bad "ms"/)
+    expect(text).toMatch(/"dur" has a bad duration/)
+  })
+
+  it('rejects unknown piece kinds, colours and variant ids in a match', () => {
+    const { items, problems } = validateCinematicsReport({
+      version: 1,
+      cinematics: [
+        { id: 'kind', match: { victim: 'x' }, steps: [] },
+        { id: 'kinds', match: { attacker: ['p', 'z'] }, steps: [] },
+        { id: 'colour', match: { attackerColor: 'red' }, steps: [] },
+        { id: 'variant', match: { variant: 'chess961' }, steps: [] },
+        { id: 'fine', match: { attacker: ['p', 'd'], victim: '*', victimColor: 'b', variant: ['duck', 'fischer960'] }, steps: [] },
+      ],
+    })
+    expect(items.map((c) => c.id)).toEqual(['fine'])
+    const text = problems.join('\n')
+    expect(text).toMatch(/"kind" has unknown victim kind "x"/)
+    expect(text).toMatch(/"kinds" has unknown attacker kind "z"/)
+    expect(text).toMatch(/"colour" has a bad attackerColor "red"/)
+    expect(text).toMatch(/"variant" has unknown variant "chess961"/)
+  })
+
   it('colour-specific matches outrank generic ones', () => {
     expect(scoreMatch({ attackerColor: 'w' }, ctx)).toBeGreaterThan(scoreMatch({}, ctx))
   })

@@ -189,9 +189,6 @@ header p {
 .btn.primary:hover:not(:disabled) {
   background: var(--accent-dark);
 }
-.btn.wide {
-  grid-column: span 2;
-}
 .btn.small {
   padding: 6px 12px;
   font-size: 0.85rem;
@@ -937,8 +934,9 @@ input:focus-visible,
   .piece {
     transition: none;
   }
-  .aim-sprite {
-    animation: aimFade 0.4s both;
+  .aim-sprite,
+  .aim-sprite.aim-hold {
+    animation-name: aimFade;
   }
   .meme-flash {
     animation: none;

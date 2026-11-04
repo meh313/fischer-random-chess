@@ -138,7 +138,7 @@ export const Board = forwardRef<HTMLDivElement, Props>(function Board({ chass, s
       </div>
       {chass.aimFlash && <AimLayer key={chass.aimFlash.key} aims={chass.aimFlash.aims} flipped={flipped} />}
       {flash && <MemeFlash key={flash.key} meme={flash} pos={posFor(flash.square, flipped)} onDone={() => onFlashEnd?.()} />}
-      {cine && <CinematicLayer key={cine.key} request={cine} flipped={flipped} setPose={chass.setPose} onDone={chass.endCine} onSound={chass.noteCineSound} />}
+      {cine && <CinematicLayer key={cine.key} request={cine} flipped={flipped} setPose={chass.setPose} onDone={chass.endCine} />}
       {duckPhase && !game.result && (
         <div className="board-hint" role="status">
           Place the duck on an empty square

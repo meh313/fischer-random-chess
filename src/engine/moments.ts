@@ -1,7 +1,7 @@
 import { fileOf, opposite, rankOf } from './board'
 import { attackersOf, hasNoCheck, inCheck, legalMoves } from './rules'
 import { detectTactics } from './tactics'
-import { cheapestCaptor, see, TACTICAL_VALUE } from './threats'
+import { enPrise, see, TACTICAL_VALUE } from './threats'
 import { threatensMate } from './threats'
 import type { Color, Move, PieceKind, Square, State } from './types'
 import type { Variant } from './variant'
@@ -11,7 +11,7 @@ import type { Variant } from './variant'
  * Memes, GIFs and captions key off these so they match what just happened.
  */
 /** Squares (king distance) a bishop capture must cross to count as a long shot. */
-export const LONG_SHOT = 4
+const LONG_SHOT = 4
 
 export const MOMENTS = [
   'hung_queen',
@@ -74,7 +74,7 @@ export interface MoveLog {
 const VALUE = TACTICAL_VALUE
 
 /** Material of `color` minus the opponent's, in pawns. */
-export function materialBalance(state: State, color: Color): number {
+function materialBalance(state: State, color: Color): number {
   let sum = 0
   for (const p of state.board) if (p) sum += p.color === color ? VALUE[p.kind] : -VALUE[p.kind]
   return sum
@@ -117,8 +117,11 @@ export function detectMoments(before: State, after: State, move: Move, log: read
     add('long_shot', move.from, move.piece.kind, victim.kind, [move.from, move.to])
   }
 
+  const gaveCheck = !duck && inCheck(after, vs)
+
   // A fresh blunder: a piece of ours can now be taken at a profit (static exchange, pins and the king's limits
   // included), it was safe before, the opponent can really take it this move, and we are not threatening mate ourselves.
+  // After a check the opponent cannot pass, so the mate-threat test (which assumes a pass) does not apply.
   if (!duck && legalAfter().length > 0) {
     const them = opposite(color)
     const gained = victim ? VALUE[victim.kind] : 0
@@ -126,18 +129,16 @@ export function detectMoments(before: State, after: State, move: Move, log: read
     for (let s = 0; s < 64; s++) {
       const p = after.board[s]
       if (!p || p.color !== color || p.kind === 'k' || p.kind === 'p') continue
-      const loss = see(after, s, them, vs)
-      if (loss <= 0) continue
+      const e = enPrise(after, s, vs)
+      if (!e) continue
       if (s === move.to ? !!move.promotion : see(before, s, them, vs) > 0) continue
-      const net = loss - gained
+      const net = e.loss - gained
       if (net <= 0) continue
       if (!legalAfter().some((m) => (m.captureSq ?? m.to) === s)) continue
-      const by = cheapestCaptor(after, s, them, vs)
-      if (by === undefined) continue
       const better = !best || (p.kind === 'q' && after.board[best.sq]!.kind !== 'q') || (after.board[best.sq]!.kind !== 'q' && net > best.net)
-      if (better) best = { sq: s, net, by }
+      if (better) best = { sq: s, net, by: e.by }
     }
-    if (best && !threatensMate(after, vs)) {
+    if (best && (gaveCheck || !threatensMate(after, vs))) {
       const kind = after.board[best.sq]!.kind
       add(kind === 'q' ? 'hung_queen' : 'hung_piece', best.sq, after.board[best.by]!.kind, kind, [best.by, best.sq])
     }
@@ -148,7 +149,6 @@ export function detectMoments(before: State, after: State, move: Move, log: read
   const last2 = mine.slice(-2)
   // Three captures in a row only count as a spree when they actually won something (not an even trade sequence).
   if (victim && last2.length === 2 && last2.every((r) => r.move.capture) && (!retakeable || materialBalance(after, color) > 0)) add('capture_spree')
-  const gaveCheck = !duck && inCheck(after, vs)
   if (gaveCheck && last2.length === 2 && last2.every((r) => /[+#]$/.test(r.san))) add('check_spam', after.kings[opposite(color)], move.piece.kind, 'k')
 
   // Early king stroll: the opening of this game (not of a custom FEN), castling still possible, not running from check.
@@ -166,7 +166,8 @@ export function detectMoments(before: State, after: State, move: Move, log: read
   if (balPrev <= -3 && balAfter >= 0) add('comeback')
   else if (victim && balAfter >= 8 && balPrev < 8) add('steamroll')
 
-  if (move.promotion && move.promotion !== 'q') add('underpromotion')
+  // The attacker is the promoted kind: the GIF table refines underpromotion by it.
+  if (move.promotion && move.promotion !== 'q') add('underpromotion', move.to, move.promotion)
 
   // The brick: en passant was legal and the mover played anything else. It is forced, everyone knows this.
   // Taking that pawn some other way is not a brick.

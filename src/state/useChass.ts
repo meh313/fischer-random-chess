@@ -42,8 +42,6 @@ export interface CineRequest {
 }
 
 export interface EventMeta {
-  /** True when a cinematic already played (or is playing) its own sound for this move. */
-  cinematic: boolean
   /** Which parts of the move a gag covered (its sound replaces the plain one for that event only). */
   gagged?: CineEvent[]
   /** Moments a gag covered this move: no reaction GIF for the same beat. */
@@ -110,7 +108,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const trackedRef = useRef<TrackedPiece[]>([])
   const stackRef = useRef<StackEntry[]>([])
   const listeners = useRef(new Set<Listener>())
-  const metaRef = useRef<EventMeta>({ cinematic: false })
+  const metaRef = useRef<EventMeta>({})
   const cineKey = useRef(0)
   const ai = useRef<AiClient | null>(null)
   const duckHint = useRef<number | null>(null)
@@ -158,19 +156,21 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   }, [clearAimFlash])
 
   // Exact clock lives in a ref; the state copy only changes when the displayed text would.
-  const [clock, setClock] = useState<Clock | null>(null)
+  const [clock, setClock] = useState<Clock | null>(() => {
+    const tc = parseTimeControl(settings.timeControl)
+    return tc ? { w: tc.initialMs, b: tc.initialMs } : null
+  })
   const clockRef = useRef<Clock | null>(null)
   const clockCfg = useRef<{ initialMs: number; incrementMs: number } | null>(null)
   const shownKeys = useRef({ w: 0, b: 0 })
 
-  // Events (sounds, memes) wait for a cinematic to finish so they do not cover it.
   const [replay, setReplay] = useState<ReplayState | null>(null)
   const replayRef = useRef<ReplayState | null>(null)
   const suppressCine = useRef(false)
   /** Replay jumps: skipped moves make no sound, show no meme and flash no hand. */
   const muted = useRef(false)
+  // Events (sounds, memes) wait for a cinematic to finish so they do not cover it.
   const deferred = useRef<GameEvent[]>([])
-  const cineSounded = useRef(false)
   const gagged = useRef<CineEvent[]>([])
   const gaggedMoments = useRef<MomentId[]>([])
 
@@ -222,7 +222,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       trackedRef.current = trackFromGame(game)
       stackRef.current = []
       deferred.current = []
-      metaRef.current = { cinematic: false }
+      metaRef.current = {}
       resetClock()
       setSelected(null)
       setPromotion(null)
@@ -244,16 +244,10 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     gameRef.current = first
     trackedRef.current = trackFromGame(first)
     clockCfg.current = parseTimeControl(settings.timeControl)
-    clockRef.current = clockCfg.current ? { w: clockCfg.current.initialMs, b: clockCfg.current.initialMs } : null
-    shownKeys.current = clockRef.current ? { w: displayKey(clockRef.current.w), b: displayKey(clockRef.current.b) } : { w: 0, b: 0 }
+    clockRef.current = clock
+    shownKeys.current = clock ? { w: displayKey(clock.w), b: displayKey(clock.b) } : { w: 0, b: 0 }
   }
   const game = gameRef.current
-  const clockInit = useRef(false)
-  useEffect(() => {
-    if (clockInit.current) return
-    clockInit.current = true
-    setClock(clockRef.current ? { ...clockRef.current } : null)
-  }, [])
 
   // Playing the computer as Black shows the board from Black's side.
   useEffect(() => {
@@ -317,18 +311,18 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
 
   /** Hand every event that waited for the gag to the listeners (sounds, memes). */
   const flush = useCallback(
-    (cinematic: boolean) => {
+    (afterGag: boolean) => {
       deferring.current = false
-      metaRef.current = { cinematic, gagged: gagged.current, gaggedMoments: gaggedMoments.current }
+      metaRef.current = { gagged: gagged.current, gaggedMoments: gaggedMoments.current }
       gagged.current = []
       gaggedMoments.current = []
       const pending = deferred.current
       deferred.current = []
       if (muted.current) return
       for (const e of pending) deliver(e)
-      metaRef.current = { cinematic: false }
+      metaRef.current = {}
       // After a gag the pieces already stand still; otherwise wait for the move animation to land.
-      flashAims(cinematic ? 0 : PIECE_MOVE_MS + 40)
+      flashAims(afterGag ? 0 : PIECE_MOVE_MS + 40)
     },
     [deliver, flashAims],
   )
@@ -364,7 +358,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       cineRef.current = null
       setCine(null)
       recomputePoses() // the Chad Horse appears on the landing square once the gags are over; gag faces come off
-      flush(cineSounded.current)
+      flush(true)
     },
     [flush, startCine, recomputePoses],
   )
@@ -492,9 +486,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
         }
       }
 
-      cineSounded.current = false
       deferring.current = true // sounds and memes for this move wait until we know whether a gag plays
-      metaRef.current = { cinematic: !!captureReq }
       const mover = g.turn
       stackRef.current.push({ pieces: prev, clock: clockRef.current ? { ...clockRef.current } : null, kills: { ...kills.current } })
       let events: GameEvent[]
@@ -524,7 +516,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
           const i = deferred.current.findIndex((e) => e.type === 'move')
           if (i >= 0) {
             const [mv] = deferred.current.splice(i, 1)
-            metaRef.current = { cinematic: false, gagged: gagged.current }
+            metaRef.current = { gagged: gagged.current }
             deliver(mv!)
           }
         }
@@ -541,7 +533,6 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const placeDuck = useCallback(
     (sq: Square) => {
       const g = gameRef.current!
-      metaRef.current = { cinematic: false }
       const mover = g.turn
       stackRef.current.push({ pieces: trackedRef.current, clock: clockRef.current ? { ...clockRef.current } : null, kills: kills.current })
       deferring.current = true // same gate as a move: replay jumps stay silent
@@ -612,7 +603,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     deferred.current = []
     deferring.current = false
     cineNext.current = null
-    metaRef.current = { cinematic: false }
+    metaRef.current = {}
     cineRef.current = null
     setCine(null)
 
@@ -647,7 +638,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   const resign = useCallback(() => {
     const g = gameRef.current!
     const cfg = settingsRef.current
-    metaRef.current = { cinematic: false }
+    metaRef.current = {}
     g.resign(cfg.opponent !== 'human' ? cfg.playAs : g.turn)
     bump()
   }, [])
@@ -672,7 +663,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       trackedRef.current = trackFromGame(fresh)
       stackRef.current = []
       deferred.current = []
-      metaRef.current = { cinematic: false }
+      metaRef.current = {}
       cineRef.current = null
       clockCfg.current = null
       publishClock(null, true)
@@ -764,10 +755,6 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     bump()
   }, [])
 
-  const noteCineSound = useCallback(() => {
-    cineSounded.current = true
-  }, [])
-
   // Clock: runs for the side to move after the first move. Every animation stops it: gags, gun hands,
   // reaction GIFs and the piece slide itself, so nobody pays for the show.
   const active = !game.result && game.records.length > 0 && clock !== null ? game.turn : null
@@ -785,7 +772,7 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
       const left = Math.max(0, c[running] - dt)
       publishClock({ ...c, [running]: left })
       if (left <= 0) {
-        metaRef.current = { cinematic: false }
+        metaRef.current = {}
         g.timeout(running)
         bump()
       }
@@ -794,7 +781,6 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
   }, [running, game, publishClock])
 
   // Computer opponent: think in a worker, wait for any cinematic to finish, then play.
-  const aiTurn = settings.opponent !== 'human' && !game.result && game.turn !== settings.playAs
   useEffect(() => {
     const g = gameRef.current!
     const cfg = settingsRef.current
@@ -883,6 +869,14 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     }
   }, [])
 
+  const skipCine = useCallback(() => finishCine(true), [finishCine])
+  const endCine = useCallback(() => finishCine(false), [finishCine])
+  const cancelPromotion = useCallback(() => setPromotion(null), [])
+  const clearSelection = useCallback(() => {
+    setSelected(null)
+    setPromotion(null)
+  }, [])
+
   // What the board draws.
   const shown = cine?.hold ?? trackedRef.current
   const display: DisplayPiece[] = shown.map((p) => {
@@ -911,7 +905,6 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     cine: cine?.req ?? null,
     clock,
     thinking,
-    aiTurn,
     canUndo,
     activeClock: active,
     holdClock: setClockHold,
@@ -919,16 +912,12 @@ export function useChass(cinematics: readonly Cinematic[], settings: Settings) {
     newGame,
     clickSquare,
     choosePromotion,
-    cancelPromotion: () => setPromotion(null),
-    clearSelection: () => {
-      setSelected(null)
-      setPromotion(null)
-    },
+    cancelPromotion,
+    clearSelection,
     undo,
     resign,
-    skipCine: () => finishCine(true),
-    endCine: () => finishCine(false),
-    noteCineSound,
+    skipCine,
+    endCine,
     replay,
     loadReplay,
     replayForward,

@@ -6,7 +6,7 @@ import { pickText } from '../content/select'
 import type { CinematicStep } from '../content/types'
 import { playSfx } from '../audio/sfx'
 import type { CineRequest } from '../state/useChass'
-import { HAND_PIVOT, HAND_REACH, HAND_SIZE, HAND_SPRITE, handPose } from './AimLayer'
+import { HAND_PIVOT, HAND_SIZE, HAND_SPRITE, gripAlong, handPose } from './AimLayer'
 import type { Pt } from './AimLayer'
 
 interface Props {
@@ -14,8 +14,6 @@ interface Props {
   flipped: boolean
   setPose: (id: number, pose: string | null) => void
   onDone: () => void
-  /** Called when the cinematic plays one of its own sounds (so the default capture sound is skipped). */
-  onSound?: () => void
 }
 
 const EASE: Record<string, string> = {
@@ -32,9 +30,9 @@ const AIM_HOLD_MS = 900
  * Playback speed. Gags are authored at a comfortable 1.5 to 2.4 s but a capture should resolve in about
  * a second, so every `at`, `ms` and duration is scaled by this on play. Content stays authored at 1x.
  */
-export const CINE_SPEED = 0.6
+const CINE_SPEED = 0.6
 /** Authored milliseconds to played milliseconds. */
-export const played = (ms: number) => Math.round(ms * CINE_SPEED)
+const played = (ms: number) => Math.round(ms * CINE_SPEED)
 
 const SQ_TARGET = /^sq([1-4])$/
 
@@ -42,12 +40,10 @@ const SQ_TARGET = /^sq([1-4])$/
  * Plays one scripted cinematic over the board. Coordinates are in squares:
  * (0,0) is the top-left corner of the board as displayed, so flipping the board just works.
  */
-export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: Props) {
+export function CinematicLayer({ request, flipped, setPose, onDone }: Props) {
   const layerRef = useRef<HTMLDivElement>(null)
   const doneRef = useRef(onDone)
   doneRef.current = onDone
-  const soundRef = useRef(onSound)
-  soundRef.current = onSound
 
   useEffect(() => {
     const layer = layerRef.current!
@@ -61,7 +57,6 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
     }
     const A = center(request.from)
     const V = center(request.victimSq)
-    const dist = Math.hypot(V.x - A.x, V.y - A.y) || 1
 
     /** Anchors: attacker, victim, from, to, between, sq1..sq4 (a moment's squares), a square name, or "aim:<reach>". null = nothing there. */
     const baseAnchor = (name: string): Pt | null => {
@@ -77,9 +72,7 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
       if (name.startsWith('aim:')) {
         // The gun's spot: a little in front of the attacker on the line to the victim (the hand never travels
         // across the board), and never closer than `reach` squares to the victim when the victim is adjacent.
-        const reach = Number(name.slice(4)) || 0
-        const d = Math.min(HAND_REACH, Math.max(dist - reach, 0.2))
-        return { x: A.x + ((V.x - A.x) / dist) * d, y: A.y + ((V.y - A.y) / dist) * d }
+        return gripAlong(A, V, Number(name.slice(4)) || 0)
       }
       if (/^[a-h][1-8]$/.test(name)) return center((name.charCodeAt(1) - 49) * 8 + (name.charCodeAt(0) - 97))
       return A
@@ -189,8 +182,8 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           break
         }
         case 'scale': {
-          const el = targetEl(s.target)
           if (reduced) break
+          const el = targetEl(s.target)
           // Start from wherever the element is now so a later scale-back animates instead of snapping.
           const current = el ? getComputedStyle(el).scale : 'none'
           run(el, [{ scale: current === 'none' ? '1' : current }, { scale: String(s.to) }], { duration: played(s.ms) })
@@ -218,21 +211,19 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
           cap.className = `cine-caption ${s.pos ?? 'bottom'} ${s.style ?? ''}`
           cap.textContent = pickText(s.text)
           layer.appendChild(cap)
-          animations.push(
-            cap.animate(
-              [
-                { opacity: 0, transform: 'translateX(-50%) scale(0.6)' },
-                { opacity: 1, transform: 'translateX(-50%) scale(1.08)', offset: 0.18 },
-                { opacity: 1, transform: 'translateX(-50%) scale(1)', offset: 0.85 },
-                { opacity: 0, transform: 'translateX(-50%) scale(1)' },
-              ],
-              { duration: played(s.ms), fill: 'forwards' },
-            ),
+          run(
+            cap,
+            [
+              { opacity: 0, transform: 'translateX(-50%) scale(0.6)' },
+              { opacity: 1, transform: 'translateX(-50%) scale(1.08)', offset: 0.18 },
+              { opacity: 1, transform: 'translateX(-50%) scale(1)', offset: 0.85 },
+              { opacity: 0, transform: 'translateX(-50%) scale(1)' },
+            ],
+            { duration: played(s.ms) },
           )
           break
         }
         case 'sound':
-          soundRef.current?.()
           void playSfx(s.sfx)
           break
         case 'despawn': {
@@ -250,6 +241,11 @@ export function CinematicLayer({ request, flipped, setPose, onDone, onSound }: P
     return () => {
       timers.forEach(clearTimeout)
       animations.forEach((a) => a.cancel())
+      // `rotate` steps track their angle on React-owned piece elements; a later gag must start from zero.
+      board.querySelectorAll<HTMLElement>('[data-pid][data-rot]').forEach((el) => {
+        delete el.dataset.rot
+        delete el.dataset.flip
+      })
       layer.replaceChildren()
     }
     // The request object is stable per cinematic (keyed); flipped cannot change mid-play.

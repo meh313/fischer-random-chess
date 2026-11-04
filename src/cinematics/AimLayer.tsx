@@ -38,11 +38,20 @@ export const HAND_REACH = 0.6
  * Where a gun hand sits: its grip a little in front of A, the barrel on the A to V line pointing at V.
  * The hand never travels to the victim; on an adjacent victim it stops short of its centre.
  */
-export function handPose(A: Pt, V: Pt): HandPose {
+/**
+ * The grip point on the A to V line: HAND_REACH squares in front of A, but never closer than `reach`
+ * squares to V (and at least 0.2 squares out) when V is adjacent.
+ */
+export function gripAlong(A: Pt, V: Pt, reach = 0.45): Pt {
   const dist = Math.hypot(V.x - A.x, V.y - A.y) || 1
-  const d = Math.min(HAND_REACH, Math.max(dist - 0.45, 0.2))
+  const d = Math.min(HAND_REACH, Math.max(dist - reach, 0.2))
+  return { x: A.x + ((V.x - A.x) / dist) * d, y: A.y + ((V.y - A.y) / dist) * d }
+}
+
+export function handPose(A: Pt, V: Pt): HandPose {
+  const { x, y } = gripAlong(A, V)
   const deg = (Math.atan2(V.y - A.y, V.x - A.x) * 180) / Math.PI
-  return { x: A.x + ((V.x - A.x) / dist) * d, y: A.y + ((V.y - A.y) / dist) * d, deg, flip: Math.abs(deg) > 90 }
+  return { x, y, deg, flip: Math.abs(deg) > 90 }
 }
 
 /** Warms the browser cache so the first 0.4 s flash is not blank while the sprite downloads. */
@@ -63,7 +72,7 @@ export function AimLayer({ aims, flipped }: Props) {
   }
   return (
     <div className="cine-layer aim-layer" aria-hidden="true">
-      {aims.slice(0, AIM_MAX).map((a) => {
+      {aims.map((a) => {
         const A = center(a.attacker)
         const h = handPose(A, center(a.victim))
         return (

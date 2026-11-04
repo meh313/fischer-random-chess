@@ -52,31 +52,41 @@ function Chass() {
 
   // Content is data: load it once, report problems without crashing the game.
   useEffect(() => {
-    const note = (what: string) => (err: unknown) => setProblems((p) => [...p, `${what}: ${(err as Error).message}`])
+    // Deduped: under StrictMode the effect runs twice and the same problem must not show (or key) twice.
+    const addProblems = (msgs: string[]) => setProblems((p) => [...p, ...msgs.filter((m) => !p.includes(m))])
+    const note = (what: string) => (err: unknown) => addProblems([`${what}: ${(err as Error).message}`])
     loadCinematics()
       .then(({ items, problems: bad }) => {
         setCinematics(items)
-        if (bad.length) setProblems((p) => [...p, ...bad.map((b) => `cinematics: ${b}`)])
+        if (bad.length) addProblems(bad.map((b) => `cinematics: ${b}`))
       })
       .catch(note('cinematics'))
     loadMemes().then(setMemeList).catch(note('memes'))
     loadGifs()
       .then(({ file, problems: bad }) => {
         setGifFile(file)
-        if (bad.length) setProblems((p) => [...p, ...bad])
+        if (bad.length) addProblems(bad)
       })
       .catch(note('gifs'))
     loadPieceSetIndex().then(setSetIndex).catch(note('piece sets'))
   }, [])
 
   useEffect(() => {
+    let stale = false // a quick second change of set: the first load's result must not win the race
     loadPieceSet(settings.pieceSet)
-      .then(setPieceSet)
+      .then((set) => {
+        if (!stale) setPieceSet(set)
+      })
       .catch((err: Error) => {
-        setProblems((p) => [...p, `piece set "${settings.pieceSet}": ${err.message}`])
+        if (stale) return
+        const msg = `piece set "${settings.pieceSet}": ${err.message}`
+        setProblems((p) => (p.includes(msg) ? p : [...p, msg]))
         if (settings.pieceSet !== 'classic') update({ pieceSet: 'classic' }) // never leave the board stuck loading
       })
-  }, [settings.pieceSet])
+    return () => {
+      stale = true
+    }
+  }, [settings.pieceSet, update])
 
   useEffect(() => configureAudio(settings.sound, settings.volume), [settings.sound, settings.volume])
 

@@ -61,15 +61,6 @@
             "got em",
             "amen"
           ]
-        },
-        {
-          "attacker": "k",
-          "queries": [
-            "the rock eyebrow",
-            "fine ill do it myself",
-            "im the captain now",
-            "bow down"
-          ]
         }
       ]
     },
@@ -208,15 +199,6 @@
           ]
         },
         {
-          "attacker": "k",
-          "queries": [
-            "the rock eyebrow",
-            "fine ill do it myself",
-            "im the captain now",
-            "boss move"
-          ]
-        },
-        {
           "attacker": "q",
           "queries": [
             "drag race lip sync",
@@ -267,18 +249,6 @@
             "horse fail",
             "monkey puppet",
             "hide the pain harold"
-          ]
-        },
-        {
-          "victim": [
-            "b",
-            "d"
-          ],
-          "queries": [
-            "picard facepalm",
-            "chloe side eye",
-            "nervous laugh",
-            "sweating"
           ]
         }
       ]

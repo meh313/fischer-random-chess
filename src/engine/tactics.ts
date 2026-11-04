@@ -129,9 +129,9 @@ export function detectTactics(ctx: TacticsContext): Moment[] {
 
   // ---- pins and skewers: a slider sees two enemy pieces in a row, and that line is new.
   const lineKey = (l: { front: Square; behind: Square; dir: readonly [number, number] }) => `${l.front}:${l.behind}:${l.dir[0]},${l.dir[1]}`
-  const seen = new Set(lines(before, color, vs).map(lineKey))
+  const seen = new Set(lines(before, color).map(lineKey))
   const pinned = new Set<string>()
-  for (const l of lines(after, color, vs)) {
+  for (const l of lines(after, color)) {
     if (seen.has(lineKey(l))) continue
     const S = l.piece
     const P = after.board[l.front]!

@@ -71,8 +71,15 @@ describe('move moments', () => {
     expect(play('r3k3/8/8/n7/8/8/8/R3K3 w - - 0 1', 'a1a5')).toContain('comeback')
   })
 
-  it('marks underpromotion', () => {
-    expect(play('4k3/1P6/8/8/8/8/8/4K3 w - - 0 1', 'b7b8n')).toContain('underpromotion')
+  it('marks underpromotion, with the promoted kind as the attacker', () => {
+    const g = new Game({ fen: '4k3/1P6/8/8/8/8/8/4K3 w - - 0 1' })
+    const ev = g.playUci('b7b8n').find((e) => e.type === 'moment' && e.moment === 'underpromotion')
+    expect(ev).toBeDefined()
+    expect(ev!.type === 'moment' && ev!.attacker).toBe('n')
+  })
+
+  it('still flags a queen hung with check (the opponent cannot pass, so no mate threat is implied)', () => {
+    expect(play('4k3/pp2p1pp/1B3n2/8/8/8/4Q3/3R2K1 w - - 0 1', 'e2h5')).toContain('hung_queen')
   })
 
   it('review regressions: recaptures, x-rays, en passant, capture-promotion, duck kings, custom starts', () => {

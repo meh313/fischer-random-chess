@@ -4,6 +4,7 @@ import { MAX_CINEMATIC_MS } from './types'
 import { CINE_EVENTS } from './types'
 import type { Cinematic, CinematicMatch, CineEvent, GifFile, GifKey, GifRefine, KindMatch, MemeEntry, MemeKey } from './types'
 import { MOMENTS } from '../engine/moments'
+import { VARIANTS } from '../engine/variants'
 
 export interface CaptureContext {
   attacker: PieceKind
@@ -178,7 +179,14 @@ export function pickMemeKey(
   return best && { key: best.key, cfg: best.cfg, ctx: best.ctx }
 }
 
-const MEME_KEYS = new Set<string>([...MOMENTS, 'move', 'capture', 'castling', 'promotion', 'check', 'checkmate', 'stalemate', 'duckPlaced', 'draw', 'gameOver', 'blunder', 'moment'])
+const MEME_KEYS = new Set<string>([...MOMENTS, 'move', 'capture', 'castling', 'promotion', 'check', 'checkmate', 'stalemate', 'duckPlaced', 'draw', 'gameOver', 'blunder'])
+
+const PIECE_KINDS: readonly string[] = ['p', 'n', 'b', 'r', 'q', 'k', 'd']
+const COLORS: readonly string[] = ['w', 'b']
+const VARIANT_IDS: readonly string[] = Object.keys(VARIANTS)
+
+/** The unknown piece kinds in a match field: '*' and undefined are fine, anything else must be a kind or a list of kinds. */
+const badKinds = (m: unknown): string[] => (m === undefined || m === '*' ? [] : asList(m as string | string[]).filter((k) => typeof k !== 'string' || !PIECE_KINDS.includes(k)).map(String))
 
 /** Checks gifs.json; bad keys are dropped and reported instead of breaking the game. */
 export function validateGifFile(raw: unknown): { file: GifFile; problems: string[] } {
@@ -194,6 +202,8 @@ export function validateGifFile(raw: unknown): { file: GifFile; problems: string
     if (typeof v.priority !== 'number') { problems.push(`gifs.json: "${k}" needs a numeric priority`); continue }
     if (v.chance !== undefined && !(v.chance >= 0 && v.chance <= 1)) { problems.push(`gifs.json: "${k}" chance outside 0..1`); continue }
     if (v.refine !== undefined && (!Array.isArray(v.refine) || v.refine.some((r) => !r || !Array.isArray(r.queries) || !r.queries.length))) { problems.push(`gifs.json: "${k}" refine entries need search phrases`); continue }
+    const badRefineKinds = (v.refine ?? []).flatMap((r) => [...badKinds(r.attacker), ...badKinds(r.victim)])
+    if (badRefineKinds.length) { problems.push(`gifs.json: "${k}" refine has unknown piece kind "${badRefineKinds[0]}"`); continue }
     keys[k as MemeKey] = v
   }
   const rating = r.rating && ['g', 'pg', 'pg-13'].includes(r.rating) ? r.rating : 'g'
@@ -233,6 +243,17 @@ export function checkCinematic(c: Cinematic): string[] {
   if (ev !== 'moment' && moments.length) out.push(`"${c.id}" names a moment but its event is not "moment"`)
   for (const mo of moments) if (!(MOMENTS as readonly string[]).includes(mo)) out.push(`"${c.id}" has unknown moment "${String(mo)}"`)
   if (c.chance !== undefined && !(c.chance >= 0 && c.chance <= 1)) out.push(`"${c.id}" has a chance outside 0..1`)
+  for (const k of badKinds(c.match?.attacker)) out.push(`"${c.id}" has unknown attacker kind "${k}"`)
+  for (const k of badKinds(c.match?.victim)) out.push(`"${c.id}" has unknown victim kind "${k}"`)
+  for (const key of ['attackerColor', 'victimColor'] as const) {
+    const col = c.match?.[key]
+    if (col !== undefined && !COLORS.includes(col)) out.push(`"${c.id}" has a bad ${key} "${String(col)}"`)
+  }
+  const variant = c.match?.variant
+  if (variant !== undefined && variant !== '*') {
+    for (const id of asList(variant)) if (typeof id !== 'string' || !VARIANT_IDS.includes(id)) out.push(`"${c.id}" has unknown variant "${String(id)}"`)
+  }
+  if (c.duration !== undefined && !Number.isFinite(c.duration)) out.push(`"${c.id}" has a bad duration`)
   for (const [i, step] of c.steps.entries()) {
     const at = `"${c.id}" step ${i + 1}`
     const st = step as unknown as Record<string, unknown>
@@ -243,6 +264,10 @@ export function checkCinematic(c: Cinematic): string[] {
       continue
     }
     for (const field of required) if (st[field] === undefined) out.push(`${at} (${String(st.do)}) is missing "${field}"`)
+    for (const k of ['ms', 'deg', 'size']) {
+      const v = st[k]
+      if (v !== undefined && (typeof v !== 'number' || !Number.isFinite(v) || (k !== 'deg' && v < 0))) out.push(`${at} has a bad "${k}"`)
+    }
     if ((st.do === 'spawn' || st.do === 'aim') && typeof st.id === 'string') spawned.add(st.id)
     for (const key of ['anchor', 'from', 'to']) {
       const v = st[key]
